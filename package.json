@@ -1,0 +1,9 @@
+{
+  "name": "zoo-ml-subject-assistant",
+  "version": "1.0.0",
+  "description": "Machine Learning-assisted web app for processing Zooniverse Subjects.",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
+  "license": "Apache-2.0"
+}
