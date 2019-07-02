@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "Machine Learning-assisted web app for processing Zooniverse Subjects.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack",
+  },
   "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
   "license": "Apache-2.0",
-  "scripts": {
-    "start": "webpack",
-    "dev": "webpack --watch"
-  },
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
@@ -20,6 +19,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.6",
     "webpack": "^4.35.2",
-    "webpack-cli": "^3.3.5"
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2"
   }
 }
