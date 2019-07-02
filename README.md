@@ -24,7 +24,8 @@ Requires:
 - a modern web browser (e.g. Chrome 75+, Firefox 67+) and an Internet connection
 - a familiarity with the [Zooniverse](https://www.zooniverse.org) crowdsourced
   research platform
-- preferably
+- preferably, a Zooniverse project that has already been set up with Subjects
+  featuring images of animal from camera traps.
 
 How to Use:
 - **TODO**
