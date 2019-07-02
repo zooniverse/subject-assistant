@@ -48,3 +48,4 @@ How to Setup:
 - Navigate to this project's directory.
 - Run `npm install` to install all the dependencies for this project.
 - Run `npm start` to start the project
+- Visit the web app `http://localhost:3000`

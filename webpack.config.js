@@ -17,8 +17,8 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, ''),
-    compress: true,
+    contentBase: path.join(__dirname, 'app'),
+    watchContentBase: true,
     port: 3000
   }
 }

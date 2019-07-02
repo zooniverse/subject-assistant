@@ -7,9 +7,11 @@ class App extends React.Component {
   
   render () {
     return (
-      <div>
-        Hello World
-      </div>
+      <>
+        <header>Zooniverse ML Subject Assistant</header>
+        <main>Hello World</main>
+        <footer>Footer</footer>
+      </>
     )
   }
 }
