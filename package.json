@@ -6,6 +6,10 @@
   "scripts": {},
   "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
   "license": "Apache-2.0",
+  "scripts": {
+    "start": "webpack",
+    "dev": "webpack --watch"
+  },
   "dependencies": {
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
