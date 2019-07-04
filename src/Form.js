@@ -1,4 +1,5 @@
 import React from 'react'
+import { AppContext } from './store/AppContext'
 
 class Form extends React.Component {
   constructor (props) {
@@ -10,15 +11,17 @@ class Form extends React.Component {
       <form>
         <fieldset>
           <label>Name</label>
-          <input type="text" />
+          <input type="text" value={this.context.name} />
         </fieldset>
         <fieldset>
           <label>Job</label>
-          <input type="text" />
+          <input type="text" value={this.context.job} />
         </fieldset>
       </form>
     )
   }
 }
+
+Form.contextType = AppContext
 
 export default Form

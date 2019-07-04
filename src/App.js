@@ -1,15 +1,20 @@
 import React from 'react'
 import { HashRouter as Router, Route, Link } from 'react-router-dom'
 
+import { APP_CONTEXT } from './store/AppContext'
+import AppStore from './store/AppStore'
 import Form from './Form'
 
 const Home = () => <div><Link to="/form">Form</Link></div>
-const ComponentY = () => <div>Y</div>
-const ComponentZ = () => <div>Z</div>
 
 class App extends React.Component {
   constructor () {
     super()
+    
+    this.store = AppStore.create({
+      name: 'Shaun',
+      job: 'wizard',
+    })
   }
   
   render () {
