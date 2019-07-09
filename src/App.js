@@ -1,6 +1,7 @@
 import React from 'react'
 import { HashRouter as Router, Route, Link } from 'react-router-dom'
 
+import { AppStore  } from './store/AppStore.js'
 import { AppContext } from './store/AppContext'
 import Header from './Header'
 import Form from './Form'
@@ -11,18 +12,15 @@ class App extends React.Component {
   constructor () {
     super()
     
-    this.state = {
-      name: 'Harry Potter',
-      job: 'Wizard',
-      setName: (name) => {
-        this.setState({ name })
-      }
-    }
+    this.store = AppStore.create({
+      name: 'Shaun',
+      job: 'Developer',
+    })
   }
   
   render () {
     return (
-      <AppContext.Provider value={this.state}>
+      <AppContext.Provider value={this.store}>
         <>
           <Header />
           <main>
