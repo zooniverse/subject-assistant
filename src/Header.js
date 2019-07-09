@@ -8,14 +8,16 @@ class Header extends React.Component {
   
   render () {
     return (
-      <header>
-        <h1>Zoo ML Subject Assistant</h1>
-        <h2>Hello, {this.context.name}</h2>
-      </header>
+      <AppContext.Consumer>
+        {(store) => (
+          <header>
+            <h1>Zoo ML Subject Assistant</h1>
+            <h2>Hello, {store.name}</h2>
+          </header>
+        )}
+      </AppContext.Consumer>
     )
   }
 }
-
-Header.contextType = AppContext
 
 export default Header

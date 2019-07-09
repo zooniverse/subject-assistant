@@ -2,7 +2,7 @@ import React from 'react'
 import { HashRouter as Router, Route, Link } from 'react-router-dom'
 
 import { AppContext } from './store/AppContext'
-import AppStore from './store/AppStore'
+import { AppStore, appStore } from './store/AppStore'
 import Header from './Header'
 import Form from './Form'
 
@@ -12,15 +12,16 @@ class App extends React.Component {
   constructor () {
     super()
     
-    this.store = AppStore.create({
-      name: 'Shaun',
-      job: 'wizard',
-    })
+    this.store = appStore
+  }
+  
+  componentDidUpdate () {
+    console.log('+++ App.componentDidUpdate: ', this.context)
   }
   
   render () {
     return (
-      <AppContext.Provider value={{ name: 'shaun', job: 'developer' }}>
+      <AppContext.Provider value={this.store}>
         <>
           <Header />
           <main>

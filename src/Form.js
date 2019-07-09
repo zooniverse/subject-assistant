@@ -8,20 +8,30 @@ class Form extends React.Component {
   
   render () {
     return (
-      <form>
-        <fieldset>
-          <label>Name</label>
-          <input type="text" value={this.context.name} />
-        </fieldset>
-        <fieldset>
-          <label>Job</label>
-          <input type="text" value={this.context.job} />
-        </fieldset>
-      </form>
+      <AppContext.Consumer>
+        {(store) => (
+          <form>
+            <fieldset>
+              <label>Name</label>
+              <input
+                type="text"
+                value={store.name}
+                onChange={e => store.setName(e.target.value) }
+              />
+            </fieldset>
+            <fieldset>
+              <label>Job</label>
+              <input
+                type="text"
+                value={store.job}
+                onChange={e => {}}
+              />
+            </fieldset>
+          </form>
+        )}
+      </AppContext.Consumer>
     )
   }
 }
-
-Form.contextType = AppContext
 
 export default Form
