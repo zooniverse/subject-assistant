@@ -1,4 +1,7 @@
 import React from 'react'
-import { appStore } from './AppStore'
 
-export const AppContext = React.createContext(appStore)
+export const AppContext = React.createContext({
+  name: '',
+  job: '',
+  setName: () => {},
+})
