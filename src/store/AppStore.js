@@ -8,6 +8,7 @@ const AppStore = types.model('AppStore', {
     setName (name) {
       console.log('+++ AppStore.setName: ', self.name, ' => ', name)
       self.name = name
+      console.log(self.toJSON())
     },
   }
 })

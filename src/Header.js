@@ -1,7 +1,20 @@
 import React from 'react'
+import { observer } from 'mobx-react'
 import { AppContext } from './store/AppContext'
 
-class Header extends React.Component {
+function Header(props) {
+  console.log('Header', props)
+  return (
+    <header>
+      <h1>Zoo ML Subject Assistant</h1>
+      <h2>Hello, {props.name}</h2>
+    </header>
+  )
+}
+
+const ObservableHeader = observer(Header)
+
+class HeaderContainer extends React.Component {
   constructor (props) {
     super(props)
   }
@@ -9,15 +22,10 @@ class Header extends React.Component {
   render () {
     return (
       <AppContext.Consumer>
-        {(store) => (
-          <header>
-            <h1>Zoo ML Subject Assistant</h1>
-            <h2>Hello, {store.name}</h2>
-          </header>
-        )}
+        {(store) => <ObservableHeader name={store.name} /> }
       </AppContext.Consumer>
     )
   }
 }
 
-export default Header
+export default HeaderContainer

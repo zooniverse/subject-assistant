@@ -6,31 +6,29 @@ import { AppContext } from './store/AppContext'
 import Header from './Header'
 import Form from './Form'
 
+const store = AppStore.create({
+  name: 'Shaun',
+  job: 'Developer',
+})
+
 const Home = () => <div><Link to="/form">Form</Link></div>
 
 class App extends React.Component {
   constructor () {
     super()
-    
-    this.store = AppStore.create({
-      name: 'Shaun',
-      job: 'Developer',
-    })
   }
   
   render () {
     return (
-      <AppContext.Provider value={this.store}>
-        <>
-          <Header />
-          <main>
-            <Router>
-              <Route path="/" exact component={Home} />
-              <Route path="/form" component={Form} />
-            </Router>
-          </main>
-          <footer>Footer</footer>
-        </>
+      <AppContext.Provider value={store}>
+        <Header />
+        <main>
+          <Router>
+            <Route path="/" exact component={Home} />
+            <Route path="/form" component={Form} />
+          </Router>
+        </main>
+        <footer>Footer</footer>
       </AppContext.Provider>
     )
   }

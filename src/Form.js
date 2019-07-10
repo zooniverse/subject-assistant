@@ -1,7 +1,34 @@
 import React from 'react'
+import { observer } from 'mobx-react'
 import { AppContext } from './store/AppContext'
 
-class Form extends React.Component {
+function Form(props) {
+  console.log('Form', props)
+  return (
+    <form>
+      <fieldset>
+        <label>Name</label>
+        <input
+          type="text"
+          defaultValue={props.name}
+          onChange={e => props.onChange(e.target.value) }
+        />
+      </fieldset>
+      <fieldset>
+        <label>Job</label>
+        <input
+          type="text"
+          defaultValue={props.job}
+          onChange={e => {}}
+        />
+      </fieldset>
+    </form>
+  )
+}
+
+const ObservableForm = observer(Form)
+
+class FormContainer extends React.Component {
   constructor (props) {
     super(props)
   }
@@ -9,29 +36,13 @@ class Form extends React.Component {
   render () {
     return (
       <AppContext.Consumer>
-        {(store) => (
-          <form>
-            <fieldset>
-              <label>Name</label>
-              <input
-                type="text"
-                value={store.name}
-                onChange={e => store.setName(e.target.value) }
-              />
-            </fieldset>
-            <fieldset>
-              <label>Job</label>
-              <input
-                type="text"
-                value={store.job}
-                onChange={e => {}}
-              />
-            </fieldset>
-          </form>
-        )}
+        {(store) => {
+          console.log('Form context', store)
+          return <ObservableForm name={store.name} job={store.job} onChange={store.setName} />
+        }}
       </AppContext.Consumer>
     )
   }
 }
 
-export default Form
+export default FormContainer
