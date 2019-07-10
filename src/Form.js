@@ -28,21 +28,17 @@ function Form(props) {
 
 const ObservableForm = observer(Form)
 
-class FormContainer extends React.Component {
+class FormContainer extends React.PureComponent {
   constructor (props) {
     super(props)
   }
   
   render () {
-    return (
-      <AppContext.Consumer>
-        {(store) => {
-          console.log('Form context', store)
-          return <ObservableForm name={store.name} job={store.job} onChange={store.setName} />
-        }}
-      </AppContext.Consumer>
-    )
+    console.log('Form context', this.context)
+    const { name, job, setName } = this.context
+    return <ObservableForm name={name} job={job} onChange={setName} />
   }
 }
+FormContainer.contextType = AppContext
 
 export default FormContainer

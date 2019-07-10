@@ -20,12 +20,11 @@ class HeaderContainer extends React.Component {
   }
   
   render () {
-    return (
-      <AppContext.Consumer>
-        {(store) => <ObservableHeader name={store.name} /> }
-      </AppContext.Consumer>
-    )
+    console.log(this.context)
+    const { name } = this.context
+    return <ObservableHeader name={name} />
   }
 }
+HeaderContainer.contextType = AppContext
 
 export default HeaderContainer
