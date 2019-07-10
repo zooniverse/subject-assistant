@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const AppContext = React.createContext({
-  name: '',
+  displayName: '',
   job: '',
   setName: () => {},
 })

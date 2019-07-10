@@ -7,7 +7,7 @@ function Header(props) {
   return (
     <header>
       <h1>Zoo ML Subject Assistant</h1>
-      <h2>Hello, {props.name}</h2>
+      <h2>Hello, {props.displayName}</h2>
     </header>
   )
 }
@@ -21,8 +21,8 @@ class HeaderContainer extends React.Component {
   
   render () {
     console.log(this.context)
-    const { name } = this.context
-    return <ObservableHeader name={name} />
+    const { displayName } = this.context
+    return <ObservableHeader displayName={displayName} />
   }
 }
 HeaderContainer.contextType = AppContext

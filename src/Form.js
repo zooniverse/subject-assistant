@@ -10,7 +10,7 @@ function Form(props) {
         <label>Name</label>
         <input
           type="text"
-          defaultValue={props.name}
+          defaultValue={props.displayName}
           onChange={e => props.onChange(e.target.value) }
         />
       </fieldset>
@@ -35,8 +35,8 @@ class FormContainer extends React.PureComponent {
   
   render () {
     console.log('Form context', this.context)
-    const { name, job, setName } = this.context
-    return <ObservableForm name={name} job={job} onChange={setName} />
+    const { displayName, job, setName } = this.context
+    return <ObservableForm displayName={displayName} job={job} onChange={setName} />
   }
 }
 FormContainer.contextType = AppContext

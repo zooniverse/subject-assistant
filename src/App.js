@@ -7,7 +7,7 @@ import Header from './Header'
 import Form from './Form'
 
 const store = AppStore.create({
-  name: 'Shaun',
+  displayName: 'Shaun',
   job: 'Developer',
 })
 
