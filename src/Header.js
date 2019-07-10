@@ -12,19 +12,17 @@ function Header(props) {
   )
 }
 
-const ObservableHeader = observer(Header)
-
 class HeaderContainer extends React.Component {
   constructor (props) {
     super(props)
   }
   
   render () {
-    console.log(this.context)
     const { displayName } = this.context
-    return <ObservableHeader displayName={displayName} />
+    console.log('Header context', { displayName } )
+    return <Header displayName={displayName} />
   }
 }
 HeaderContainer.contextType = AppContext
 
-export default HeaderContainer
+export default observer(HeaderContainer)
