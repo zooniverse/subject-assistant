@@ -6,11 +6,6 @@ import { AppContext } from './store/AppContext'
 import Header from './Header'
 import Form from './Form'
 
-const store = AppStore.create({
-  displayName: 'Shaun',
-  job: 'Developer',
-})
-
 const Home = () => <div><Link to="/form">Form</Link></div>
 
 class App extends React.Component {
@@ -20,7 +15,7 @@ class App extends React.Component {
   
   render () {
     return (
-      <AppContext.Provider value={store}>
+      <>
         <Header />
         <main>
           <Router>
@@ -29,7 +24,7 @@ class App extends React.Component {
           </Router>
         </main>
         <footer>Footer</footer>
-      </AppContext.Provider>
+      </>
     )
   }
 }
