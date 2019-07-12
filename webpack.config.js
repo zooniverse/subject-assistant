@@ -14,6 +14,14 @@ module.exports = {
         exclude: /node_modules/,
         use: "babel-loader"
       },
+      {  // Compile Sass assets
+        test: /\.(scss)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+      },
       {  // Copy HTML file
         test: /\.html$/,
         use: [
@@ -36,7 +44,7 @@ module.exports = {
             },
           },
         ],
-      }
+      },
     ]
   },
   devServer: {
