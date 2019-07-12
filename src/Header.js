@@ -1,23 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { observer } from 'mobx-react'
 import { AppContext } from './store/AppContext'
 
-class Header extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-  
-  render () {
-    return (
-      <AppContext.Consumer>
-        {(store) => (
-          <header>
-            <h1>Zoo ML Subject Assistant</h1>
-            <h2>Hello, {store.name}</h2>
-          </header>
-        )}
-      </AppContext.Consumer>
-    )
-  }
+function Header() {
+  const store = useContext(AppContext)
+  return (
+    <header>
+      <h1>Zoo ML Subject Assistant</h1>
+      <h2>Hello, {store.displayName}</h2>
+    </header>
+  )
 }
 
-export default Header
+export default observer(Header)

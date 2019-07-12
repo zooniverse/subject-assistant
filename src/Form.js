@@ -1,37 +1,29 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { observer } from 'mobx-react'
 import { AppContext } from './store/AppContext'
 
-class Form extends React.Component {
-  constructor (props) {
-    super(props)
-  }
-  
-  render () {
-    return (
-      <AppContext.Consumer>
-        {(store) => (
-          <form>
-            <fieldset>
-              <label>Name</label>
-              <input
-                type="text"
-                value={store.name}
-                onChange={e => store.setName(e.target.value) }
-              />
-            </fieldset>
-            <fieldset>
-              <label>Job</label>
-              <input
-                type="text"
-                value={store.job}
-                onChange={e => {}}
-              />
-            </fieldset>
-          </form>
-        )}
-      </AppContext.Consumer>
-    )
-  }
+function Form() {
+  const store = useContext(AppContext)
+  return (
+    <form>
+      <fieldset>
+        <label>Name</label>
+        <input
+          type="text"
+          defaultValue={store.displayName}
+          onChange={e => store.setName(e.target.value) }
+        />
+      </fieldset>
+      <fieldset>
+        <label>Job</label>
+        <input
+          type="text"
+          defaultValue={store.job}
+          onChange={e => {}}
+        />
+      </fieldset>
+    </form>
+  )
 }
 
-export default Form
+export default observer(Form)

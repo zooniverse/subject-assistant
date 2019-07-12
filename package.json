@@ -11,6 +11,9 @@
   "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
   "license": "Apache-2.0",
   "dependencies": {
+    "mobx": "^5.11.0",
+    "mobx-react": "^6.1.1",
+    "mobx-state-tree": "^3.14.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1"
