@@ -7,19 +7,11 @@ function Form() {
   return (
     <form>
       <fieldset>
-        <label>Name</label>
+        <label>Username</label>
         <input
           type="text"
-          defaultValue={store.displayName}
-          onChange={e => store.setName(e.target.value) }
-        />
-      </fieldset>
-      <fieldset>
-        <label>Job</label>
-        <input
-          type="text"
-          defaultValue={store.job}
-          onChange={e => {}}
+          defaultValue={store.user}
+          onChange={e => store.setUser(e.target.value) }
         />
       </fieldset>
     </form>
