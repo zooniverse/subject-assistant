@@ -1,10 +1,9 @@
 import React from 'react'
-import { HashRouter as Router, Route, Link } from 'react-router-dom'
+import { HashRouter as Router, Route } from 'react-router-dom'
 
-import Header from './Header'
 import Form from './Form'
-
-const Home = () => <div><Link to="/form">Form</Link></div>
+import Home from './Home'
+import Header from './Header'
 
 class App extends React.Component {
   constructor () {
@@ -13,16 +12,16 @@ class App extends React.Component {
   
   render () {
     return (
-      <>
-        <Header />
-        <main>
-          <Router>
+      <Router>
+        <>
+          <Header />
+          <main>
             <Route path="/" exact component={Home} />
             <Route path="/form" component={Form} />
-          </Router>
-        </main>
-        <footer>Footer</footer>
-      </>
+          </main>
+          <footer>Footer</footer>
+        </>
+      </Router>
     )
   }
 }

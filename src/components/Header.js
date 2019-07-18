@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import { observer } from 'mobx-react'
-import { AppContext } from '../store/AppContext'
+import { Link } from 'react-router-dom'
+
+import AppContext from '../store'
 
 function Header() {
   const store = useContext(AppContext)
@@ -8,6 +10,9 @@ function Header() {
     <header>
       <h1>Zoo ML Subject Assistant</h1>
       <h2>Hello, {store.displayName}</h2>
+      <nav>
+        <Link to="/">Home</Link>
+      </nav>
     </header>
   )
 }

@@ -6,4 +6,6 @@ const defaultContext = AppStore.create({
   job: 'Developer',
 })
 
-export const AppContext = createContext(defaultContext)
+const AppContext = createContext(defaultContext)
+
+export default AppContext
