@@ -1,8 +1,6 @@
 import React from 'react'
 import { HashRouter as Router, Route, Link } from 'react-router-dom'
 
-import { AppStore  } from './store/AppStore.js'
-import { AppContext } from './store/AppContext'
 import Header from './Header'
 import Form from './Form'
 

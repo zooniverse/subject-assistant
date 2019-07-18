@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { observer } from 'mobx-react'
-import { AppContext } from './store/AppContext'
+import { AppContext } from '../store/AppContext'
 
 function Form() {
   const store = useContext(AppContext)
