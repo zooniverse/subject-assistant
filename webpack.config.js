@@ -7,6 +7,12 @@ module.exports = {
     path: path.resolve(__dirname, 'app'),
   },
   mode: "development",
+  resolve: {
+    alias: {  // Allows absolute paths in import statements, so we can `import Example from '@store/Example'` instead of `import Example from '../../src/store/Example'` 
+      '@util': path.resolve(__dirname, 'src/util/'),
+      '@store': path.resolve(__dirname, 'src/store/'),
+    },
+  },
   module: {
     rules: [
       {  // Compile JavaScript files into a single bundle
@@ -45,11 +51,11 @@ module.exports = {
           },
         ],
       },
-    ]
+    ],
   },
   devServer: {
     contentBase: path.join(__dirname, 'app'),
     watchContentBase: true,
     port: 3000
-  }
+  },
 }

@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
-import AppContext from '../store'
+import AppContext from '@store'
 
 function Header() {
   const store = useContext(AppContext)
