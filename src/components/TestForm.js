@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
 
-function Form() {
+function TestForm() {
   const store = useContext(AppContext)
   return (
     <form>
@@ -18,4 +18,4 @@ function Form() {
   )
 }
 
-export default observer(Form)
+export default observer(TestForm)
