@@ -7,7 +7,7 @@ function TestForm() {
   return (
     <form>
       <fieldset>
-        <label>Username</label>
+        <legend>Username</legend>
         <input
           type="text"
           defaultValue={store.user}

@@ -28,21 +28,23 @@ class ConfigForm extends React.Component {
           return (
             <fieldset key={key}>
               <legend>{key}</legend>
-              <input
-                className="long text input"
-                defaultValue={config[key]}
-                onChange={(e) => {
-                  localStorage.setItem(key, e.target.value)
-                  this.setState({ message: MESSAGE.CHANGED })
-                }}
-              />
+              <div className="flex-row">
+                <input
+                  className="long text input flex-item grow"
+                  defaultValue={config[key]}
+                  onChange={(e) => {
+                    localStorage.setItem(key, e.target.value)
+                    this.setState({ message: MESSAGE.CHANGED })
+                  }}
+                />
+              </div>
             </fieldset>
           )
         })}
   
-        <div>
+        <div className="action panel">
           <button
-            className="button"
+            className="danger button"
             onClick={() => {
               Object.keys(config).map((key) => {
                 localStorage.removeItem(key)

@@ -1,6 +1,11 @@
 $primary-colour: #488;
 $primary-contrast: #eee;
+$action-colour: #48c;
+$action-contrast: #fff;
+$danger-colour: #c44;
+$danger-contrast: #fff;
 $fore-colour: #444;
+$mid-colour: #ccc;
 $back-colour: #fff;
 
 :root {
@@ -46,5 +51,5 @@ html, body {
 }
 
 a {
-  color: $primary-colour;
+  color: $action-colour;
 }
