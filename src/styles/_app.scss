@@ -1,0 +1,55 @@
+$primary-colour: #488;
+$primary-contrast: #eee;
+$action-colour: #48c;
+$action-contrast: #fff;
+$danger-colour: #c44;
+$danger-contrast: #fff;
+$fore-colour: #444;
+$mid-colour: #ccc;
+$back-colour: #fff;
+
+:root {
+  background: $back-colour;
+  color: $fore-colour;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  
+  > header {
+    background: $primary-colour;
+    color: $back-colour;
+    
+    h1 {
+      padding: 0;
+      margin: 0;
+    }
+    
+    nav {
+      
+    }
+    
+    a {
+      color: $primary-contrast;
+    }
+  }
+  
+  > main {
+    padding: 0.5rem;
+  }
+  
+  > footer {
+    background: $primary-colour;
+    color: $back-colour;
+  }
+}
+
+a {
+  color: $action-colour;
+}

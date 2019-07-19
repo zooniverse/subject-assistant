@@ -1,15 +1,18 @@
 import { types } from 'mobx-state-tree'
+import { MLTaskStore } from './MLTaskStore'
 
 const AppStore = types.model('AppStore', {
-  displayName: types.string,
-  job: types.string,  
+  
+  user: types.optional(types.string, 'Anonymous'),  
+  mlTask: types.optional(MLTaskStore, {})  // We can use {} to set the initial values of a store
+  
 }).actions(self => {
   return {
-    setName (displayName) {
-      console.log('+++ AppStore.setName: ', self.displayName, ' => ', displayName)
-      self.displayName = displayName
-      console.log(self.toJSON())
+    
+    setUser (val) {
+      self.user = val
     },
+    
   }
 })
 

@@ -1,0 +1,29 @@
+.form {
+  
+  fieldset {
+    margin: 0.5em;
+  }
+  
+  .panel {
+    background: $mid-colour;
+    margin: 0.5em;
+    padding: 0.5em 1em;
+  }
+}
+
+.button {
+  background: $primary-colour;
+  color: $primary-contrast;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.action.button {
+  background: $action-colour;
+  color: $action-contrast;
+}
+
+.danger.button {
+  background: $danger-colour;
+  color: $danger-contrast;
+}

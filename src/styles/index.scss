@@ -1,13 +1,1 @@
-:root {
-  font-family: sans-serif;
-  font-size: 16px;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
-#app {
-  padding: 0.5rem;
-}
+@import 'app', 'layouts', 'forms';
