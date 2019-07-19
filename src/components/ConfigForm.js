@@ -1,21 +1,58 @@
 import React, { useContext } from 'react'
+import config from '@config'
+
+const MESSAGE = {
+  DEFAULT: 'Use this form to change the configuration settings for the app.',
+  CHANGED: 'Changes made. Please reload the app.',
+  RESET: 'Config values have been reset. Please reload the app.',
+}
 
 class ConfigForm extends React.Component {
   constructor (props) {
     super(props)
+    
+    this.state = {
+      message: MESSAGE.DEFAULT,
+    }
   }
   
   render () {
-    
-    
+    const state = this.state;
     
     return (
-      <form>
-        <fieldset>
-          <label>URL</label>
-          <input
-          />
-        </fieldset>
+      <form className="form">
+        <h2>App Config</h2>
+        <p>{state.message}</p>
+      
+        {Object.keys(config).map((key) => {
+          return (
+            <fieldset key={key}>
+              <legend>{key}</legend>
+              <input
+                className="long text input"
+                defaultValue={config[key]}
+                onChange={(e) => {
+                  localStorage.setItem(key, e.target.value)
+                  this.setState({ message: MESSAGE.CHANGED })
+                }}
+              />
+            </fieldset>
+          )
+        })}
+  
+        <div>
+          <button
+            className="button"
+            onClick={() => {
+              Object.keys(config).map((key) => {
+                localStorage.removeItem(key)
+                this.setState({ message: MESSAGE.RESET })
+              })
+            }}
+          >
+            Reset
+          </button>
+        </div>
       </form>
     )
   }

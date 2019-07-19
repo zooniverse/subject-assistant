@@ -31,7 +31,7 @@ class MLTaskManager extends React.Component {
         
         <fieldset>
           <legend>URL</legend>
-          <input className="text input" value={state.url} onChange={(e) => { this.setState({ url: e.target.value }) }} />
+          <input className="long text input" value={state.url} onChange={(e) => { this.setState({ url: e.target.value }) }} />
           <button className="action button" onClick={() => { mlTask.testFetch(state.url) }}>Fetch</button>
         </fieldset>
         

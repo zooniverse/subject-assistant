@@ -11,6 +11,7 @@ module.exports = {
     alias: {  // Allows absolute paths in import statements, so we can `import Example from '@store/Example'` instead of `import Example from '../../src/store/Example'` 
       '@util': path.resolve(__dirname, 'src/util/'),
       '@store': path.resolve(__dirname, 'src/store/'),
+      '@config': path.resolve(__dirname, 'src/config/'),
     },
   },
   module: {
