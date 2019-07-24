@@ -5,10 +5,6 @@ import AppContext from '@store'
 class MLTaskManager extends React.Component {
   constructor (props) {
     super(props)
-    
-    this.state = {
-      url: 'https://www.zooniverse.org/api/projects?http_cache=true&page=1&sort=-launch_date&launch_approved=true&cards=true&include=avatar&state=live'
-    }
   }
   
   render () {
@@ -30,10 +26,10 @@ class MLTaskManager extends React.Component {
         </fieldset>
         
         <fieldset>
-          <legend>URL</legend>
+          <legend>ML Task Request ID</legend>
           <div className="flex-row">
-            <input className="text input flex-item grow" value={state.url} onChange={(e) => { this.setState({ url: e.target.value }) }} />
-            <button className="action button flex-item" onClick={() => { mlTask.testFetch(state.url) }}>Fetch</button>
+            <input className="text input flex-item grow" value={mlTask.id} onChange={(e) => { mlTask.setId(e.target.value) }} />
+            <button className="action button flex-item" onClick={() => { mlTask.fetchTask() }}>Fetch</button>
           </div>
         </fieldset>
         

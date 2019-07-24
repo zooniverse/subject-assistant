@@ -1,10 +1,14 @@
 import { types } from 'mobx-state-tree'
 import { ASYNC_STATES } from '@util'
+import config from '@config'
 import superagent from 'superagent'
+
+const TASKS_ENDPOINT = '/tasks'
 
 const MLTaskStore = types.model('MLTaskStore', {
   
   status: types.optional(types.string, ASYNC_STATES.IDLE),
+  id: types.optional(types.string, ''),
   data: types.optional(types.array(types.frozen({})), []),
   
 }).actions(self => {
@@ -12,6 +16,16 @@ const MLTaskStore = types.model('MLTaskStore', {
     
     setStatus (val) {
       self.status = val
+    },
+    
+    setId (val) {
+      self.id = val
+    },
+    
+    fetchTask () {
+      const url = `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
+      
+      console.log('+++ ', url)
     },
     
     testFetch (url = 'https://www.zooniverse.org/api/projects') {
