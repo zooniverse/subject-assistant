@@ -30,31 +30,19 @@ const MLTaskStore = types.model('MLTaskStore', {
       superagent
         .get(url)
       
-        // Zooniverse API
         .set('Content-Type', 'application/json')
-        .set('Accept', 'application/vnd.api+json; version=1')
+        .withCredentials()
       
-        .end((err, res) => {
+        .then(res => {
           self.setStatus(ASYNC_STATES.SUCCESS)
-          console.log(res)
+          console.log('+++ res', res)
+        })
+        
+        .catch(err => {
+          self.setStatus(ASYNC_STATES.ERROR)
+          console.log('+++ err', err)
         })
     },
-    
-    testFetch (url = 'https://www.zooniverse.org/api/projects') {
-      self.setStatus(ASYNC_STATES.FETCHING)
-      
-      superagent
-        .get(url)
-      
-        // Zooniverse API
-        .set('Content-Type', 'application/json')
-        .set('Accept', 'application/vnd.api+json; version=1')
-      
-        .end((err, res) => {
-          self.setStatus(ASYNC_STATES.SUCCESS)
-          console.log(res)
-        })
-    }
     
   }
 })
