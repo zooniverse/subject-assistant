@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree'
+import { types, getRoot } from 'mobx-state-tree'
 import { ASYNC_STATES } from '@util'
 import config from '@config'
 import superagent from 'superagent'
@@ -50,6 +50,11 @@ const MLTaskStore = types.model('MLTaskStore', {
         })
       
         .then(data => {
+          const root = getRoot(self)
+          
+          console.log('+++ data', data)
+          console.log('+++ root', root)
+        
           self.setData(data)
         })
         
