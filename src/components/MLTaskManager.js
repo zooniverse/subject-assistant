@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
+import { stopEvent } from '@util'
 
 class MLTaskManager extends React.Component {
   constructor (props) {
@@ -29,7 +30,15 @@ class MLTaskManager extends React.Component {
           <legend>ML Task Request ID</legend>
           <div className="flex-row">
             <input className="text input flex-item grow" value={mlTask.id} onChange={(e) => { mlTask.setId(e.target.value) }} />
-            <button className="action button flex-item" onClick={() => { mlTask.fetchTask() }}>Fetch</button>
+            <button
+              className="action button flex-item"
+              onClick={(e) => {
+                mlTask.fetch()
+                stopEvent(e)
+              }}
+            >
+              Fetch
+            </button>
           </div>
         </fieldset>
         
