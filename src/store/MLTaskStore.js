@@ -3,7 +3,7 @@ import { ASYNC_STATES } from '@util'
 import config from '@config'
 import superagent from 'superagent'
 
-const TASKS_ENDPOINT = '/tasks'
+const TASKS_ENDPOINT = '/task'
 
 const MLTaskStore = types.model('MLTaskStore', {
   
@@ -25,7 +25,19 @@ const MLTaskStore = types.model('MLTaskStore', {
     fetchTask () {
       const url = `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
       
-      console.log('+++ ', url)
+      self.setStatus(ASYNC_STATES.FETCHING)
+      
+      superagent
+        .get(url)
+      
+        // Zooniverse API
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/vnd.api+json; version=1')
+      
+        .end((err, res) => {
+          self.setStatus(ASYNC_STATES.SUCCESS)
+          console.log(res)
+        })
     },
     
     testFetch (url = 'https://www.zooniverse.org/api/projects') {
