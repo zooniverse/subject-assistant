@@ -11,6 +11,11 @@ const MLResultsStore = types.model('MLResultsStore', {
 }).actions(self => {
   return {
     
+    reset () {
+      self.status = ASYNC_STATES.IDLE
+      self.data = {}
+    },
+    
     setStatus (val) {
       self.status = val
     },
@@ -37,8 +42,6 @@ const MLResultsStore = types.model('MLResultsStore', {
           self.setData(data)
           
           console.log('+++ Data From ML Results: ', data)
-          
-          // TODO
         })
         
         .catch(err => {

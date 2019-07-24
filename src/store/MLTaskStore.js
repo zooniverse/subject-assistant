@@ -17,6 +17,14 @@ const MLTaskStore = types.model('MLTaskStore', {
 }).actions(self => {
   return {
     
+    reset () {
+      self.status = ASYNC_STATES.IDLE
+      self.data = {}
+      
+      const root = getRoot(self)
+      root.mlResults.reset()
+    },
+    
     setStatus (val) {
       self.status = val
     },
@@ -31,9 +39,10 @@ const MLTaskStore = types.model('MLTaskStore', {
     },
     
     fetch () {
-      const url = `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
+      self.reset()
       self.setStatus(ASYNC_STATES.FETCHING)
       
+      const url = `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
       superagent
         .get(url)
       

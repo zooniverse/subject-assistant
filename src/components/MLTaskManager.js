@@ -11,6 +11,7 @@ class MLTaskManager extends React.Component {
   render () {
     const state = this.state
     const mlTask = this.context.mlTask
+    const mlResults = this.context.mlResults
     
     return (
       <form className="mlTaskManager form">
@@ -23,7 +24,7 @@ class MLTaskManager extends React.Component {
         
         <fieldset>
           <legend>Status</legend>
-          <var>{mlTask.status}</var>
+          <var>Task: {mlTask.status} / Results: {mlResults.status}</var>
         </fieldset>
         
         <fieldset>
