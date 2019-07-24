@@ -6,6 +6,12 @@ export const ASYNC_STATES = {
   ERROR: 'error',
 }
 
+export const API_RESPONSE = {
+  REQUEST_STATUS: {
+    COMPLETED: 'completed',
+  },
+}
+
 export function stopEvent (e) {
   // var eve = e || window.event
   e.preventDefault && e.preventDefault()
