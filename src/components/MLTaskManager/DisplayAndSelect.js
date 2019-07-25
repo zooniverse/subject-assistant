@@ -46,16 +46,16 @@ class DisplayAndSelect extends React.Component {
     const sampleImages = images.slice(startIndex, startIndex + numOfSamples)
     
     return (
-      <div className="list">
+      <ul className="image-list">
         {sampleImages.map((image, index) => {
           console.log('+++', image)
           const imgSrc = image.file || ''
           
           return (
-            <img src={imgSrc} className="item" key={`results-image-${index}`} />
+            <li className="item" key={`results-image-${index}`}><img src={imgSrc} /></li>
           )
         })}
-      </div>
+      </ul>
     
     )
     
