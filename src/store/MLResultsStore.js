@@ -32,7 +32,7 @@ const MLResultsStore = types.model('MLResultsStore', {
       
         .withCredentials()
       
-        .then(res => {
+        .then(res => {        
           if (res.ok) return JSON.parse(res.text)
           throw new Error('ERROR: ML Results Store can\'t fetch() data')
         })
@@ -40,8 +40,6 @@ const MLResultsStore = types.model('MLResultsStore', {
         .then(data => {
           self.setStatus(ASYNC_STATES.SUCCESS)
           self.setData(data)
-          
-          console.log('+++ Data From ML Results: ', data)
         })
         
         .catch(err => {

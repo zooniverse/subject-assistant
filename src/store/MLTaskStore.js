@@ -74,8 +74,6 @@ const MLTaskStore = types.model('MLTaskStore', {
               // TODO
             }
             
-            console.log(data.status)
-            
           } else {
             throw new Error('ERROR: the ML Task could not be found or did not have any valid results.')
           }

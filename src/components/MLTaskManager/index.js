@@ -14,11 +14,6 @@ class MLTaskManager extends React.Component {
       <div className="mlTaskManager">
         <h2>ML Task Manager</h2>
         
-        <p>
-          This lets users fetch results from the ML service.
-          For the moment, we're just testing fetch services from pretty much anywhere.
-        </p>
-        
         <Fetch />
       
         <DisplayAndSelect />
