@@ -9,7 +9,6 @@ class Fetch extends React.Component {
   }
   
   render () {
-    const state = this.state
     const mlTask = this.context.mlTask
     const mlResults = this.context.mlResults
     

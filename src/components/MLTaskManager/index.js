@@ -2,6 +2,7 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
 import Fetch from './Fetch'
+import DisplayAndSelect from './DisplayAndSelect'
 
 class MLTaskManager extends React.Component {
   constructor (props) {
@@ -9,10 +10,6 @@ class MLTaskManager extends React.Component {
   }
   
   render () {
-    const state = this.state
-    const mlTask = this.context.mlTask
-    const mlResults = this.context.mlResults
-    
     return (
       <div className="mlTaskManager">
         <h2>ML Task Manager</h2>
@@ -23,7 +20,9 @@ class MLTaskManager extends React.Component {
         </p>
         
         <Fetch />
-        
+      
+        <DisplayAndSelect />
+      
       </div>
     )
   }  
