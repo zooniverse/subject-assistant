@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
-import { ASYNC_STATES, stopEvent } from '@util'
+import { ASYNC_STATES, SELECTION_OPERATORS, SELECTION_THRESHOLD, stopEvent } from '@util'
 
 const NUMBER_OF_SAMPLES = 20
 const OPERATORS = {
@@ -12,11 +12,6 @@ const OPERATORS = {
 class DisplayAndSelect extends React.Component {
   constructor (props) {
     super(props)
-    
-    this.state = {
-      threshold: 50,
-      operator: OPERATORS.LESS_THAN,
-    }
   }
   
   render () {
@@ -46,12 +41,34 @@ class DisplayAndSelect extends React.Component {
   }
   
   renderControls () {
+    const mlSelection = this.context.mlSelection
+    
     return (
       <div className="panel">
+        
+        <select
+          onChange={(e) => { mlSelection.setOperator(e.target.value) }}
+          value={mlSelection.operator}
+        >
+          {Object.keys(SELECTION_OPERATORS).map(key => (
+            <option
+              key={`selection-operator-${key}`}
+              val={SELECTION_OPERATORS[key]}
+            >
+              {SELECTION_OPERATORS[key]}
+            </option>
+          ))}
+        </select>
+        
+        <input
+          value={mlSelection.threshold}
+          onChange={(e) => { mlSelection.setThreshold(e.target.value) }}
+        />
+        
         <button
-          className="danger button"
-            type="button"
-            onClick={(e) => {}}
+          className="action button"
+          type="button"
+          onClick={(e) => {}}
         >
           Update
         </button>
@@ -70,7 +87,7 @@ class DisplayAndSelect extends React.Component {
     return (
       <ul className="image-list">
         {sampleImages.map((image, index) => {
-          console.log('+++', image)
+          // console.log('+++', image)
           const imgSrc = image.file || ''
           
           return (
@@ -82,7 +99,9 @@ class DisplayAndSelect extends React.Component {
       </ul>
     
     )
-    
+  }
+  
+  updateSelection () {
     
   }
 }
