@@ -56,6 +56,7 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, 'app'),
+    host: process.env.HOST || 'localhost',
     watchContentBase: true,
     port: 3000
   },
