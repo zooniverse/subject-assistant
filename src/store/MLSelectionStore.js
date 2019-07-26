@@ -32,6 +32,7 @@ const MLSelectionStore = types.model('MLSelectionStore', {
       
       const images = root.mlResults.data.images || []
       
+      // Select only the Subject images that fit a criteria
       const selection = images.filter(image => {
         const likelinessToBeEmpty = (1 - image.max_detection_conf) * 100
         
@@ -44,10 +45,13 @@ const MLSelectionStore = types.model('MLSelectionStore', {
         return false        
       })
       
-      // TODO: make sample selection a bit more random.
+      // Now from that selection, pick a random smaller sample
+      const numOfSamples = Math.min(selection.length, NUM_OF_SAMPLES)
+      const startIndex = Math.floor(Math.random() * (selection.length - numOfSamples))
+      const endIndex = startIndex + numOfSamples
       
       self.selection = selection
-      self.sample = selection.slice(0, NUM_OF_SAMPLES)
+      self.sample = selection.slice(startIndex, endIndex)
     }
     
   }
