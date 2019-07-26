@@ -1,5 +1,7 @@
-import { types } from 'mobx-state-tree'
+import { types, getRoot } from 'mobx-state-tree'
 import { SELECTION_OPERATORS, SELECTION_THRESHOLDS } from '@util'
+
+const NUM_OF_SAMPLES = 20
 
 const MLSelectionStore = types.model('MLSelectionStore', {
   
@@ -13,7 +15,7 @@ const MLSelectionStore = types.model('MLSelectionStore', {
   return {
     
     reset () {
-      // TODO
+      self.selection = []
     },
     
     setOperator (val) {
@@ -26,7 +28,12 @@ const MLSelectionStore = types.model('MLSelectionStore', {
     },
     
     makeSelection () {
-      // TODO
+      const root = getRoot(self)
+      
+      const images = root.mlResults.data.images || []
+      
+      self.selection = images.slice()
+      self.sample = self.selection.slice(0, NUM_OF_SAMPLES)
     }
     
   }
