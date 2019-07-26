@@ -13,8 +13,8 @@ export const API_RESPONSE = {
 }
 
 export const SELECTION_OPERATORS = {
-  LESS_THAN: '<',
-  GREATER_THAN: '>',
+  LESS_THAN: '<=',
+  GREATER_THAN: '>=',
 }
 
 export const SELECTION_THRESHOLDS = {

@@ -38,9 +38,9 @@ const MLSelectionStore = types.model('MLSelectionStore', {
         
         switch (self.operator) {
           case SELECTION_OPERATORS.GREATER_THAN:
-            return self.threshold < likelinessToBeEmpty
+            return self.threshold <= likelinessToBeEmpty
           case SELECTION_OPERATORS.LESS_THAN:
-            return self.threshold > likelinessToBeEmpty
+            return self.threshold >= likelinessToBeEmpty
         }
         return false        
       })

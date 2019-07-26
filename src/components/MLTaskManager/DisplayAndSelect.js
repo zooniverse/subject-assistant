@@ -41,6 +41,8 @@ class DisplayAndSelect extends React.Component {
     return (
       <div className="panel">
         
+        <span>Select images that are &nbsp;</span>
+        
         <select
           onChange={(e) => { mlSelection.setOperator(e.target.value) }}
           value={mlSelection.operator}
@@ -60,6 +62,8 @@ class DisplayAndSelect extends React.Component {
           onChange={(e) => { mlSelection.setThreshold(e.target.value) }}
         />
         
+        <span>% likely to be empty &nbsp;</span>
+        
         <button
           className="action button"
           type="button"
@@ -77,7 +81,6 @@ class DisplayAndSelect extends React.Component {
     return (
       <ul className="image-list">
         {images.map((image, index) => {
-          // console.log('+++', image)
           const imgSrc = image.file || ''
           const likelinessToBeEmpty = (1 - image.max_detection_conf) * 100
           
@@ -91,10 +94,6 @@ class DisplayAndSelect extends React.Component {
       </ul>
     
     )
-  }
-  
-  updateSelection () {
-    
   }
 }
 

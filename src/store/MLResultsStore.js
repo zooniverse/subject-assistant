@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree'
+import { types, getRoot } from 'mobx-state-tree'
 import { ASYNC_STATES } from '@util'
 import config from '@config'
 import superagent from 'superagent'
@@ -25,6 +25,7 @@ const MLResultsStore = types.model('MLResultsStore', {
     },
     
     fetch (url) {
+      const root = getRoot(self)
       self.setStatus(ASYNC_STATES.FETCHING)
       
       superagent
@@ -40,6 +41,7 @@ const MLResultsStore = types.model('MLResultsStore', {
         .then(data => {
           self.setStatus(ASYNC_STATES.SUCCESS)
           self.setData(data)
+          root.mlSelection.makeSelection()
         })
         
         .catch(err => {
