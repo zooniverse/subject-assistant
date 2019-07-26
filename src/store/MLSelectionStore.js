@@ -32,8 +32,22 @@ const MLSelectionStore = types.model('MLSelectionStore', {
       
       const images = root.mlResults.data.images || []
       
-      self.selection = images.slice()
-      self.sample = self.selection.slice(0, NUM_OF_SAMPLES)
+      const selection = images.filter(image => {
+        const likelinessToBeEmpty = (1 - image.max_detection_conf) * 100
+        
+        switch (self.operator) {
+          case SELECTION_OPERATORS.GREATER_THAN:
+            return self.threshold < likelinessToBeEmpty
+          case SELECTION_OPERATORS.LESS_THAN:
+            return self.threshold > likelinessToBeEmpty
+        }
+        return false        
+      })
+      
+      // TODO: make sample selection a bit more random.
+      
+      self.selection = selection
+      self.sample = selection.slice(0, NUM_OF_SAMPLES)
     }
     
   }

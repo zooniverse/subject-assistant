@@ -79,10 +79,12 @@ class DisplayAndSelect extends React.Component {
         {images.map((image, index) => {
           // console.log('+++', image)
           const imgSrc = image.file || ''
+          const likelinessToBeEmpty = (1 - image.max_detection_conf) * 100
           
           return (
             <li className="list-item" key={`results-image-${index}`}>
               <img src={imgSrc} />
+              <div>{likelinessToBeEmpty.toFixed(2)}% empty</div>
             </li>
           )
         })}
