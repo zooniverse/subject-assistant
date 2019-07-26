@@ -55,6 +55,10 @@ module.exports = {
     ],
   },
   devServer: {
+    allowedHosts: [
+      'localhost',
+      '.zooniverse.org'
+    ],
     contentBase: path.join(__dirname, 'app'),
     host: process.env.HOST || 'localhost',
     watchContentBase: true,
