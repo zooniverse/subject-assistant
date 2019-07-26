@@ -32,7 +32,7 @@ class DisplayAndSelect extends React.Component {
     const images = mlResults.data.images || []
     
     return (
-      <form className="form">
+      <form className="form" onSubmit={(e) => { return stopEvent(e) }}>
         <h2>Select Subjects</h2>
         <div className="info panel">
           {Object.keys(info).length && Object.keys(info).map(key => (
@@ -48,6 +48,13 @@ class DisplayAndSelect extends React.Component {
   renderControls () {
     return (
       <div className="panel">
+        <button
+          className="danger button"
+            type="button"
+            onClick={(e) => {}}
+        >
+          Update
+        </button>
       </div>
     )
   }

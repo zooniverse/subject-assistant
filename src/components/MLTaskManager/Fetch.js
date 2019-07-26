@@ -13,7 +13,7 @@ class Fetch extends React.Component {
     const mlResults = this.context.mlResults
     
     return (
-      <form className="form">
+      <form className="form" onSubmit={(e) => { return stopEvent(e) }}>
         <h2>Fetch Task</h2>
       
         <fieldset>
@@ -27,6 +27,7 @@ class Fetch extends React.Component {
             <input className="text input flex-item grow" value={mlTask.id} onChange={(e) => { mlTask.setId(e.target.value) }} />
             <button
               className="action button flex-item"
+              type="button"
               onClick={(e) => {
                 mlTask.fetch()
                 stopEvent(e)
