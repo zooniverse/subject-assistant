@@ -4,10 +4,19 @@ import AppContext from '@store'
 import { ASYNC_STATES, stopEvent } from '@util'
 
 const NUMBER_OF_SAMPLES = 20
+const OPERATORS = {
+  LESS_THAN: '<',
+  GREATER_THAN: '>',
+}
 
 class DisplayAndSelect extends React.Component {
   constructor (props) {
     super(props)
+    
+    this.state = {
+      threshold: 50,
+      operator: OPERATORS.LESS_THAN,
+    }
   }
   
   render () {
@@ -22,8 +31,6 @@ class DisplayAndSelect extends React.Component {
     const info = mlResults.data.info || {}
     const images = mlResults.data.images || []
     
-    console.log('+++ info ', info)
-    
     return (
       <form className="form">
         <h2>Select Subjects</h2>
@@ -32,12 +39,20 @@ class DisplayAndSelect extends React.Component {
             <div key={`results-info-${key}`}><b>{key}</b> : <i>{info[key]}</i></div>
           ))}
         </div>
+        {this.renderControls()}
         {this.renderSampleImages(images)}
       </form>
     )
   }
+  
+  renderControls () {
+    return (
+      <div className="panel">
+      </div>
+    )
+  }
 
-  renderSampleImages(images = []) {
+  renderSampleImages (images = []) {
     if (!images || !images.length) return
     
     // Pick a small sample from the images provided
@@ -52,7 +67,9 @@ class DisplayAndSelect extends React.Component {
           const imgSrc = image.file || ''
           
           return (
-            <li className="item" key={`results-image-${index}`}><img src={imgSrc} /></li>
+            <li className="list-item" key={`results-image-${index}`}>
+              <img src={imgSrc} />
+            </li>
           )
         })}
       </ul>
