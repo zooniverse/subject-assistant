@@ -36,41 +36,48 @@ class DisplayAndSelect extends React.Component {
   }
   
   renderControls () {
+    const mlResults = this.context.mlResults
     const mlSelection = this.context.mlSelection
     
     return (
       <div className="panel">
+        <p>
+          <span>You are selecting images that are &nbsp;</span>
+
+          <select
+            onChange={(e) => { mlSelection.setOperator(e.target.value) }}
+            value={mlSelection.operator}
+          >
+            {Object.keys(SELECTION_OPERATORS).map(key => (
+              <option
+                key={`selection-operator-${key}`}
+                val={SELECTION_OPERATORS[key]}
+              >
+                {SELECTION_OPERATORS[key]}
+              </option>
+            ))}
+          </select>
+
+          <input
+            value={mlSelection.threshold}
+            onChange={(e) => { mlSelection.setThreshold(e.target.value) }}
+          />
+
+          <span>% likely to be empty &nbsp;</span>
         
-        <span>Select images that are &nbsp;</span>
-        
-        <select
-          onChange={(e) => { mlSelection.setOperator(e.target.value) }}
-          value={mlSelection.operator}
-        >
-          {Object.keys(SELECTION_OPERATORS).map(key => (
-            <option
-              key={`selection-operator-${key}`}
-              val={SELECTION_OPERATORS[key]}
-            >
-              {SELECTION_OPERATORS[key]}
-            </option>
-          ))}
-        </select>
-        
-        <input
-          value={mlSelection.threshold}
-          onChange={(e) => { mlSelection.setThreshold(e.target.value) }}
-        />
-        
-        <span>% likely to be empty &nbsp;</span>
-        
-        <button
-          className="action button"
-          type="button"
-          onClick={(e) => { mlSelection.makeSelection() }}
-        >
-          Update
-        </button>
+          <button
+            className="action button"
+            type="button"
+            onClick={(e) => { mlSelection.makeSelection() }}
+          >
+            Update
+          </button>
+        </p>
+        <p>
+          In total, there are <var>{mlResults.data.images && mlResults.data.images.length}</var> image results from this ML Task.
+          Your selection criteria narrows this down to <var>{mlSelection.selection.length}</var> for further processing.
+          From your selection, a random sample of <var>{mlSelection.sample.length}</var> are shown below for you to preview.
+        </p>
       </div>
     )
   }
