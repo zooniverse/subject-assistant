@@ -1,0 +1,9 @@
+**/.next
+**/build
+**/dist
+**/node_modules
+**/.DS_Store
+docs
+plop
+plopfile.js
+*.log
