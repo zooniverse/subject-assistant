@@ -6,7 +6,7 @@ import superagent from 'superagent'
 const MLResultsStore = types.model('MLResultsStore', {
   
   status: types.optional(types.string, ASYNC_STATES.IDLE),
-  data: types.optional(types.frozen({}), {}),
+  data: types.frozen({}),
   
 }).actions(self => {
   return {

@@ -10,7 +10,7 @@ const MLTaskStore = types.model('MLTaskStore', {
   
   status: types.optional(types.string, ASYNC_STATES.IDLE),
   id: types.optional(types.string, localStorage.getItem(TASK_ID_STORAGE_KEY) || ''),  // ID of the ML Task, specified by the user.
-  data: types.optional(types.frozen({}), {}),  // Data related to the ML Task itself.
+  data: types.frozen({}),  // Data related to the ML Task itself.
   
   // Data from the results file, which is linked to from the ML Task, is stored in the MLResultsStore.
   
