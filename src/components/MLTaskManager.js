@@ -30,7 +30,11 @@ class MLTaskManager extends React.Component {
         <fieldset>
           <legend>ML Task Request ID</legend>
           <div className="flex-row">
-            <input className="text input flex-item grow" value={mlTask.id} onChange={(e) => { mlTask.setId(e.target.value) }} />
+            <input
+              className="text input flex-item grow"
+              value={mlTask.id}
+              onChange={(e) => { mlTask.setId(e.target.value) }}
+            />
             <button
               className="action button flex-item"
               onClick={(e) => {
