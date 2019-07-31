@@ -5,3 +5,18 @@ export const ASYNC_STATES = {
   SUCCESS: 'success',
   ERROR: 'error',
 }
+
+export const API_RESPONSE = {
+  REQUEST_STATUS: {
+    COMPLETED: 'completed',
+  },
+}
+
+export function stopEvent (e) {
+  // var eve = e || window.event
+  e.preventDefault && e.preventDefault()
+  e.stopPropagation && e.stopPropagation()
+  e.returnValue = false
+  e.cancelBubble = true
+  return false
+}

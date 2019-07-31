@@ -2,6 +2,25 @@
 
 Machine Learning-assisted web app for processing Zooniverse Subjects.
 
+## Dev Notes
+
+This project is still a Work In Progress, so the following notes are for
+Zooniverse team devs.
+- The primary feature component is the ML Task Manager (`#/tasks`)
+- As of 2019.07.24, you first need to set the URL of the ML service via the App
+  Config (`#/config`). This was set up to prevent having to store the URL as
+  part of the config.
+- If XHR requests to the ML service API server are receiving CORS errors (e.g.
+  `Access to XMLHttpRequest at 'X' from origin 'Y' has been blocked by CORS policy`),
+  it's due to your web browser's security settings _and_ the server's security
+  policy not playing nice. Two options:
+  - Contact the owners of the API server and request that they update their
+    security policy be updated to allow requests from your host. (Probably
+    `localhost` or `*.zooniverse.org`)
+  - Disable _(temporarily)_ your web browser's security systems. For example,
+    for Chrome on Mac OSX, run `open -a Google\ Chrome --args --disable-web-security --user-data-dir`
+    from bash.
+
 ## Usage
 
 Intended Users:
