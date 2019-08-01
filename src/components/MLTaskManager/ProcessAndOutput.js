@@ -1,6 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import Papa from 'papaparse'
+import streamSaver from 'StreamSaver'
 
 import AppContext from '@store'
 import { ASYNC_STATES, stopEvent } from '@util'
@@ -44,6 +45,13 @@ class ProcessAndOutput extends React.Component {
     const csvData = Papa.unparse(selection)
     
     console.log('+++ csvData\n', csvData)
+    
+    const fileStream = streamSaver.createWriteStream('subject-assistant.csv', {})
+    
+    const onSuccess = () => { console.log('EXPORT SUCCESS') }
+    const onError = () => { console.error('EXPORT ERROR') }
+    
+    new Response(csvData).body.pipeTo(fileStream).then(onSuccess, onError)
   }
 }
 
