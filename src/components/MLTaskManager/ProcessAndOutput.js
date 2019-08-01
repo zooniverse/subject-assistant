@@ -1,5 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
+import Papa from 'papaparse'
+
 import AppContext from '@store'
 import { ASYNC_STATES, stopEvent } from '@util'
 
@@ -39,8 +41,9 @@ class ProcessAndOutput extends React.Component {
   doExport () {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON()
+    const csvData = Papa.unparse(selection)
     
-    console.log('+++ mlSelection', selection)
+    console.log('+++ csvData\n', csvData)
   }
 }
 
