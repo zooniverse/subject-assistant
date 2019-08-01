@@ -25,10 +25,22 @@ class ProcessAndOutput extends React.Component {
           You have selected {mlSelection.selection.length} images to process. You have a choice to...
         </div>
         <fieldset>
-          <button className="action button">Export</button>
+          <button
+            className="action button"
+            onClick={this.doExport.bind(this)}
+          >
+            Export to CSV
+          </button>
         </fieldset>
       </form>
     )
+  }
+  
+  doExport () {
+    const mlSelection = this.context.mlSelection
+    const selection = mlSelection.selection.toJSON()
+    
+    console.log('+++ mlSelection', selection)
   }
 }
 
