@@ -5,8 +5,8 @@ const NUM_OF_SAMPLES = 20
 
 const MLSelectionStore = types.model('MLSelectionStore', {
   
-  selection: types.optional(types.array(types.frozen({})), []),
-  sample: types.optional(types.array(types.frozen({})), []),
+  selection: types.array(types.frozen({})),
+  sample: types.array(types.frozen({})),
   
   operator: types.optional(types.string, SELECTION_OPERATORS.GREATER_THAN),
   threshold: types.optional(types.integer, SELECTION_THRESHOLDS.DEFAULT),
