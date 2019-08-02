@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import Papa from 'papaparse'
+import { parse } from 'json2csv'
 import streamSaver from 'StreamSaver'
 
 import AppContext from '@store'
@@ -42,7 +42,7 @@ class ProcessAndOutput extends React.Component {
   doExport () {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON()
-    const csvData = Papa.unparse(selection)
+    const csvData = parse(selection, {})
     
     console.log('+++ csvData\n', csvData)
     
