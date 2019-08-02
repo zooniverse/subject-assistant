@@ -44,8 +44,6 @@ class ProcessAndOutput extends React.Component {
     const selection = mlSelection.selection.toJSON()
     const csvData = parse(selection, {})
     
-    console.log('+++ csvData\n', csvData)
-    
     const fileStream = streamSaver.createWriteStream('subject-assistant.csv', {})
     
     const onSuccess = () => { console.log('EXPORT SUCCESS') }
