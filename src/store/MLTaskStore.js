@@ -5,6 +5,7 @@ import superagent from 'superagent'
 
 const TASKS_ENDPOINT = '/task'
 const TASK_ID_STORAGE_KEY = 'mlTaskId'
+const DEMO_URL = `${config.appRootUrl}demo-data/task.txt`
 
 const MLTaskStore = types.model('MLTaskStore', {
   
@@ -46,7 +47,7 @@ const MLTaskStore = types.model('MLTaskStore', {
       
       const url = (!root.demoMode)
         ? `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
-        : `${config.appRootUrl}demo-data/task.txt`
+        : DEMO_URL
       
       superagent
         .get(url)
