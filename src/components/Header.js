@@ -12,6 +12,7 @@ function Header() {
       <h2>Hello, {store.user}</h2>
       <nav>
         <Link to="/">Home</Link>
+        <label><input type="checkbox" checked={store.demoMode} onChange={store.toggleDemoMode} /> Demo Mode</label>
       </nav>
     </header>
   )

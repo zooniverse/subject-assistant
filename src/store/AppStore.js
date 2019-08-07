@@ -5,7 +5,9 @@ import { MLSelectionStore } from './MLSelectionStore'
 
 const AppStore = types.model('AppStore', {
   
-  user: types.optional(types.string, 'Anonymous'),  
+  demoMode: types.optional(types.boolean, false),
+  user: types.optional(types.string, 'Anonymous'),
+  
   mlTask: types.optional(MLTaskStore, {}),  // We can use {} to set the initial values of a store
   mlResults: types.optional(MLResultsStore, {}),
   mlSelection: types.optional(MLSelectionStore, {}),
@@ -15,6 +17,10 @@ const AppStore = types.model('AppStore', {
     
     setUser (val) {
       self.user = val
+    },
+    
+    toggleDemoMode () {
+      self.demoMode = !self.demoMode
     },
     
   }
