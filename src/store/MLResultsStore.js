@@ -28,8 +28,12 @@ const MLResultsStore = types.model('MLResultsStore', {
       const root = getRoot(self)
       self.setStatus(ASYNC_STATES.FETCHING)
       
+      const _url = (!root.demoMode)
+        ? _url
+        : `${config.appRootUrl}demo-data/detections.txt`
+      
       superagent
-        .get(url)
+        .get(_url)
       
         .withCredentials()
       

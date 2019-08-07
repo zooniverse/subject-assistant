@@ -39,23 +39,26 @@ const MLTaskStore = types.model('MLTaskStore', {
     },
     
     fetch () {
+      const root = getRoot(self)
+      
       self.reset()
       self.setStatus(ASYNC_STATES.FETCHING)
       
-      const url = `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
+      const url = (!root.demoMode)
+        ? `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
+        : `${config.appRootUrl}demo-data/task.txt`
+      
       superagent
         .get(url)
       
         .withCredentials()
       
         .then(res => {
-          if (res.ok) return res.body
+          if (res.ok) return res.body || JSON.parse(res.text)  // The latter is for demo-data
           throw new Error('ERROR: ML Task Store can\'t fetch() data')
         })
       
         .then(data => {
-          const root = getRoot(self)
-        
           self.setStatus(ASYNC_STATES.SUCCESS)
           self.setData(data)
           
