@@ -48,6 +48,10 @@ html, body {
       label {
         padding: 0.5rem 1rem;
         cursor: pointer;
+        
+        &.active {
+          background: $danger-colour;
+        }
       }
     }
   }
