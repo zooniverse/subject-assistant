@@ -7,6 +7,10 @@ import Header from './Header'
 import MLTaskManager from './MLTaskManager'
 import TestForm from './TestForm'
 
+import demoTaskData from '@demo-data/task'
+
+console.log('+++ ', demoTaskData)
+
 class App extends React.Component {
   constructor () {
     super()
