@@ -12,7 +12,7 @@ module.exports = {
       '@util': path.resolve(__dirname, 'src/util/'),
       '@store': path.resolve(__dirname, 'src/store/'),
       '@config': path.resolve(__dirname, 'src/config/'),
-      '@demo-data': path.resolve(__dirname, 'demo-data/'),
+      '@demo-data': path.resolve(__dirname, 'src/demo-data/'),
     },
   },
   module: {
@@ -54,7 +54,7 @@ module.exports = {
         ],
       },
       {  // Copy demo data
-        test: /demo-data\/\.json$/,
+        test: /demo-data\/.+\.txt/,
         use: [
           {
             loader: 'file-loader',
