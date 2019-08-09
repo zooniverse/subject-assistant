@@ -12,6 +12,7 @@ module.exports = {
       '@util': path.resolve(__dirname, 'src/util/'),
       '@store': path.resolve(__dirname, 'src/store/'),
       '@config': path.resolve(__dirname, 'src/config/'),
+      '@demo-data': path.resolve(__dirname, 'src/demo-data/'),
     },
   },
   module: {
@@ -48,6 +49,18 @@ module.exports = {
             options: {
               name: '[name].[ext]',
               outputPath: 'assets',
+            },
+          },
+        ],
+      },
+      {  // Copy demo data
+        test: /demo-data\/.+\.txt/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'demo-data',
             },
           },
         ],

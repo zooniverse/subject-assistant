@@ -11,7 +11,7 @@ $back-colour: #fff;
 :root {
   background: $back-colour;
   color: $fore-colour;
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 16px;
 }
 
@@ -32,16 +32,32 @@ html, body {
     flex: 0 0 auto;
     
     h1 {
-      padding: 0;
+      padding: 0.5rem 1rem;
       margin: 0;
     }
     
     nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       
-    }
-    
-    a {
-      color: $primary-contrast;
+      a {
+        color: $primary-contrast;
+        padding: 0.5rem 1rem;
+        
+        &:hover, &:focus {
+          background: $action-colour;
+        }
+      }
+      
+      label {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        
+        &.active {
+          background: $danger-colour;
+        }
+      }
     }
   }
   

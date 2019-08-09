@@ -3,6 +3,8 @@ import { ASYNC_STATES } from '@util'
 import config from '@config'
 import superagent from 'superagent'
 
+const DEMO_URL = `${config.appRootUrl}demo-data/detections.txt`
+
 const MLResultsStore = types.model('MLResultsStore', {
   
   status: types.optional(types.string, ASYNC_STATES.IDLE),
@@ -28,8 +30,12 @@ const MLResultsStore = types.model('MLResultsStore', {
       const root = getRoot(self)
       self.setStatus(ASYNC_STATES.FETCHING)
       
+      const _url = (!root.demoMode)
+        ? _url
+        : DEMO_URL
+      
       superagent
-        .get(url)
+        .get(_url)
       
         .withCredentials()
       

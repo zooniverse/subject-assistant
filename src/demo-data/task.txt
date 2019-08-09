@@ -1,0 +1,17 @@
+{
+    "uuid": 9308,
+    "status": {
+        "request_status": "completed",
+        "time": "2019-07-19 15:18:41",
+        "message": {
+            "num_failed_shards": 0,
+            "output_file_urls": {
+                "detections": "https://cameratrap.blob.core.windows.net/async-api-zooniverse/9308/9308_detections_zoo-ms-test-list-20190719_20190719151312.json?se=2019-10-17T15%3A18%3A41Z&sp=r&sv=2018-03-28&sr=b&sig=i15LToX3lh9yrRdAI27m2jiHQkGxbUMrk1vyhC9H1xk%3D",
+                "failed_images": "https://cameratrap.blob.core.windows.net/async-api-zooniverse/9308/9308_failed_images_zoo-ms-test-list-20190719_20190719151312.json?se=2019-10-17T15%3A18%3A41Z&sp=r&sv=2018-03-28&sr=b&sig=oj/TszmHYSaYNPupBjBY4GRbhpGH8K6X2fVpODGhLNc%3D",
+                "images": "https://cameratrap.blob.core.windows.net/async-api-zooniverse/9308/9308_images.json?se=2019-10-17T15%3A18%3A41Z&sp=r&sv=2018-03-28&sr=b&sig=p4Mih/oyfTWexQgdWACowTZgYzuChEGNOu2kgHtA3kw%3D"
+            }
+        }
+    },
+    "timestamp": "2019-07-19 15:13:12",
+    "endpoint": "uri"
+}

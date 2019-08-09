@@ -9,9 +9,18 @@ function Header() {
   return (
     <header>
       <h1>Zoo ML Subject Assistant</h1>
-      <h2>Hello, {store.user}</h2>
       <nav>
-        <Link to="/">Home</Link>
+        <Link to="/"><i class="material-icons">home</i></Link>
+        <label
+          className={(store.demoMode) ? 'active' : ''}
+        >
+          <input
+            type="checkbox"
+            checked={store.demoMode}
+            onChange={store.toggleDemoMode}
+          />
+          Demo Mode
+        </label>
       </nav>
     </header>
   )

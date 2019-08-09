@@ -5,6 +5,7 @@ import superagent from 'superagent'
 
 const TASKS_ENDPOINT = '/task'
 const TASK_ID_STORAGE_KEY = 'mlTaskId'
+const DEMO_URL = `${config.appRootUrl}demo-data/task.txt`
 
 const MLTaskStore = types.model('MLTaskStore', {
   
@@ -39,23 +40,26 @@ const MLTaskStore = types.model('MLTaskStore', {
     },
     
     fetch () {
+      const root = getRoot(self)
+      
       self.reset()
       self.setStatus(ASYNC_STATES.FETCHING)
       
-      const url = `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
+      const url = (!root.demoMode)
+        ? `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
+        : DEMO_URL
+      
       superagent
         .get(url)
       
         .withCredentials()
       
         .then(res => {
-          if (res.ok) return res.body
+          if (res.ok) return res.body || JSON.parse(res.text)  // The latter is for demo-data
           throw new Error('ERROR: ML Task Store can\'t fetch() data')
         })
       
         .then(data => {
-          const root = getRoot(self)
-        
           self.setStatus(ASYNC_STATES.SUCCESS)
           self.setData(data)
           

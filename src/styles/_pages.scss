@@ -1,0 +1,36 @@
+article {
+  padding: 0.5rem;
+  border: 1px solid $mid-colour;
+  
+  > h2 {
+    color: $primary-colour;
+  }
+  
+  > p {
+    font-size: 0.8em;
+    line-height: 1.5em;
+  }
+  
+  ul.nav-list {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 0.5em;
+
+      a {
+        display: inline-block;
+        padding: 0.5em;
+        background: $action-colour;
+        color: $action-contrast;
+        text-decoration: none;
+        padding-right: 2em;
+
+        &:before {
+          content: ">";
+          margin-right: 1em;
+        }
+      }
+    }
+  }
+}
