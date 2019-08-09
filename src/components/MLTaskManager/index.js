@@ -12,7 +12,7 @@ class MLTaskManager extends React.Component {
   
   render () {
     return (
-      <div className="mlTaskManager">
+      <article className="mlTaskManager">
         <h2>ML Task Manager</h2>
         
         <Fetch />
@@ -21,7 +21,7 @@ class MLTaskManager extends React.Component {
       
         <ProcessAndOutput />
 
-      </div>
+      </article>
     )
   }  
 }

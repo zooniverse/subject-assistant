@@ -5,6 +5,10 @@
   padding: 0.25rem 1rem;
   margin: 0.5rem 0;
   
+  > h2 {
+    color: $primary-colour;
+  }
+  
   fieldset {
     margin: 0.5em;
   }

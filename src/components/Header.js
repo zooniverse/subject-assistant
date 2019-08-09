@@ -9,7 +9,6 @@ function Header() {
   return (
     <header>
       <h1>Zoo ML Subject Assistant</h1>
-      <h2>Hello, {store.user}</h2>
       <nav>
         <Link to="/">Home</Link>
         <label
