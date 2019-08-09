@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import config from '@config'
+import { stopEvent } from '@util'
 
 const MESSAGE = {
   DEFAULT: 'Use this form to change the configuration settings for the app.',
@@ -20,7 +21,7 @@ class ConfigForm extends React.Component {
     const state = this.state;
     
     return (
-      <form className="form">
+      <form className="form" onSubmit={(e) => { return stopEvent(e) }}>
         <h2>App Config</h2>
         <p>{state.message}</p>
       
@@ -45,7 +46,8 @@ class ConfigForm extends React.Component {
         <div className="action panel">
           <button
             className="danger button"
-            onClick={() => {
+            type="button"
+            onClick={(e) => {
               Object.keys(config).map((key) => {
                 localStorage.removeItem(key)
                 this.setState({ message: MESSAGE.RESET })

@@ -12,6 +12,17 @@ export const API_RESPONSE = {
   },
 }
 
+export const SELECTION_OPERATORS = {
+  LESS_THAN: '<=',
+  GREATER_THAN: '>=',
+}
+
+export const SELECTION_THRESHOLDS = {
+  MIN: 0,
+  MAX: 100,
+  DEFAULT: 50,
+}
+
 export function stopEvent (e) {
   // var eve = e || window.event
   e.preventDefault && e.preventDefault()

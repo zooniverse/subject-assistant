@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree'
+import { types, getRoot } from 'mobx-state-tree'
 import { ASYNC_STATES } from '@util'
 import config from '@config'
 import superagent from 'superagent'
@@ -25,6 +25,7 @@ const MLResultsStore = types.model('MLResultsStore', {
     },
     
     fetch (url) {
+      const root = getRoot(self)
       self.setStatus(ASYNC_STATES.FETCHING)
       
       superagent
@@ -32,7 +33,7 @@ const MLResultsStore = types.model('MLResultsStore', {
       
         .withCredentials()
       
-        .then(res => {
+        .then(res => {        
           if (res.ok) return JSON.parse(res.text)
           throw new Error('ERROR: ML Results Store can\'t fetch() data')
         })
@@ -40,8 +41,7 @@ const MLResultsStore = types.model('MLResultsStore', {
         .then(data => {
           self.setStatus(ASYNC_STATES.SUCCESS)
           self.setData(data)
-          
-          console.log('+++ Data From ML Results: ', data)
+          root.mlSelection.makeSelection()
         })
         
         .catch(err => {

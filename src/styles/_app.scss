@@ -22,9 +22,14 @@ html, body {
 
 #app {
   
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
   > header {
     background: $primary-colour;
     color: $back-colour;
+    flex: 0 0 auto;
     
     h1 {
       padding: 0;
@@ -41,12 +46,14 @@ html, body {
   }
   
   > main {
+    flex: 1 1 auto;
     padding: 0.5rem;
   }
   
   > footer {
     background: $primary-colour;
     color: $back-colour;
+    flex: 0 0 auto;
   }
 }
 

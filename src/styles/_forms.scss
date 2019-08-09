@@ -1,5 +1,10 @@
 .form {
   
+  background: $back-colour;
+  box-shadow: 0.125rem 0.125rem 0.25rem $mid-colour;
+  padding: 0.25rem 1rem;
+  margin: 0.5rem 0;
+  
   fieldset {
     margin: 0.5em;
   }
