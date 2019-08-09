@@ -6,9 +6,15 @@ article {
     color: $primary-colour;
   }
   
-  > p {
-    font-size: 0.8em;
-    line-height: 1.5em;
+  > .text {
+    background: $mid-back-colour;
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    
+    > p, > ol {
+      font-size: 0.8em;
+      line-height: 1.5em;
+    }
   }
   
   ul.nav-list {
