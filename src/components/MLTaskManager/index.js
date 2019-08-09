@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import AppContext from '@store'
 import Fetch from './Fetch'
 import DisplayAndSelect from './DisplayAndSelect'
+import ProcessAndOutput from './ProcessAndOutput'
 
 class MLTaskManager extends React.Component {
   constructor (props) {
@@ -18,6 +19,8 @@ class MLTaskManager extends React.Component {
       
         <DisplayAndSelect />
       
+        <ProcessAndOutput />
+
       </div>
     )
   }  
