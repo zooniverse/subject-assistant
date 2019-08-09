@@ -10,7 +10,7 @@ function Header() {
     <header>
       <h1>Zoo ML Subject Assistant</h1>
       <nav>
-        <Link to="/">Home</Link>
+        <Link to="/"><i class="material-icons">home</i></Link>
         <label
           className={(store.demoMode) ? 'active' : ''}
         >
