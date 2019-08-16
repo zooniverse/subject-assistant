@@ -1,4 +1,6 @@
 import { types } from 'mobx-state-tree'
+import oauth from 'panoptes-client/lib/oauth'
+
 import { ASYNC_STATES } from '@util'
 import config from '@config'
 
@@ -13,7 +15,14 @@ const AuthStore = types.model('AuthStore', {
     checkUser () {
       
       self.setStatus(ASYNC_STATES.FETCHING)
-      setTimeout(function () { self.setStatus(ASYNC_STATES.SUCCESS) }, 5000)
+      // setTimeout(function () { self.setStatus(ASYNC_STATES.SUCCESS) }, 5000)
+      
+      oauth.checkCurrent()
+      .then(user => {
+        self.setStatus(ASYNC_STATES.SUCCESS)
+        self.setUser(user)
+      })
+
       
     },
     
