@@ -22,7 +22,7 @@ class App extends React.Component {
   }
   
   initialise () {
-    this.context.auth.checkUser()
+    this.context.auth.initialise()
   }
   
   render () {

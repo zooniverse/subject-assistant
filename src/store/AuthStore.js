@@ -12,22 +12,30 @@ const AuthStore = types.model('AuthStore', {
 }).actions(self => {
   return {
     
+    initialise () {
+      oauth.init(config.panoptesAppId)
+      .then(() => {
+        self.checkUser()
+      })
+      .catch(err => {
+        console.error(err)
+      })
+    },
+    
     checkUser () {
       
       self.setStatus(ASYNC_STATES.FETCHING)
-      // setTimeout(function () { self.setStatus(ASYNC_STATES.SUCCESS) }, 5000)
       
       oauth.checkCurrent()
       .then(user => {
         self.setStatus(ASYNC_STATES.SUCCESS)
         self.setUser(user)
       })
-
       
     },
     
     login () {
-      
+      oauth.signIn(computeRedirectURL(window))
     },
     
     logout () {
@@ -43,5 +51,11 @@ const AuthStore = types.model('AuthStore', {
     },
   }
 })
+
+const computeRedirectURL = (window) => {
+  const { location } = window;
+  return location.origin ||
+    `${location.protocol}//${location.hostname}:${location.port}`;
+}
 
 export { AuthStore }
