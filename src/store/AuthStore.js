@@ -7,7 +7,7 @@ import config from '@config'
 const AuthStore = types.model('AuthStore', {
   
   status: types.optional(types.string, ASYNC_STATES.IDLE),
-  user: types.frozen({}),
+  user: types.optional(types.frozen({}), null),  // When uninitialised, user should be null instead of {}
   
 }).actions(self => {
   return {
@@ -39,7 +39,10 @@ const AuthStore = types.model('AuthStore', {
     },
     
     logout () {
-      
+      oauth.signOut()
+      .then(user => {
+        self.setUser(user)
+      })
     },
     
     setStatus (val) {
