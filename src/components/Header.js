@@ -6,8 +6,6 @@ import AppContext from '@store'
 
 function Header() {
   const store = useContext(AppContext)
-  
-  console.log('+++ ', store.auth.user)
   return (
     <header>
       <h1>Zoo ML Subject Assistant</h1>
@@ -24,9 +22,13 @@ function Header() {
           Demo Mode
         </label>
         <div className="user">
-          {(!store.auth.user)
-            ? <button onClick={() => { store.auth.login() }}>Login</button>
-            : <button onClick={() => { store.auth.logout() }}>Logout</button>
+          {(store.auth.user)
+            ? <span>{store.auth.user.display_name || store.auth.user.login}</span>
+            : undefined
+          }
+          {(store.auth.user)
+            ? <button onClick={() => { store.auth.logout() }}>Logout</button>
+            : <button onClick={() => { store.auth.login() }}>Login</button>
           }
         </div>
       </nav>
