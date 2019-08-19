@@ -19,7 +19,6 @@ const AuthStore = types.model('AuthStore', {
       self.setStatus(ASYNC_STATES.FETCHING)
       oauth.checkCurrent()
       .then(user => {
-        console.log('+++ user: ', user)
         self.setStatus(ASYNC_STATES.SUCCESS)
         self.setUser(user)
       })
