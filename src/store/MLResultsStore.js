@@ -8,6 +8,7 @@ const DEMO_URL = `${config.appRootUrl}demo-data/detections.txt`
 const MLResultsStore = types.model('MLResultsStore', {
   
   status: types.optional(types.string, ASYNC_STATES.IDLE),
+  statusMessage: types.maybe(types.string),
   data: types.frozen({}),
   
 }).actions(self => {
@@ -15,11 +16,13 @@ const MLResultsStore = types.model('MLResultsStore', {
     
     reset () {
       self.status = ASYNC_STATES.IDLE
+      self.statusMessage = undefined
       self.data = {}
     },
     
-    setStatus (val) {
-      self.status = val
+    setStatus (status, message = undefined) {
+      self.status = status
+      self.statusMessage = message
     },
     
     setData (val) {
@@ -41,7 +44,7 @@ const MLResultsStore = types.model('MLResultsStore', {
       
         .then(res => {        
           if (res.ok) return JSON.parse(res.text)
-          throw new Error('ERROR: ML Results Store can\'t fetch() data')
+          throw new Error('ML Results Store couldn\'t fetch() data')
         })
       
         .then(data => {
@@ -51,7 +54,8 @@ const MLResultsStore = types.model('MLResultsStore', {
         })
         
         .catch(err => {
-          self.setStatus(ASYNC_STATES.ERROR)
+          const message = err && err.toString() || undefined
+          self.setStatus(ASYNC_STATES.ERROR, message)
           console.error('[MLResultsStore] ', err)
         })
     },

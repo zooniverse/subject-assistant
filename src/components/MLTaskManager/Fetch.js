@@ -23,6 +23,10 @@ class Fetch extends React.Component {
             ? <var className="error block">[Task] {mlTask.statusMessage}</var>
             : null
           }
+          {(mlResults.statusMessage && mlResults.statusMessage.length > 0)
+            ? <var className="error block">[Results] {mlResults.statusMessage}</var>
+            : null
+          }
         </fieldset>
         
         <fieldset>

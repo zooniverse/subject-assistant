@@ -21,6 +21,7 @@ const MLTaskStore = types.model('MLTaskStore', {
     
     reset () {
       self.status = ASYNC_STATES.IDLE
+      self.statusMessage = undefined
       self.data = {}
       
       const root = getRoot(self)
