@@ -31,7 +31,7 @@ const MLResultsStore = types.model('MLResultsStore', {
       self.setStatus(ASYNC_STATES.FETCHING)
       
       const _url = (!root.demoMode)
-        ? _url
+        ? url
         : DEMO_URL
       
       superagent
