@@ -18,7 +18,11 @@ class Fetch extends React.Component {
       
         <fieldset>
           <legend>Status</legend>
-          <var>Task: {mlTask.status} / Results: {mlResults.status}</var>
+          <var className="block">Task: {mlTask.status} / Results: {mlResults.status}</var>
+          {(mlTask.statusMessage && mlTask.statusMessage.length > 0)
+            ? <var className="error block">[Task] {mlTask.statusMessage}</var>
+            : null
+          }
         </fieldset>
         
         <fieldset>

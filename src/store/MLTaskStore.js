@@ -10,6 +10,7 @@ const DEMO_URL = `${config.appRootUrl}demo-data/task.txt`
 const MLTaskStore = types.model('MLTaskStore', {
   
   status: types.optional(types.string, ASYNC_STATES.IDLE),
+  statusMessage: types.maybe(types.string),
   id: types.optional(types.string, localStorage.getItem(TASK_ID_STORAGE_KEY) || ''),  // ID of the ML Task, specified by the user.
   data: types.frozen({}),  // Data related to the ML Task itself.
   
@@ -26,8 +27,13 @@ const MLTaskStore = types.model('MLTaskStore', {
       root.mlResults.reset()
     },
     
-    setStatus (val) {
-      self.status = val
+    setStatus (status, message = undefined) {
+      self.status = status
+      self.statusMessage = message
+    },
+    
+    setStatusMessage (val) {
+      self.statusMessage = val
     },
     
     setId (val) {
@@ -56,7 +62,7 @@ const MLTaskStore = types.model('MLTaskStore', {
       
         .then(res => {
           if (res.ok) return res.body || JSON.parse(res.text)  // The latter is for demo-data
-          throw new Error('ERROR: ML Task Store can\'t fetch() data')
+          throw new Error('ML Task Store can\'t fetch() data')
         })
       
         .then(data => {
@@ -71,16 +77,17 @@ const MLTaskStore = types.model('MLTaskStore', {
             if (url) {
               root.mlResults.fetch(url)
             } else {
-              throw new Error('ERROR: the ML Task could not be found or did not have any valid results.')
+              throw new Error('the ML Task could not be found or did not have any valid results.')
             }
             
           } else {
-            throw new Error('ERROR: the ML Task could not be found or did not have any valid results.')
+            throw new Error('the ML Task could not be found or did not have any valid results.')
           }
         })
         
         .catch(err => {
-          self.setStatus(ASYNC_STATES.ERROR)
+          const message = err && err.toString() || undefined
+          self.setStatus(ASYNC_STATES.ERROR, message)
           console.error('[MLTaskStore] ', err)
         })
     },
