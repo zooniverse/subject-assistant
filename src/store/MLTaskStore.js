@@ -63,19 +63,15 @@ const MLTaskStore = types.model('MLTaskStore', {
           self.setStatus(ASYNC_STATES.SUCCESS)
           self.setData(data)
           
-          if (data.status && typeof(data.status) === 'object') {
+          if (data.status && typeof(data.status) === 'object'
+              && data.status.request_status === API_RESPONSE.REQUEST_STATUS.COMPLETED) {
             
-            if (data.status.request_status === API_RESPONSE.REQUEST_STATUS.COMPLETED) {
-              const url = data.status.message && data.status.message.output_file_urls && data.status.message.output_file_urls.detections
-              
-              if (url) {
-                root.mlResults.fetch(url)
-              } else {
-                // TODO
-              }
-              
+            const url = data.status.message && data.status.message.output_file_urls && data.status.message.output_file_urls.detections
+
+            if (url) {
+              root.mlResults.fetch(url)
             } else {
-              // TODO
+              throw new Error('ERROR: the ML Task could not be found or did not have any valid results.')
             }
             
           } else {
