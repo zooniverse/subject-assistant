@@ -69,20 +69,31 @@ const MLTaskStore = types.model('MLTaskStore', {
           self.setStatus(ASYNC_STATES.SUCCESS)
           self.setData(data)
           
-          if (data.status && typeof(data.status) === 'object'
-              && data.status.request_status === API_RESPONSE.REQUEST_STATUS.COMPLETED) {
+          if (data.status && typeof(data.status) === 'object') {
             
-            const url = data.status.message && data.status.message.output_file_urls && data.status.message.output_file_urls.detections
-
-            if (url) {
-              root.mlResults.fetch(url)
-            } else {
-              throw new Error('the ML Task could not be found or did not have any valid results.')
+            switch (data.status.request_status) {
+              case API_RESPONSE.REQUEST_STATUS.COMPLETED:
+            
+                const url = data.status.message && data.status.message.output_file_urls && data.status.message.output_file_urls.detections
+                if (!url) throw new Error('ML Task did not have any valid results.')
+                root.mlResults.fetch(url)
+                return
+              
+              case API_RESPONSE.REQUEST_STATUS.RUNNING:
+                throw new Error('ML Task is still running on the ML Service. Please check again later.')
+                
+              case API_RESPONSE.REQUEST_STATUS.FAILED:
+                
+                const message = data.status.message
+                if (data.status.message) throw new Error(`ML Task failed. The ML Service said: ${data.status.message}`)
+                throw new Error('ML Task failed. No reason was specified.')
+              
             }
-            
-          } else {
-            throw new Error('the ML Task could not be found or did not have any valid results.')
+          } else if (data.status === API_RESPONSE.STATUS.NOT_FOUND) {
+            throw new Error('ML Task could not be found. Please check that the Request ID is correct, and that the ML Task hasn\'t expired/been removed from the ML Service.')
           }
+        
+          throw new Error('ML Task encountered an unknown error.')
         })
         
         .catch(err => {
