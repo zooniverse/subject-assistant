@@ -11,7 +11,6 @@
   "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
   "license": "Apache-2.0",
   "dependencies": {
-    "@zooniverse/panoptes-js": "0.0.1",
     "json2csv": "^4.5.2",
     "mobx": "^5.11.0",
     "mobx-react": "^6.1.1",
