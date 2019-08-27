@@ -16,11 +16,9 @@ const AuthStore = types.model('AuthStore', {
 
   checkUser: flow(function * checkUser () {
     self.status = ASYNC_STATES.FETCHING
-    oauth.checkCurrent()
-    .then(user => {
-      self.status = ASYNC_STATES.SUCCESS
-      self.user = user
-    })
+    const user = yield oauth.checkCurrent()
+    self.status = ASYNC_STATES.SUCCESS
+    self.user = user
   }),
 
   login () {
@@ -28,10 +26,8 @@ const AuthStore = types.model('AuthStore', {
   },
 
   logout: flow(function * logout () {
-    oauth.signOut()
-    .then(user => {
-      self.user = user
-    })
+    const user = yield oauth.signOut()
+    self.user = user
   }),
 
   setStatus (val) {
