@@ -7,8 +7,13 @@ export const ASYNC_STATES = {
 }
 
 export const API_RESPONSE = {
+  STATUS: {
+    NOT_FOUND: 'n',
+  },
   REQUEST_STATUS: {
     COMPLETED: 'completed',
+    RUNNING: 'running',
+    FAILED: 'failed',
   },
 }
 

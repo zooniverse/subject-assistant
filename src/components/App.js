@@ -1,5 +1,8 @@
 import React from 'react'
 import { HashRouter as Router, Route } from 'react-router-dom'
+import { observer } from 'mobx-react'
+import AppContext from '@store'
+import { ASYNC_STATES } from '@util'
 
 import ConfigForm from './ConfigForm'
 import Home from './Home'
@@ -14,16 +17,33 @@ class App extends React.Component {
     super()
   }
   
+  componentDidMount () {
+    this.initialise()
+  }
+  
+  initialise () {
+    this.context.auth.initialise()
+  }
+  
   render () {
+    const initialised = this.context.auth.status === ASYNC_STATES.SUCCESS
+    
     return (
       <Router>
         <>
           <Header />
-          <main>
-            <Route path="/" exact component={Home} />
-            <Route path="/tasks" component={MLTaskManager} />
-            <Route path="/config" component={ConfigForm} />
-          </main>
+          {(!initialised)
+            ?
+              <main>
+                <div className="status box">Loading</div>
+              </main>
+            :
+              <main>
+                <Route path="/" exact component={Home} />
+                <Route path="/tasks" component={MLTaskManager} />
+                <Route path="/config" component={ConfigForm} />
+              </main>
+          }
           <footer>Footer</footer>
         </>
       </Router>
@@ -31,4 +51,6 @@ class App extends React.Component {
   }
 }
 
-export default App
+App.contextType = AppContext
+
+export default observer(App)

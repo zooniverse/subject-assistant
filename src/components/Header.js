@@ -21,6 +21,16 @@ function Header() {
           />
           Demo Mode
         </label>
+        <div className="user">
+          {(store.auth.user)
+            ? <span>{store.auth.user.display_name || store.auth.user.login}</span>
+            : undefined
+          }
+          {(store.auth.user)
+            ? <button onClick={() => { store.auth.logout() }}>Logout</button>
+            : <button onClick={() => { store.auth.login() }}>Login</button>
+          }
+        </div>
       </nav>
     </header>
   )
