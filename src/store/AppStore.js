@@ -16,15 +16,13 @@ const AppStore = types.model('AppStore', {
   mlResults: types.optional(MLResultsStore, () => MLResultsStore.create({})),
   mlSelection: types.optional(MLSelectionStore, () => MLSelectionStore.create({})),
   
-}).actions(self => {
-  return {
+}).actions(self => ({
     
-    toggleDemoMode () {
-      self.demoMode = !self.demoMode
-      localStorage.setItem(DEMO_MODE_STORAGE_KEY, (self.demoMode) ? 'yes' : 'no')
-    },
-    
-  }
-})
+  toggleDemoMode () {
+    self.demoMode = !self.demoMode
+    localStorage.setItem(DEMO_MODE_STORAGE_KEY, (self.demoMode) ? 'yes' : 'no')
+  },
+
+}))
 
 export { AppStore }
