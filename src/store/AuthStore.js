@@ -27,7 +27,7 @@ const AuthStore = types.model('AuthStore', {
     oauth.signIn(computeRedirectURL(window))
   },
 
-  logout: flow(function* () {
+  logout: flow(function * logout () {
     oauth.signOut()
     .then(user => {
       self.user = user
