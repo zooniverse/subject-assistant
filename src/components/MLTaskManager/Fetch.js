@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
-import { stopEvent } from '@util'
+import { ASYNC_STATES, stopEvent } from '@util'
 
 class Fetch extends React.Component {
   constructor (props) {
@@ -18,7 +18,19 @@ class Fetch extends React.Component {
       
         <fieldset>
           <legend>Status</legend>
-          <var>Task: {mlTask.status} / Results: {mlResults.status}</var>
+          <var className="block">
+            Task: {mlTask.status} {statusIcon(mlTask.status)}
+            /
+            Results: {mlResults.status} {statusIcon(mlResults.status)}
+          </var>
+          {(mlTask.statusMessage && mlTask.statusMessage.length > 0)
+            ? <var className="error block">[Task] {mlTask.statusMessage}</var>
+            : null
+          }
+          {(mlResults.statusMessage && mlResults.statusMessage.length > 0)
+            ? <var className="error block">[Results] {mlResults.statusMessage}</var>
+            : null
+          }
         </fieldset>
         
         <fieldset>
@@ -41,6 +53,22 @@ class Fetch extends React.Component {
       </form>
     )
   }  
+}
+
+function statusIcon (status) {
+  switch (status) {
+    case ASYNC_STATES.IDLE:
+      return <i className="material-icons">more_horiz</i>
+    case ASYNC_STATES.SUCCESS:
+      return <i className="material-icons">done</i>
+    case ASYNC_STATES.ERROR:
+      return <i className="material-icons">error</i>
+    case ASYNC_STATES.FETCHING:
+    case ASYNC_STATES.SENDING:
+      return <i className="material-icons">sync</i>
+  }
+  
+  return null;
 }
 
 Fetch.contextType = AppContext
