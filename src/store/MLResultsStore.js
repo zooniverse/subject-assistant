@@ -1,4 +1,4 @@
-import { types, getRoot } from 'mobx-state-tree'
+import { flow, getRoot, types } from 'mobx-state-tree'
 import { ASYNC_STATES } from '@util'
 import config from '@config'
 import superagent from 'superagent'
@@ -19,18 +19,10 @@ const MLResultsStore = types.model('MLResultsStore', {
     self.data = {}
   },
 
-  setStatus (status, message = undefined) {
-    self.status = status
-    self.statusMessage = message
-  },
-
-  setData (val) {
-    self.data = val
-  },
-
-  fetch (url) {
+  fetch: flow(function * fetch (url) {
     const root = getRoot(self)
-    self.setStatus(ASYNC_STATES.FETCHING)
+    self.status = ASYNC_STATES.FETCHING
+    self.statusMessage = undefined
 
     const _url = (!root.demoMode)
       ? url
@@ -47,17 +39,20 @@ const MLResultsStore = types.model('MLResultsStore', {
       })
 
       .then(data => {
-        self.setStatus(ASYNC_STATES.SUCCESS)
-        self.setData(data)
+        self.status = ASYNC_STATES.SUCCESS
+        self.statusMessage = undefined
+        self.data = data
+        
         root.mlSelection.makeSelection()
       })
 
       .catch(err => {
         const message = err && err.toString() || undefined
-        self.setStatus(ASYNC_STATES.ERROR, message)
+        self.status = ASYNC_STATES.ERROR
+        self.statusMessage = message
         console.error('[MLResultsStore] ', err)
       })
-  },
+  }),
 }))
 
 export { MLResultsStore }
