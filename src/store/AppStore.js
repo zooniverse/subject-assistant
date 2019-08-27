@@ -8,6 +8,7 @@ const DEMO_MODE_STORAGE_KEY = 'demoMode'
 
 const AppStore = types.model('AppStore', {
   
+  initialised: types.optional(types.boolean, false),
   demoMode: types.optional(types.boolean, localStorage.getItem(DEMO_MODE_STORAGE_KEY) === 'yes'),
   
   auth: types.optional(AuthStore, () => AuthStore.create({})),
