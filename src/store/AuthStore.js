@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree'
+import { flow, types } from 'mobx-state-tree'
 import oauth from 'panoptes-client/lib/oauth'
 
 import { ASYNC_STATES } from '@util'
@@ -9,29 +9,30 @@ const AuthStore = types.model('AuthStore', {
   user: types.optional(types.frozen({}), null),  // When uninitialised, user should be null instead of {}
   
 }).actions(self => ({
+  
   initialise () {
     self.checkUser()
   },
 
-  checkUser () {
-    self.setStatus(ASYNC_STATES.FETCHING)
+  checkUser: flow(function * checkUser () {
+    self.status = ASYNC_STATES.FETCHING
     oauth.checkCurrent()
     .then(user => {
-      self.setStatus(ASYNC_STATES.SUCCESS)
-      self.setUser(user)
+      self.status = ASYNC_STATES.SUCCESS
+      self.user = user
     })
-  },
+  }),
 
   login () {
     oauth.signIn(computeRedirectURL(window))
   },
 
-  logout () {
+  logout: flow(function* () {
     oauth.signOut()
     .then(user => {
-      self.setUser(user)
+      self.user = user
     })
-  },
+  }),
 
   setStatus (val) {
     self.status = val
