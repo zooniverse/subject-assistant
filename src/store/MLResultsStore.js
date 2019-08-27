@@ -1,4 +1,4 @@
-import { types, getRoot } from 'mobx-state-tree'
+import { flow, getRoot, types } from 'mobx-state-tree'
 import { ASYNC_STATES } from '@util'
 import config from '@config'
 import superagent from 'superagent'
@@ -11,56 +11,46 @@ const MLResultsStore = types.model('MLResultsStore', {
   statusMessage: types.maybe(types.string),
   data: types.frozen({}),
   
-}).actions(self => {
-  return {
-    
-    reset () {
-      self.status = ASYNC_STATES.IDLE
-      self.statusMessage = undefined
-      self.data = {}
-    },
-    
-    setStatus (status, message = undefined) {
-      self.status = status
-      self.statusMessage = message
-    },
-    
-    setData (val) {
-      self.data = val
-    },
-    
-    fetch (url) {
-      const root = getRoot(self)
-      self.setStatus(ASYNC_STATES.FETCHING)
-      
-      const _url = (!root.demoMode)
-        ? url
-        : DEMO_URL
-      
-      superagent
+}).actions(self => ({
+  
+  reset () {
+    self.status = ASYNC_STATES.IDLE
+    self.statusMessage = undefined
+    self.data = {}
+  },
+
+  fetch: flow(function * fetch (url) {
+    const root = getRoot(self)
+    self.status = ASYNC_STATES.FETCHING
+    self.statusMessage = undefined
+
+    const _url = (!root.demoMode)
+      ? url
+      : DEMO_URL
+
+    try {
+      const data = yield superagent
         .get(_url)
-      
         .withCredentials()
-      
         .then(res => {        
           if (res.ok) return JSON.parse(res.text)
           throw new Error('ML Results Store couldn\'t fetch() data')
         })
+
+      self.status = ASYNC_STATES.SUCCESS
+      self.statusMessage = undefined
+      self.data = data
+
+      root.mlSelection.makeSelection()
       
-        .then(data => {
-          self.setStatus(ASYNC_STATES.SUCCESS)
-          self.setData(data)
-          root.mlSelection.makeSelection()
-        })
-        
-        .catch(err => {
-          const message = err && err.toString() || undefined
-          self.setStatus(ASYNC_STATES.ERROR, message)
-          console.error('[MLResultsStore] ', err)
-        })
-    },
+    } catch (err) {
+      const message = err && err.toString() || undefined
+      self.status = ASYNC_STATES.ERROR
+      self.statusMessage = message
+      console.error('[MLResultsStore] ', err)
+    }
     
-  }
-})
+  }),
+}))
 
 export { MLResultsStore }

@@ -1,4 +1,4 @@
-import { types } from 'mobx-state-tree'
+import { flow, types } from 'mobx-state-tree'
 import oauth from 'panoptes-client/lib/oauth'
 
 import { ASYNC_STATES } from '@util'
@@ -8,42 +8,45 @@ const AuthStore = types.model('AuthStore', {
   status: types.optional(types.string, ASYNC_STATES.IDLE),
   user: types.optional(types.frozen({}), null),  // When uninitialised, user should be null instead of {}
   
-}).actions(self => {
-  return {
+}).actions(self => ({
+  
+  initialise () {
+    self.checkUser()
+  },
+
+  checkUser: flow(function * checkUser () {
+    self.status = ASYNC_STATES.FETCHING
     
-    initialise () {
-      self.checkUser()
-    },
-    
-    checkUser () {
-      self.setStatus(ASYNC_STATES.FETCHING)
-      oauth.checkCurrent()
-      .then(user => {
-        self.setStatus(ASYNC_STATES.SUCCESS)
-        self.setUser(user)
-      })
-    },
-    
-    login () {
-      oauth.signIn(computeRedirectURL(window))
-    },
-    
-    logout () {
-      oauth.signOut()
-      .then(user => {
-        self.setUser(user)
-      })
-    },
-    
-    setStatus (val) {
-      self.status = val
-    },
-    
-    setUser (val) {
-      self.user = val
-    },
-  }
-})
+    try {
+      const user = yield oauth.checkCurrent()
+      self.status = ASYNC_STATES.SUCCESS
+      self.user = user
+    } catch (err) {
+      self.status = ASYNC_STATES.ERROR
+    }
+  }),
+
+  login () {
+    oauth.signIn(computeRedirectURL(window))
+  },
+
+  logout: flow(function * logout () {
+    try {
+      const user = yield oauth.signOut()
+      self.user = user
+    } catch (err) {
+      self.status = ASYNC_STATES.ERROR
+    }
+  }),
+
+  setStatus (val) {
+    self.status = val
+  },
+
+  setUser (val) {
+    self.user = val
+  },
+}))
 
 const computeRedirectURL = (window) => {
   const { location } = window;
