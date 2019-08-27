@@ -28,30 +28,28 @@ const MLResultsStore = types.model('MLResultsStore', {
       ? url
       : DEMO_URL
 
-    superagent
-      .get(_url)
+    try {
+      const data = yield superagent
+        .get(_url)
+        .withCredentials()
+        .then(res => {        
+          if (res.ok) return JSON.parse(res.text)
+          throw new Error('ML Results Store couldn\'t fetch() data')
+        })
 
-      .withCredentials()
+      self.status = ASYNC_STATES.SUCCESS
+      self.statusMessage = undefined
+      self.data = data
 
-      .then(res => {        
-        if (res.ok) return JSON.parse(res.text)
-        throw new Error('ML Results Store couldn\'t fetch() data')
-      })
-
-      .then(data => {
-        self.status = ASYNC_STATES.SUCCESS
-        self.statusMessage = undefined
-        self.data = data
-        
-        root.mlSelection.makeSelection()
-      })
-
-      .catch(err => {
-        const message = err && err.toString() || undefined
-        self.status = ASYNC_STATES.ERROR
-        self.statusMessage = message
-        console.error('[MLResultsStore] ', err)
-      })
+      root.mlSelection.makeSelection()
+      
+    } catch (err) {
+      const message = err && err.toString() || undefined
+      self.status = ASYNC_STATES.ERROR
+      self.statusMessage = message
+      console.error('[MLResultsStore] ', err)
+    }
+    
   }),
 }))
 

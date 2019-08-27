@@ -92,67 +92,6 @@ const MLTaskStore = types.model('MLTaskStore', {
 
   }),
 
-  /*fetch: flow(function * fetch () {
-    const root = getRoot(self)
-
-    self.reset()
-    self.status = ASYNC_STATES.FETCHING
-    self.statusMessage = undefined
-
-    const url = (!root.demoMode)
-      ? `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
-      : DEMO_URL
-
-    superagent
-      .get(url)
-
-      .withCredentials()
-
-      .then(res => {
-        if (res.ok) return res.body || JSON.parse(res.text)  // The latter is for demo-data
-        throw new Error('ML Task Store can\'t fetch() data')
-      })
-
-      .then(data => {
-        self.status = ASYNC_STATES.SUCCESS
-        self.statusMessage = undefined
-        self.data = data
-
-        if (data.status && typeof(data.status) === 'object') {
-
-          switch (data.status.request_status) {
-            case API_RESPONSE.REQUEST_STATUS.COMPLETED:
-
-              const url = data.status.message && data.status.message.output_file_urls && data.status.message.output_file_urls.detections
-              if (!url) throw new Error('ML Task did not have any valid results.')
-              root.mlResults.fetch(url)
-              return
-
-            case API_RESPONSE.REQUEST_STATUS.RUNNING:
-              throw new Error('ML Task is still running on the ML Service. Please check again later.')
-
-            case API_RESPONSE.REQUEST_STATUS.FAILED:
-
-              const message = data.status.message
-              if (data.status.message) throw new Error(`ML Task failed. The ML Service said: ${data.status.message}`)
-              throw new Error('ML Task failed. No reason was specified.')
-
-          }
-        } else if (data.status === API_RESPONSE.STATUS.NOT_FOUND) {
-          throw new Error('ML Task could not be found. Please check that the Request ID is correct, and that the ML Task hasn\'t expired/been removed from the ML Service.')
-        }
-
-        throw new Error('ML Task encountered an unknown error.')
-      })
-
-      .catch(err => {
-        const message = err && err.toString() || undefined
-        self.status = ASYNC_STATES.ERROR
-        self.statusMessage = message
-        self.data = data
-        console.error('[MLTaskStore] ', err)
-      })
-  }),*/
 }))
 
 export { MLTaskStore }
