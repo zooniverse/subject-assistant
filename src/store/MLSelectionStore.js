@@ -32,17 +32,9 @@ const MLSelectionStore = types.model('MLSelectionStore', {
     const images = root.mlResults.data.images || []
 
     // Select only the Subject images that fit a criteria
-    const selection = images.filter(image => {
-      const likelinessToBeEmpty = (1 - image.max_detection_conf) * 100
-
-      switch (self.operator) {
-        case SELECTION_OPERATORS.GREATER_THAN:
-          return self.threshold <= likelinessToBeEmpty
-        case SELECTION_OPERATORS.LESS_THAN:
-          return self.threshold >= likelinessToBeEmpty
-      }
-      return false        
-    })
+    const selection = images    
+    .filter(filterImageByDetectionConfidence.bind(this, self.threshold, self.operator))
+    .map(parseImageMeta)
 
     // Now from that selection, pick a random smaller sample
     const numOfSamples = Math.min(selection.length, NUM_OF_SAMPLES)
@@ -53,5 +45,35 @@ const MLSelectionStore = types.model('MLSelectionStore', {
     self.sample = selection.slice(startIndex, endIndex)
   },
 }))
+
+function filterImageByDetectionConfidence (threshold, operator, image) {
+  const likelinessToBeEmpty = (1 - image.max_detection_conf) * 100
+
+  switch (operator) {
+    case SELECTION_OPERATORS.GREATER_THAN:
+      return threshold <= likelinessToBeEmpty
+    case SELECTION_OPERATORS.LESS_THAN:
+      return threshold >= likelinessToBeEmpty
+  }
+  
+  return false
+}
+
+/*
+Our ML provider's datum unit is the Image, and the Image stores the metadata
+(describing the Zooniverse Subject) as a string, which we need to convert into
+a JS object.
+ */
+function parseImageMeta (image) {
+  let meta = {}
+  
+  try {
+    meta = image && JSON.parse(image.meta)
+  } catch (err) {}
+  
+  return {
+    ...image, meta
+  }
+}
 
 export { MLSelectionStore }
