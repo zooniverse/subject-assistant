@@ -35,6 +35,15 @@ class ProcessAndOutput extends React.Component {
             Export to CSV
           </button>
         </fieldset>
+            
+        <fieldset>
+          <button
+            className="action button"
+            onClick={this.doRetire.bind(this)}
+          >
+            Retire
+          </button>
+        </fieldset>
       </form>
     )
   }
@@ -50,6 +59,14 @@ class ProcessAndOutput extends React.Component {
     const onError = () => { console.error('EXPORT ERROR') }
     
     new Response(csvData).body.pipeTo(fileStream).then(onSuccess, onError)
+  }
+
+  doRetire () {
+    const mlSelection = this.context.mlSelection
+    const selection = mlSelection.selection.toJSON()
+    const workflowOutput = this.context.workflowOutput
+    
+    workflowOutput.retire(selection)
   }
 }
 
