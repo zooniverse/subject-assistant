@@ -51,7 +51,6 @@ class ProcessAndOutput extends React.Component {
   doExport () {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON()
-    
     let csvData = ''
     if (selection.length > 0) csvData = parse(selection, {})
     
@@ -64,14 +63,27 @@ class ProcessAndOutput extends React.Component {
   }
 
   doRetire () {
+    const workflowOutput = this.context.workflowOutput
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON() || []
-    const workflowOutput = this.context.workflowOutput
+    const subjectIds = getUniqueSubjectIds(selection)
     
-    const uniqueSubjects = selection && selection
-    
-    workflowOutput.retire(selection)
+    workflowOutput.retire(subjectIds)
   }
+}
+
+function getUniqueSubjectIds (selection) {
+  if (!selection) return []
+  return selection
+  .map(image => image.meta && image.meta.subject_id)
+  .sort()
+  .map((subject_id, index, array) => {
+    if (index <= 0) return subject_id;
+    const prev = array[index - 1]
+    if (subject_id === prev) return undefined
+    return subject_id
+  })
+  .filter(subject_id => subject_id !== undefined)
 }
 
 ProcessAndOutput.contextType = AppContext
