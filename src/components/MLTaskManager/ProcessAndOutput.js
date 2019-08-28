@@ -51,7 +51,9 @@ class ProcessAndOutput extends React.Component {
   doExport () {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON()
-    const csvData = parse(selection, {})
+    
+    let csvData = ''
+    if (selection.length > 0) csvData = parse(selection, {})
     
     const fileStream = streamSaver.createWriteStream('subject-assistant.csv', {})
     
@@ -63,8 +65,10 @@ class ProcessAndOutput extends React.Component {
 
   doRetire () {
     const mlSelection = this.context.mlSelection
-    const selection = mlSelection.selection.toJSON()
+    const selection = mlSelection.selection.toJSON() || []
     const workflowOutput = this.context.workflowOutput
+    
+    const uniqueSubjects = selection && selection
     
     workflowOutput.retire(selection)
   }
