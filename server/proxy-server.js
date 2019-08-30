@@ -5,7 +5,7 @@ const server = express()
 
 const config = {
   port: 3666,
-  targetServer: 'https://shaunanoordin.com',
+  targetServer: 'https://www.zooniverse.org',
 }
 
 function getQueryString (queryObject) {
@@ -23,9 +23,13 @@ function getQueryString (queryObject) {
 function proxyGet (req, res) {
   const query = getQueryString(req.query)
   const path = req.path
-  
-  //console.log(res)
-  res.send(`Path: ${path}${query}` )
+
+  superagent.get(`${config.targetServer}${path}${query}`)
+  .then(proxyRes => {
+    res
+    .type(proxyRes.type)
+    .send(proxyRes.text)
+  })
 }
 
 server.get('*', proxyGet)
