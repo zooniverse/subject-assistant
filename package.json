@@ -6,11 +6,13 @@
   "scripts": {
     "start": "webpack-dev-server",
     "clean": "rm -fr ./app",
-    "build": "npm run clean && webpack"
+    "build": "npm run clean && webpack",
+    "proxy-server": "node server/proxy-server.js"
   },
   "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
   "license": "Apache-2.0",
   "dependencies": {
+    "express": "^4.17.1",
     "json2csv": "^4.5.2",
     "mobx": "^5.11.0",
     "mobx-react": "^6.1.1",
