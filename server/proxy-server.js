@@ -21,7 +21,7 @@ function proxyGet (req, res) {
     const url = req.query.url || ''
     const acceptableTargets = config.targets.split(';')
     const urlIsAcceptable = acceptableTargets.find(function (target) {
-      return target.toLowerCase().startsWith(url.toLowerCase())
+      return url.toLowerCase().startsWith(target.toLowerCase())
     })
 
     if (url.length === 0) {
