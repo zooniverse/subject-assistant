@@ -89,7 +89,6 @@ const MLTaskStore = types.model('MLTaskStore', {
       const message = err && err.toString() || undefined
       self.status = ASYNC_STATES.ERROR
       self.statusMessage = message
-      self.data = data
       console.error('[MLTaskStore] ', err)
     }
 
