@@ -4,15 +4,24 @@ const request = require('request')  // Note: superagent doesn't work well in thi
 const server = express()
 
 const config = {
-  origin: process.env.ORIGIN || 'http://local.zooniverse.org:3000',
+  origins: process.env.ORIGINS || 'http://localhost:3000;http://local.zooniverse.org:3000',
   targets: process.env.TARGETS || 'http://example.com;https://www.zooniverse.org/',
   port: process.env.PORT || 3666,
 }
 
 server.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', config.origin)
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  res.header('Access-Control-Allow-Credentials', 'true')
+  const origin = req.get('origin') || ''
+  const acceptableOrigins = config.origins.split(';')
+  const originIsAcceptable = acceptableOrigins.find(function (target) {
+    return origin.toLowerCase() === target.toLowerCase()
+  })
+  
+  if (originIsAcceptable) {
+    res.header('Access-Control-Allow-Origin', origin)
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+    res.header('Access-Control-Allow-Credentials', 'true')
+  }
+  
   next();
 });
 
