@@ -18,14 +18,24 @@ server.use(function (req, res, next) {
 
 function proxyGet (req, res) {
   try {
-    const url = req.query.url
+    const url = req.query.url || ''
+    const acceptableTargets = config.targets.split(';')
+    const urlIsAcceptable = acceptableTargets.find(function (target) {
+      return target.toLowerCase().startsWith(url.toLowerCase())
+    })
 
-    if (!url) {
+    if (url.length === 0) {
 
       res
         .status(500)
         .send('No URL specified')
 
+    } else if (!urlIsAcceptable) {
+      
+      res
+        .status(500)
+        .send('Target URL is not in the whitelist')
+      
     } else {
 
       request(url, function (proxyErr, proxyRes, proxyBody) {
@@ -62,4 +72,5 @@ server.listen(config.port, (err) => {
   if (err) throw err
   console.log(`Proxy Server running at port ${config.port}`)
   console.log(`Acceptable origin: ${config.origin}`)
+  console.log(`Acceptable targets: ${config.targets.split(';')}`)
 })
