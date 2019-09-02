@@ -28,10 +28,7 @@ function proxyGet (req, res) {
       // Note: proxyBody is the parsed data.
       // proxyRes.body is unparsed.
       
-      console.log('url: ', url)
-      console.log('proxyErr: ', proxyErr)
-      console.log('proxyRes: ', proxyRes)
-      console.log('--------')
+      // TODO: handle errors, etc
     
       res.send(proxyRes.body)
     });
