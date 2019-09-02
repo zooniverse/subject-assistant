@@ -4,32 +4,26 @@ const superagent = require('superagent')
 const server = express()
 
 const config = {
-  port: 3666,
-  targetServer: 'https://www.zooniverse.org',
-}
-
-function getQueryString (queryObject) {
-  const str = Object
-  .keys(queryObject).map((key) => {
-    const val = encodeURIComponent(queryObject[key])
-    return `${key}=${val}`
-  })
-  .join('&')
-  return (str.length > 0)
-    ? `?${str}`
-    : str
+  port: process.env.PORT || 3666,
 }
 
 function proxyGet (req, res) {
-  const query = getQueryString(req.query)
-  const path = req.path
-
-  superagent.get(`${config.targetServer}${path}${query}`)
-  .then(proxyRes => {
-    res
-    .type(proxyRes.type)
-    .send(proxyRes.text)
-  })
+  const url = req.query.url
+  
+  if (!url) {
+    
+    res.send('No URL specified')
+    
+  } else {
+    
+    superagent.get(url)
+    .then(proxyRes => {
+      res
+      .type(proxyRes.type)
+      .send(proxyRes.text)
+    })
+    
+  }
 }
 
 server.get('*', proxyGet)
