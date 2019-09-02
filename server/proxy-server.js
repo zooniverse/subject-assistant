@@ -1,5 +1,5 @@
 const express = require('express')
-const superagent = require('superagent')
+const request = require('request')  // Note: superagent doesn't work well in this scenario.
 
 const server = express()
 
@@ -24,13 +24,17 @@ function proxyGet (req, res) {
     
   } else {
     
-    superagent.get(url)
-    .then(proxyRes => {
-      res
-      .type(proxyRes.type)
-      .send(proxyRes.text)
-    })
+    request(url, function (proxyErr, proxyRes, proxyBody) {
+      // Note: proxyBody is the parsed data.
+      // proxyRes.body is unparsed.
+      
+      console.log('url: ', url)
+      console.log('proxyErr: ', proxyErr)
+      console.log('proxyRes: ', proxyRes)
+      console.log('--------')
     
+      res.send(proxyRes.body)
+    });
   }
 }
 
