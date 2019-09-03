@@ -15,7 +15,6 @@ services:
       - HOST=0.0.0.0
     volumes:
       - ./src:/usr/src/src
-      - /usr/src/node_modules
   proxy:
     image: ms-ml-dev:latest
     build:
@@ -31,4 +30,4 @@ services:
       - TARGETS=${TARGETS}
     volumes:
       - ./server:/usr/src/server
-      - /usr/src/node_modules
+
