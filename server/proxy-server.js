@@ -47,9 +47,8 @@ function proxyGet (req, res) {
       
     } else {
 
-      request(url, function (proxyErr, proxyRes, proxyBody) {
-        // Note: proxyBody is the parsed data.
-        // proxyRes.body is unparsed.
+      request(url, function (proxyErr, proxyRes) {
+        // Note: proxyRes.body is unparsed data.
         
         let status = (proxyRes && proxyRes.statusCode) || 500
         let statusMessage = (proxyRes && proxyRes.statusMessage) || 'No data'
@@ -80,6 +79,6 @@ server.get('*', proxyGet)
 server.listen(config.port, (err) => {
   if (err) throw err
   console.log(`Proxy Server running at port ${config.port}`)
-  console.log(`Acceptable origin: ${config.origin}`)
+  console.log(`Acceptable origins: ${config.origins.split(';')}`)
   console.log(`Acceptable targets: ${config.targets.split(';')}`)
 })
