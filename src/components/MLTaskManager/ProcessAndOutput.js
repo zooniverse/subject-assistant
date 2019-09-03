@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { parse } from 'json2csv'
-import streamSaver from 'StreamSaver'
+import streamSaver from 'streamsaver'
 
 import AppContext from '@store'
 import { ASYNC_STATES, stopEvent } from '@util'

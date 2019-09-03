@@ -2,6 +2,7 @@ version: '3.2'
 
 services:
   dev:
+    image: ms-ml-dev:latest
     build:
       context: ./
       dockerfile: Dockerfile
@@ -13,5 +14,21 @@ services:
     environment:
       - HOST=0.0.0.0
     volumes:
-      - ${PWD}:/src
-      - /src/node_modules
+      - ${PWD}:/usr/src
+      - /usr/src/node_modules
+  proxy:
+    image: ms-ml-dev:latest
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    entrypoint:
+      - "node"
+    command: ["server/proxy-server.js"]
+    ports:
+      - "3666:3666"
+    environment:
+      - ORIGINS=${ORIGINS}
+      - TARGETS=${TARGETS}
+    volumes:
+      - ${PWD}:/usr/src
+      - /usr/src/node_modules
