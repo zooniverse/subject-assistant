@@ -24,8 +24,10 @@ const MLResultsStore = types.model('MLResultsStore', {
     self.status = ASYNC_STATES.FETCHING
     self.statusMessage = undefined
 
+    const proxiedUrl = `${config.proxyUrl}?url=${encodeURIComponent(url)}`
+    
     const _url = (!root.demoMode)
-      ? url
+      ? proxiedUrl
       : DEMO_URL
 
     try {

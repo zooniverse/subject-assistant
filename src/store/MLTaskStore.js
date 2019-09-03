@@ -39,8 +39,11 @@ const MLTaskStore = types.model('MLTaskStore', {
     self.status = ASYNC_STATES.FETCHING
     self.statusMessage = undefined
 
+    const serviceUrl = `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
+    const proxiedUrl = `${config.proxyUrl}?url=${encodeURIComponent(serviceUrl)}`
+    
     const url = (!root.demoMode)
-      ? `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
+      ? proxiedUrl
       : DEMO_URL
 
     try {
@@ -86,7 +89,6 @@ const MLTaskStore = types.model('MLTaskStore', {
       const message = err && err.toString() || undefined
       self.status = ASYNC_STATES.ERROR
       self.statusMessage = message
-      self.data = data
       console.error('[MLTaskStore] ', err)
     }
 
