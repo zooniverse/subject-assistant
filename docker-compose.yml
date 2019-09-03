@@ -14,7 +14,7 @@ services:
     environment:
       - HOST=0.0.0.0
     volumes:
-      - ${PWD}:/usr/src
+      - ./src:/usr/src/src
       - /usr/src/node_modules
   proxy:
     image: ms-ml-dev:latest
@@ -30,5 +30,5 @@ services:
       - ORIGINS=${ORIGINS}
       - TARGETS=${TARGETS}
     volumes:
-      - ${PWD}:/usr/src
+      - ./server:/usr/src/server
       - /usr/src/node_modules
