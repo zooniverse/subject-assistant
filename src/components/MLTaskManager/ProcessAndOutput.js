@@ -76,14 +76,7 @@ function getUniqueSubjectIds (selection) {
   if (!selection) return []
   return selection
   .map(image => image.meta && image.meta.subject_id)
-  .sort()
-  .map((subject_id, index, array) => {
-    if (index <= 0) return subject_id;
-    const prev = array[index - 1]
-    if (subject_id === prev) return undefined
-    return subject_id
-  })
-  .filter(subject_id => subject_id !== undefined)
+  .filter((subject_id, index, arr) => arr.indexOf(subject_id) === index)
 }
 
 ProcessAndOutput.contextType = AppContext
