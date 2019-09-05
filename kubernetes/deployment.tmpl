@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subject-assistant-proxy
+  labels:
+    app: subject-assistant-proxy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: subject-assistant-proxy
+  template:
+    metadata:
+      labels:
+        app: subject-assistant-proxy
+    spec:
+      containers:
+        - name: subject-assistant-proxy-app
+          image: zooniverse/zoo-ml-subject-assistant:__IMAGE_TAG__
+          ports:
+            - containerPort: 80
