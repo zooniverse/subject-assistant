@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.4'
 
 services:
   dev:
@@ -6,6 +6,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+      target: builder
     entrypoint:
       - "npm"
     command: ["start"]
@@ -20,9 +21,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    entrypoint:
-      - "node"
-    command: ["server/proxy-server.js"]
+      target: proxy
     ports:
       - "3666:3666"
     environment:
