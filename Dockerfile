@@ -18,5 +18,4 @@ FROM builder as proxy
 
 EXPOSE 3666
 
-ENTRYPOINT "node"
-CMD ["server/proxy-server.js"]
+CMD ["node", "server/proxy-server.js"]
