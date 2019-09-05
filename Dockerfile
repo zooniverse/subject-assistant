@@ -12,5 +12,7 @@ RUN npm install
 
 FROM builder as proxy
 
+EXPOSE 3666
+
 ENTRYPOINT "node"
 CMD ["server/proxy-server.js"]
