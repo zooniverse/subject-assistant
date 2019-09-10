@@ -4,7 +4,7 @@ import { parse } from 'json2csv'
 import streamSaver from 'streamsaver'
 
 import AppContext from '@store'
-import { ASYNC_STATES, stopEvent } from '@util'
+import { ASYNC_STATES, statusIcon, stopEvent } from '@util'
 
 class ProcessAndOutput extends React.Component {
   constructor (props) {
@@ -15,6 +15,7 @@ class ProcessAndOutput extends React.Component {
     const mlTask = this.context.mlTask
     const mlResults = this.context.mlResults
     const mlSelection = this.context.mlSelection
+    const workflowOutput = this.context.workflowOutput
     
     // If the results aren't ready, don't render this component.
     if (mlTask.status !== ASYNC_STATES.SUCCESS || mlResults.status !== ASYNC_STATES.SUCCESS) {
@@ -28,21 +29,42 @@ class ProcessAndOutput extends React.Component {
           You have selected {mlSelection.selection.length} images to process. You have a choice to...
         </div>
         <fieldset>
+          <legend>Export to CSV</legend>
           <button
             className="action button"
             onClick={this.doExport.bind(this)}
           >
-            Export to CSV
+            Export
           </button>
         </fieldset>
             
         <fieldset>
-          <button
-            className="action button"
-            onClick={this.doRetire.bind(this)}
-          >
-            Retire
-          </button>
+          <legend>Retire Subjects</legend>
+          <div>
+            <span>Select which workflow to retire to: &nbsp;</span>
+            <input
+              value={workflowOutput.retirementTarget}
+              onChange={(e) => { workflowOutput.setRetirementTarget(e.target.value) }}
+            />
+          </div>
+          
+          <div>
+            <button
+              className="action button"
+              onClick={this.doRetire.bind(this)}
+            >
+              Retire
+            </button>
+
+            <var className="block">
+              {workflowOutput.status} {statusIcon(workflowOutput.status)}
+            </var>
+            {(workflowOutput.statusMessage && workflowOutput.statusMessage.length > 0)
+              ? <var className="error block">{workflowOutput.statusMessage}</var>
+              : null
+            }
+          </div>
+            
         </fieldset>
       </form>
     )
@@ -68,7 +90,15 @@ class ProcessAndOutput extends React.Component {
     const selection = mlSelection.selection.toJSON() || []
     const subjectIds = getUniqueSubjectIds(selection)
     
-    workflowOutput.retire(subjectIds)
+    const retirementTarget = workflowOutput.retirementTarget.trim()
+    
+    if (retirementTarget.length === 0) {
+      // TODO: better warnings
+      alert('Please specify a workflow')
+      return
+    }
+    
+    workflowOutput.retire(subjectIds, retirementTarget)
   }
 }
 

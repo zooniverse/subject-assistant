@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const ASYNC_STATES = {
   IDLE: 'idle',
   SENDING: 'sending',
@@ -35,4 +37,20 @@ export function stopEvent (e) {
   e.returnValue = false
   e.cancelBubble = true
   return false
+}
+
+export function statusIcon (status) {
+  switch (status) {
+    case ASYNC_STATES.IDLE:
+      return <i className="material-icons">more_horiz</i>
+    case ASYNC_STATES.SUCCESS:
+      return <i className="material-icons">done</i>
+    case ASYNC_STATES.ERROR:
+      return <i className="material-icons">error</i>
+    case ASYNC_STATES.FETCHING:
+    case ASYNC_STATES.SENDING:
+      return <i className="material-icons">sync</i>
+  }
+  
+  return null;
 }

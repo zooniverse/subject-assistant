@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
-import { ASYNC_STATES, stopEvent } from '@util'
+import { ASYNC_STATES, statusIcon, stopEvent } from '@util'
 
 class Fetch extends React.Component {
   constructor (props) {
@@ -53,22 +53,6 @@ class Fetch extends React.Component {
       </form>
     )
   }  
-}
-
-function statusIcon (status) {
-  switch (status) {
-    case ASYNC_STATES.IDLE:
-      return <i className="material-icons">more_horiz</i>
-    case ASYNC_STATES.SUCCESS:
-      return <i className="material-icons">done</i>
-    case ASYNC_STATES.ERROR:
-      return <i className="material-icons">error</i>
-    case ASYNC_STATES.FETCHING:
-    case ASYNC_STATES.SENDING:
-      return <i className="material-icons">sync</i>
-  }
-  
-  return null;
 }
 
 Fetch.contextType = AppContext
