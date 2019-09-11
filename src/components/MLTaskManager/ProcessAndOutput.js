@@ -56,10 +56,13 @@ class ProcessAndOutput extends React.Component {
               Move
             </button>
 
-            <var className="block">
-              {workflowOutput.status} {statusIcon(workflowOutput.status)}
-            </var>
-            {(workflowOutput.statusMessage && workflowOutput.statusMessage.length > 0)
+            {(workflowOutput.operation === 'move')
+              ? <var className="block">
+                  {workflowOutput.status} {statusIcon(workflowOutput.status)}
+                </var>
+              : null
+            }
+            {(workflowOutput.operation === 'move' && workflowOutput.statusMessage && workflowOutput.statusMessage.length > 0)
               ? <var className="error block">{workflowOutput.statusMessage}</var>
               : null
             }
@@ -85,10 +88,13 @@ class ProcessAndOutput extends React.Component {
               Retire
             </button>
 
-            <var className="block">
-              {workflowOutput.status} {statusIcon(workflowOutput.status)}
-            </var>
-            {(workflowOutput.statusMessage && workflowOutput.statusMessage.length > 0)
+            {(workflowOutput.operation === 'retire')
+              ? <var className="block">
+                  {workflowOutput.status} {statusIcon(workflowOutput.status)}
+                </var>
+              : null
+            }
+            {(workflowOutput.operation === 'retire' && workflowOutput.statusMessage && workflowOutput.statusMessage.length > 0)
               ? <var className="error block">{workflowOutput.statusMessage}</var>
               : null
             }
@@ -114,7 +120,20 @@ class ProcessAndOutput extends React.Component {
   }
 
   doMove () {
-    console.log('+++ DOMOVE()')
+    const workflowOutput = this.context.workflowOutput
+    const mlSelection = this.context.mlSelection
+    const selection = mlSelection.selection.toJSON() || []
+    const subjectIds = getUniqueSubjectIds(selection)
+    
+    const moveTarget = workflowOutput.moveTarget.trim()
+    
+    if (moveTarget.length === 0) {
+      // TODO: better warnings
+      alert('Please specify a Subject Set to which these Subjects will be moved')
+      return
+    }
+    
+    workflowOutput.move(subjectIds, moveTarget)
   }
 
   doRetire () {
@@ -127,7 +146,7 @@ class ProcessAndOutput extends React.Component {
     
     if (retireTarget.length === 0) {
       // TODO: better warnings
-      alert('Please specify a workflow')
+      alert('Please specify a Workflow from which these Subjects will be retired')
       return
     }
     
