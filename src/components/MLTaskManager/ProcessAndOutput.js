@@ -39,12 +39,41 @@ class ProcessAndOutput extends React.Component {
         </fieldset>
             
         <fieldset>
+          <legend>Move Subjects</legend>
+          <div>
+            <span>Select which subject set to move to: &nbsp;</span>
+            <input
+              value={workflowOutput.moveTarget}
+              onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
+            />
+          </div>
+          
+          <div>
+            <button
+              className="action button"
+              onClick={this.doMove.bind(this)}
+            >
+              Move
+            </button>
+
+            <var className="block">
+              {workflowOutput.status} {statusIcon(workflowOutput.status)}
+            </var>
+            {(workflowOutput.statusMessage && workflowOutput.statusMessage.length > 0)
+              ? <var className="error block">{workflowOutput.statusMessage}</var>
+              : null
+            }
+          </div>
+            
+        </fieldset>
+            
+        <fieldset>
           <legend>Retire Subjects</legend>
           <div>
             <span>Select which workflow to retire to: &nbsp;</span>
             <input
-              value={workflowOutput.retirementTarget}
-              onChange={(e) => { workflowOutput.setRetirementTarget(e.target.value) }}
+              value={workflowOutput.retireTarget}
+              onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
             />
           </div>
           
@@ -84,21 +113,25 @@ class ProcessAndOutput extends React.Component {
     new Response(csvData).body.pipeTo(fileStream).then(onSuccess, onError)
   }
 
+  doMove () {
+    console.log('+++ DOMOVE()')
+  }
+
   doRetire () {
     const workflowOutput = this.context.workflowOutput
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON() || []
     const subjectIds = getUniqueSubjectIds(selection)
     
-    const retirementTarget = workflowOutput.retirementTarget.trim()
+    const retireTarget = workflowOutput.retireTarget.trim()
     
-    if (retirementTarget.length === 0) {
+    if (retireTarget.length === 0) {
       // TODO: better warnings
       alert('Please specify a workflow')
       return
     }
     
-    workflowOutput.retire(subjectIds, retirementTarget)
+    workflowOutput.retire(subjectIds, retireTarget)
   }
 }
 

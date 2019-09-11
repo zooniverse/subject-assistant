@@ -8,7 +8,8 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
   status: types.optional(types.string, ASYNC_STATES.IDLE),
   statusMessage: types.maybe(types.string),
   
-  retirementTarget: types.optional(types.string, ''),
+  moveTarget: types.optional(types.string, ''),
+  retireTarget: types.optional(types.string, ''),
   
 }).actions(self => ({
     
@@ -17,19 +18,24 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
     self.statusMessage = undefined
   },
   
-  setRetirementTarget (val) {
-    self.retirementTarget = val
+  setMoveTarget (val) {
+    self.moveTarget = val
+  },
+  
+  setRetireTarget (val) {
+    self.retireTarget = val
   },
 
-  moveToWorkflow: flow(function * moveToWorkflow (workflowId, selection) {
+  move: flow(function * moveToSubjectSet (subjectIds, subjectSet) {
     self.status = ASYNC_STATES.SENDING
     
+    console.log('+++ MOVE: ', subjectIds, subjectSet)
   }),
   
-  retire: flow(function * retire (subjectIds, retirementTarget) {
+  retire: flow(function * retireInWorkflow (subjectIds, workflowId) {
     self.status = ASYNC_STATES.SENDING
     
-    console.log('+++ RETIRE: ', subjectIds)
+    console.log('+++ RETIRE: ', subjectIds, workflowId)
   }),
   
 }))
