@@ -32,12 +32,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
     self.operation = 'move'
     self.status = ASYNC_STATES.SENDING
     
-    console.log('+++ MOVE: ', subjectIds, subjectSetId)
-    
     const url = `${apiClient.root}/subject_sets/${subjectSetId}/links/subjects`
-    
-    console.log(apiClient.headers)
-    console.log(url)
     
     try {
       const data = yield superagent
@@ -50,8 +45,8 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
           subjects: subjectIds,
         })
         .then(res => {
-          console.log('+++ res ', res)
-          // throw new Error('Workflow Output Store couldn\'t move() data')
+          if (res.ok) return res.body
+          throw new Error('Workflow Output Store couldn\'t move() data')
         })
 
       self.status = ASYNC_STATES.SUCCESS
