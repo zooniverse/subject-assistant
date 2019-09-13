@@ -45,7 +45,14 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
           subjects: subjectIds,
         })
         .then(res => {
-          if (res.ok) return res.body
+          if (res.ok) return res.body          
+          throw new Error()
+        })
+        .catch(err => {
+          const res = (err && err.response) || {}
+          if (res.status === 404) {
+            throw new Error('Subject Set couldn\'t be found. Either that Subject Set doesn\'t exist or you don\'t have access to it. Please confirm that you are logged in to a Zooniverse account with the necessary privileges.')
+          }
           throw new Error('Workflow Output Store couldn\'t move() data')
         })
 
