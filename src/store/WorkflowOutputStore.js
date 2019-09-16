@@ -76,16 +76,10 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
     self.status = ASYNC_STATES.SENDING
     self.statusMessage = undefined
     
-    console.log('+++ RETIRE: ', subjectIds, workflowId)
-    
     const url = `${apiClient.root}/workflows/${workflowId}/retired_subjects`
     
     try {
-      /*const data = yield apiClient
-        .type('workflows')
-        .get(workflowId)
-        .then(res => res)*/
-      const data = yield superagent
+      yield superagent
         .post(url)
         .withCredentials()
         .set('Accept', 'application/vnd.api+json; version=1')
@@ -96,13 +90,10 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
           retirement_reason: 'other',
         })
         .then(res => {
-          console.log('+++ SUCCESS: ', res)
            if (res.ok) return res.body          
            throw new Error()
         })
         .catch(err => {
-          console.log('+++ ERROR: ', err)
-          
           const res = (err && err.response) || {}
           throw new Error('Workflow Output Store couldn\'t retire() data')
         })

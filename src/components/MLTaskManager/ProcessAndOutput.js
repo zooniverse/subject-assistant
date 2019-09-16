@@ -73,7 +73,7 @@ class ProcessAndOutput extends React.Component {
         <fieldset>
           <legend>Retire Subjects</legend>
           <div>
-            <span>Select which workflow to retire to: &nbsp;</span>
+            <span>Select which workflow to retire from: &nbsp;</span>
             <input
               value={workflowOutput.retireTarget}
               onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
