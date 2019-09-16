@@ -31,6 +31,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
   move: flow(function * moveToSubjectSet (subjectIds, subjectSetId) {
     self.operation = 'move'
     self.status = ASYNC_STATES.SENDING
+    self.statusMessage = undefined
     
     const url = `${apiClient.root}/subject_sets/${subjectSetId}/links/subjects`
     
@@ -73,6 +74,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
   retire: flow(function * retireInWorkflow (subjectIds, workflowId) {
     self.operation = 'retire'
     self.status = ASYNC_STATES.SENDING
+    self.statusMessage = undefined
     
     console.log('+++ RETIRE: ', subjectIds, workflowId)
   }),
