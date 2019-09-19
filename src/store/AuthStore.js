@@ -38,14 +38,6 @@ const AuthStore = types.model('AuthStore', {
       self.status = ASYNC_STATES.ERROR
     }
   }),
-
-  setStatus (val) {
-    self.status = val
-  },
-
-  setUser (val) {
-    self.user = val
-  },
 }))
 
 const computeRedirectURL = (window) => {
