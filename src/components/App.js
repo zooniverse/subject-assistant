@@ -8,6 +8,7 @@ import ConfigForm from './ConfigForm'
 import Home from './Home'
 import Header from './Header'
 import MLTaskManager from './MLTaskManager'
+import Debugger from './Debugger'
 
 import demoDataForTask from '@demo-data/task.txt'
 import demoDataForResults from '@demo-data/detections.txt'
@@ -42,6 +43,7 @@ class App extends React.Component {
                 <Route path="/" exact component={Home} />
                 <Route path="/tasks" component={MLTaskManager} />
                 <Route path="/config" component={ConfigForm} />
+                <Route path="/debug" component={Debugger} />
               </main>
           }
           <footer>Footer</footer>
