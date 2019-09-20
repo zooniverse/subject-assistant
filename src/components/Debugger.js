@@ -10,9 +10,21 @@ function Debugger () {
     <article className="debugger">
       <h2>Debugger</h2>
       <h3>Owned Projects</h3>
-      {ur.ownedProjects.map((project, index) =>
+      {ur.ownedProjects.map((item, index) =>
         <div key={`user-project-${index}`}>
-          {project.id} / {project.display_name}
+          {item.id} / {item.display_name}
+        </div>
+      )}
+      <h3>Owned Workflows</h3>
+      {ur.ownedWorkflows.map((item, index) =>
+        <div key={`user-workflow-${index}`}>
+          {item.id} / {item.display_name}
+        </div>
+      )}
+      <h3>Owned Subject Sets</h3>
+      {ur.ownedSubjectSets.map((item, index) =>
+        <div key={`user-subjectset-${index}`}>
+          {item.id} / {item.display_name}
         </div>
       )}
     </article>

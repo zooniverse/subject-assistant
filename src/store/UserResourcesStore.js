@@ -54,7 +54,10 @@ const UserResourcesStore = types.model('UserResourcesStore', {
         .catch(err => { throw err })
       projects.push(...data)
       
-      projects.forEach(flow (function * fetch_workflow (project) {
+      //projects.forEach(flow (function * fetch_workflow (project) {
+      for (let i = 0; i < projects.length; i++) {
+        
+        let project = projects[i];
         
         // Fetch all associated workflows.
         data = yield apiClient.type('workflows')
@@ -73,7 +76,12 @@ const UserResourcesStore = types.model('UserResourcesStore', {
           .then(res => res)
           .catch(err => { throw err })
         subjectSets.push(...data)
-      }))
+      }
+      //}))
+      
+      console.log('+++ PROJECTS: ', projects.length, projects)
+      console.log('+++ WORKFLOWS: ', workflows.length, workflows)
+      console.log('+++ SUBJECT SETS: ', subjectSets.length, subjectSets)
       
       self.ownedProjects = projects
       self.ownedWorkflows = workflows
