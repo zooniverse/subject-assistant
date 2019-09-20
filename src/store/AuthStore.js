@@ -23,7 +23,8 @@ const AuthStore = types.model('AuthStore', {
       self.status = ASYNC_STATES.SUCCESS
       self.user = user
       
-      root.userResources.fetch()
+      root.userResources.reset()
+      if (user) root.userResources.fetch()
     } catch (err) {
       self.status = ASYNC_STATES.ERROR
     }
