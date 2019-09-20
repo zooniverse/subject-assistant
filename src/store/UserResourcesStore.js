@@ -31,30 +31,53 @@ const UserResourcesStore = types.model('UserResourcesStore', {
     console.log('+++ FETCH')
     
     try {
+      let data = []
       let projects = []
-      projects = yield apiClient.type('projects')
+      let workflows = []
+      let subjectSets = []
+
+      // Fetch all projects this user is an owner of.
+      data = yield apiClient.type('projects')
         .get({
           current_user_roles: 'owner',
-          sort: 'display_name',
         })
         .then(res => res)
         .catch(err => { throw err })
+      projects.push(...data)
       
-      self.ownedProjects.push(...projects)
-      
-      console.log('+++ DATA 1: ', projects)
-      
-      projects = yield apiClient.type('projects')
+      // Fetch all projects this user is a collaborator of.
+      data = yield apiClient.type('projects')
         .get({
           current_user_roles: 'collaborator',
-          sort: 'display_name',
         })
         .then(res => res)
         .catch(err => { throw err })
+      projects.push(...data)
       
-      self.ownedProjects.push(...projects)
+      projects.forEach(flow (function * fetch_workflow (project) {
+        
+        // Fetch all associated workflows.
+        data = yield apiClient.type('workflows')
+          .get({
+            project_id: project.id,
+          })
+          .then(res => res)
+          .catch(err => { throw err })
+        workflows.push(...data)
+        
+        // Fetch all associated subject sets.
+        data = yield apiClient.type('subject_sets')
+          .get({
+            project_id: project.id,
+          })
+          .then(res => res)
+          .catch(err => { throw err })
+        subjectSets.push(...data)
+      }))
       
-      console.log('+++ DATA 2: ', projects)
+      self.ownedProjects = projects
+      self.ownedWorkflows = workflows
+      self.ownedSubjectSets = subjectSets
     
     } catch (err) {
       const message = err && err.toString() || undefined
