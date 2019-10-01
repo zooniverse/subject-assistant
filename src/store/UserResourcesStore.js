@@ -30,11 +30,15 @@ const UserResourcesStore = types.model('UserResourcesStore', {
   },
 
   fetch: flow(function * fetch (url) {
+    const root = getRoot(self)
+    
     try {
       let data = []
       let projects = []
       let workflows = []
       let subjectSets = []
+      
+      self.status = ASYNC_STATES.FETCHING
 
       // Fetch all projects this user is an owner of.
       data = yield apiClient.type('projects')
@@ -79,6 +83,11 @@ const UserResourcesStore = types.model('UserResourcesStore', {
       self.ownedProjects = projects
       self.ownedWorkflows = workflows
       self.ownedSubjectSets = subjectSets
+      
+      if (workflows.length > 0) root.workflowOutput.setRetireTarget(workflows[0].id)
+      if (subjectSets.length > 0) root.workflowOutput.setMoveTarget(subjectSets[0].id)
+      
+      self.status = ASYNC_STATES.SUCCESS
     
     } catch (err) {
       const message = err && err.toString() || undefined

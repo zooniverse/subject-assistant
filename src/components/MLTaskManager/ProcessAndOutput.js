@@ -16,6 +16,7 @@ class ProcessAndOutput extends React.Component {
     const mlResults = this.context.mlResults
     const mlSelection = this.context.mlSelection
     const workflowOutput = this.context.workflowOutput
+    const userResources = this.context.userResources
     
     // If the results aren't ready, don't render this component.
     if (mlTask.status !== ASYNC_STATES.SUCCESS || mlResults.status !== ASYNC_STATES.SUCCESS) {
@@ -42,10 +43,23 @@ class ProcessAndOutput extends React.Component {
           <legend>Move Subjects</legend>
           <div>
             <span>Select which subject set to move to: &nbsp;</span>
-            <input
-              value={workflowOutput.moveTarget}
-              onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
-            />
+            {(userResources.status === ASYNC_STATES.SUCCESS && userResources.ownedSubjectSets && userResources.ownedSubjectSets.length > 0)  // If we know which resources the user has, we can show a <select> option. Otherwise, enable manual input.
+              ? <select
+                  value={workflowOutput.moveTarget}
+                  onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
+                >
+                  {userResources.ownedSubjectSets.map(item => (
+                    <option key={`move-to-subjectset-${item.id}`} value={item.id}>
+                      {item.id} - {item.display_name}
+                  </option>
+                  ))}
+                </select>
+
+              : <input
+                  value={workflowOutput.moveTarget}
+                  onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
+                />
+            }
           </div>
           
           <div>
@@ -74,10 +88,23 @@ class ProcessAndOutput extends React.Component {
           <legend>Retire Subjects</legend>
           <div>
             <span>Select which workflow to retire from: &nbsp;</span>
-            <input
-              value={workflowOutput.retireTarget}
-              onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
-            />
+            {(userResources.status === ASYNC_STATES.SUCCESS && userResources.ownedWorkflows && userResources.ownedWorkflows.length > 0)  // If we know which resources the user has, we can show a <select> option. Otherwise, enable manual input.
+              ? <select
+                  value={workflowOutput.retireTarget}
+                  onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
+                >
+                  {userResources.ownedWorkflows.map(item => (
+                    <option key={`retire-from-workflow-${item.id}`} value={item.id}>
+                      {item.id} - {item.display_name}
+                  </option>
+                  ))}
+                </select>
+
+              : <input
+                  value={workflowOutput.retireTarget}
+                  onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
+                />
+            }
           </div>
           
           <div>
