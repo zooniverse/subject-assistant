@@ -42,23 +42,28 @@ class ProcessAndOutput extends React.Component {
         <fieldset>
           <legend>Move Subjects</legend>
           <div>
-            <span>Select which subject set to move to: &nbsp;</span>
+            <span>Specify which subject set to move to: &nbsp;</span>
+            <input
+              value={workflowOutput.moveTarget}
+              onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
+            />
             {(userResources.status === ASYNC_STATES.SUCCESS && userResources.ownedSubjectSets && userResources.ownedSubjectSets.length > 0)  // If we know which resources the user has, we can show a <select> option. Otherwise, enable manual input.
-              ? <select
-                  value={workflowOutput.moveTarget}
-                  onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
-                >
-                  {userResources.ownedSubjectSets.map(item => (
-                    <option key={`move-to-subjectset-${item.id}`} value={item.id}>
-                      {item.id} - {item.display_name}
-                  </option>
-                  ))}
-                </select>
+              ? <div>
+                  or, choose from: &nbsp;
+                  <select
+                    value={workflowOutput.moveTarget}
+                    onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
+                    class={!(userResources.ownedSubjectSets.map(i=>i.id).includes(workflowOutput.moveTarget)) ? 'greyed-out' : ''}
+                  >
+                    {userResources.ownedSubjectSets.map(item => (
+                      <option key={`move-to-subjectset-${item.id}`} value={item.id}>
+                        {item.id} - {item.display_name}
+                    </option>
+                    ))}
+                  </select>
+                </div>
 
-              : <input
-                  value={workflowOutput.moveTarget}
-                  onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
-                />
+              : null
             }
           </div>
           
@@ -87,23 +92,28 @@ class ProcessAndOutput extends React.Component {
         <fieldset>
           <legend>Retire Subjects</legend>
           <div>
-            <span>Select which workflow to retire from: &nbsp;</span>
-            {(userResources.status === ASYNC_STATES.SUCCESS && userResources.ownedWorkflows && userResources.ownedWorkflows.length > 0)  // If we know which resources the user has, we can show a <select> option. Otherwise, enable manual input.
-              ? <select
-                  value={workflowOutput.retireTarget}
-                  onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
-                >
-                  {userResources.ownedWorkflows.map(item => (
-                    <option key={`retire-from-workflow-${item.id}`} value={item.id}>
-                      {item.id} - {item.display_name}
-                  </option>
-                  ))}
-                </select>
-
-              : <input
-                  value={workflowOutput.retireTarget}
-                  onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
-                />
+            <span>Specify which workflow to retire from: &nbsp;</span>
+            <input
+              value={workflowOutput.retireTarget}
+              onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
+            />
+            
+            {(userResources.status === ASYNC_STATES.SUCCESS && userResources.ownedWorkflows && userResources.ownedWorkflows.length > 0)  // If we know which resources the user has, we can show a <select> option.
+              ? <div>
+                  or, choose from: &nbsp;
+                  <select
+                    value={workflowOutput.retireTarget}
+                    onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
+                    class={!(userResources.ownedWorkflows.map(i=>i.id).includes(workflowOutput.retireTarget)) ? 'greyed-out' : ''}
+                  >
+                    {userResources.ownedWorkflows.map(item => (
+                      <option key={`retire-from-workflow-${item.id}`} value={item.id}>
+                        {item.id} - {item.display_name}
+                    </option>
+                    ))}
+                  </select>
+                </div>
+              : null
             }
           </div>
           
