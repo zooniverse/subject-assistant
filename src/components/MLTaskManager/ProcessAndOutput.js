@@ -49,7 +49,7 @@ class ProcessAndOutput extends React.Component {
             />
             {(userResources.status === ASYNC_STATES.SUCCESS && userResources.ownedSubjectSets && userResources.ownedSubjectSets.length > 0)  // If we know which resources the user has, we can show a <select> option. Otherwise, enable manual input.
               ? <div>
-                  or, choose from: &nbsp;
+                  <span>or, choose from: &nbsp;</span>
                   <select
                     value={workflowOutput.moveTarget}
                     onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
@@ -100,7 +100,7 @@ class ProcessAndOutput extends React.Component {
             
             {(userResources.status === ASYNC_STATES.SUCCESS && userResources.ownedWorkflows && userResources.ownedWorkflows.length > 0)  // If we know which resources the user has, we can show a <select> option.
               ? <div>
-                  or, choose from: &nbsp;
+                  <span>or, choose from: &nbsp;</span>
                   <select
                     value={workflowOutput.retireTarget}
                     onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
