@@ -24,10 +24,12 @@ const UserResourcesStore = types.model('UserResourcesStore', {
     self.ownedProjects = []
     self.ownedSubjectSets = []
     self.ownedWorkflows = []
+    
+    const root = getRoot(self)
+    root.workflowOutput.resetTargets()
   },
 
   fetch: flow(function * fetch (url) {
-    
     try {
       let data = []
       let projects = []
