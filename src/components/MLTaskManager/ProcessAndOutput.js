@@ -4,7 +4,7 @@ import { parse } from 'json2csv'
 import streamSaver from 'streamsaver'
 
 import AppContext from '@store'
-import { ASYNC_STATES, stopEvent } from '@util'
+import { ASYNC_STATES, statusIcon, stopEvent } from '@util'
 
 class ProcessAndOutput extends React.Component {
   constructor (props) {
@@ -15,6 +15,7 @@ class ProcessAndOutput extends React.Component {
     const mlTask = this.context.mlTask
     const mlResults = this.context.mlResults
     const mlSelection = this.context.mlSelection
+    const workflowOutput = this.context.workflowOutput
     
     // If the results aren't ready, don't render this component.
     if (mlTask.status !== ASYNC_STATES.SUCCESS || mlResults.status !== ASYNC_STATES.SUCCESS) {
@@ -28,12 +29,77 @@ class ProcessAndOutput extends React.Component {
           You have selected {mlSelection.selection.length} images to process. You have a choice to...
         </div>
         <fieldset>
+          <legend>Export to CSV</legend>
           <button
             className="action button"
             onClick={this.doExport.bind(this)}
           >
-            Export to CSV
+            Export
           </button>
+        </fieldset>
+            
+        <fieldset>
+          <legend>Move Subjects</legend>
+          <div>
+            <span>Select which subject set to move to: &nbsp;</span>
+            <input
+              value={workflowOutput.moveTarget}
+              onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
+            />
+          </div>
+          
+          <div>
+            <button
+              className="action button"
+              onClick={this.doMove.bind(this)}
+            >
+              Move
+            </button>
+
+            {(workflowOutput.operation === 'move')
+              ? <var className="block">
+                  {workflowOutput.status} {statusIcon(workflowOutput.status)}
+                </var>
+              : null
+            }
+            {(workflowOutput.operation === 'move' && workflowOutput.statusMessage && workflowOutput.statusMessage.length > 0)
+              ? <var className="error block">{workflowOutput.statusMessage}</var>
+              : null
+            }
+          </div>
+            
+        </fieldset>
+            
+        <fieldset>
+          <legend>Retire Subjects</legend>
+          <div>
+            <span>Select which workflow to retire from: &nbsp;</span>
+            <input
+              value={workflowOutput.retireTarget}
+              onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
+            />
+          </div>
+          
+          <div>
+            <button
+              className="action button"
+              onClick={this.doRetire.bind(this)}
+            >
+              Retire
+            </button>
+
+            {(workflowOutput.operation === 'retire')
+              ? <var className="block">
+                  {workflowOutput.status} {statusIcon(workflowOutput.status)}
+                </var>
+              : null
+            }
+            {(workflowOutput.operation === 'retire' && workflowOutput.statusMessage && workflowOutput.statusMessage.length > 0)
+              ? <var className="error block">{workflowOutput.statusMessage}</var>
+              : null
+            }
+          </div>
+            
         </fieldset>
       </form>
     )
@@ -42,7 +108,8 @@ class ProcessAndOutput extends React.Component {
   doExport () {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON()
-    const csvData = parse(selection, {})
+    let csvData = ''
+    if (selection.length > 0) csvData = parse(selection, {})
     
     const fileStream = streamSaver.createWriteStream('subject-assistant.csv', {})
     
@@ -51,6 +118,47 @@ class ProcessAndOutput extends React.Component {
     
     new Response(csvData).body.pipeTo(fileStream).then(onSuccess, onError)
   }
+
+  doMove () {
+    const workflowOutput = this.context.workflowOutput
+    const mlSelection = this.context.mlSelection
+    const selection = mlSelection.selection.toJSON() || []
+    const subjectIds = getUniqueSubjectIds(selection)
+    
+    const moveTarget = workflowOutput.moveTarget.trim()
+    
+    if (moveTarget.length === 0) {
+      // TODO: better warnings
+      alert('Please specify a Subject Set to which these Subjects will be moved')
+      return
+    }
+    
+    workflowOutput.move(subjectIds, moveTarget)
+  }
+
+  doRetire () {
+    const workflowOutput = this.context.workflowOutput
+    const mlSelection = this.context.mlSelection
+    const selection = mlSelection.selection.toJSON() || []
+    const subjectIds = getUniqueSubjectIds(selection)
+    
+    const retireTarget = workflowOutput.retireTarget.trim()
+    
+    if (retireTarget.length === 0) {
+      // TODO: better warnings
+      alert('Please specify a Workflow from which these Subjects will be retired')
+      return
+    }
+    
+    workflowOutput.retire(subjectIds, retireTarget)
+  }
+}
+
+function getUniqueSubjectIds (selection) {
+  if (!selection) return []
+  return selection
+  .map(image => image.meta && image.meta.subject_id)
+  .filter((subject_id, index, arr) => arr.indexOf(subject_id) === index)
 }
 
 ProcessAndOutput.contextType = AppContext
