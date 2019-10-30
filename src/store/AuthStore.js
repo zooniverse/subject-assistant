@@ -1,4 +1,4 @@
-import { flow, types } from 'mobx-state-tree'
+import { flow, getRoot, types } from 'mobx-state-tree'
 import oauth from 'panoptes-client/lib/oauth'
 
 import { ASYNC_STATES } from '@util'
@@ -15,12 +15,16 @@ const AuthStore = types.model('AuthStore', {
   },
 
   checkUser: flow(function * checkUser () {
+    const root = getRoot(self)
     self.status = ASYNC_STATES.FETCHING
     
     try {
       const user = yield oauth.checkCurrent()
       self.status = ASYNC_STATES.SUCCESS
       self.user = user
+      
+      root.userResources.reset()
+      if (user) root.userResources.fetch()
     } catch (err) {
       self.status = ASYNC_STATES.ERROR
     }
@@ -38,14 +42,6 @@ const AuthStore = types.model('AuthStore', {
       self.status = ASYNC_STATES.ERROR
     }
   }),
-
-  setStatus (val) {
-    self.status = val
-  },
-
-  setUser (val) {
-    self.user = val
-  },
 }))
 
 const computeRedirectURL = (window) => {
