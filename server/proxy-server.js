@@ -1,5 +1,6 @@
 const express = require('express')
 const request = require('request')  // Note: superagent doesn't work well in this scenario.
+require('dotenv').config()
 
 const server = express()
 

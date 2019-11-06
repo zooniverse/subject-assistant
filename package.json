@@ -12,6 +12,7 @@
   "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
   "license": "Apache-2.0",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "json2csv": "^4.5.2",
     "mobx": "^5.11.0",
