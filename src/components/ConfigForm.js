@@ -25,24 +25,9 @@ class ConfigForm extends React.Component {
         <h2>App Config</h2>
         <p>{state.message}</p>
       
-        {Object.keys(config).map((key) => {
-          return (
-            <fieldset key={key}>
-              <legend>{key}</legend>
-              <div className="flex-row">
-                <input
-                  className="long text input flex-item grow"
-                  defaultValue={config[key]}
-                  onChange={(e) => {
-                    localStorage.setItem(key, e.target.value)
-                    this.setState({ message: MESSAGE.CHANGED })
-                  }}
-                />
-              </div>
-            </fieldset>
-          )
-        })}
-  
+        {this.render_field('appRootUrl')}
+        {this.render_field('proxyUrl')}
+
         <div className="action panel">
           <button
             className="danger button"
@@ -58,6 +43,24 @@ class ConfigForm extends React.Component {
           </button>
         </div>
       </form>
+    )
+  }
+  
+  render_field (key) {
+    return (
+      <fieldset key={key}>
+        <legend>{key}</legend>
+        <div className="flex-row">
+          <input
+            className="long text input flex-item grow"
+            defaultValue={config[key]}
+            onChange={(e) => {
+              localStorage.setItem(key, e.target.value)
+              this.setState({ message: MESSAGE.CHANGED })
+            }}
+          />
+        </div>
+      </fieldset>
     )
   }
 }

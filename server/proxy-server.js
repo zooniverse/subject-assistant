@@ -1,11 +1,13 @@
 const express = require('express')
 const request = require('request')  // Note: superagent doesn't work well in this scenario.
+require('dotenv').config()
 
 const server = express()
 
 const config = {
   origins: process.env.ORIGINS || 'http://localhost:3000;http://local.zooniverse.org:3000',
   targets: process.env.TARGETS || 'http://example.com;https://www.zooniverse.org/',
+  url_for_msml: process.env.URL_FOR_MSML || '',  // Microsofot Machine Learning
   port: process.env.PORT || 3666,
 }
 
@@ -27,7 +29,15 @@ server.use(function (req, res, next) {
 
 function proxyGet (req, res) {
   try {
-    const url = req.query.url || ''
+    let url = req.query.url || ''
+    const predefined_target = req.query.target || ''
+    
+    switch (predefined_target) {
+      case 'msml':
+        url = `${config.url_for_msml}${url}`
+        break
+    }
+    
     const acceptableTargets = config.targets.split(';')
     const urlIsAcceptable = acceptableTargets.find(function (target) {
       return url.toLowerCase().startsWith(target.toLowerCase())

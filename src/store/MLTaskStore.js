@@ -39,8 +39,8 @@ const MLTaskStore = types.model('MLTaskStore', {
     self.status = ASYNC_STATES.FETCHING
     self.statusMessage = undefined
 
-    const serviceUrl = `${config.mlServiceUrl}${TASKS_ENDPOINT}/${self.id}`
-    const proxiedUrl = `${config.proxyUrl}?url=${encodeURIComponent(serviceUrl)}`
+    const serviceUrl = `${TASKS_ENDPOINT}/${self.id}`
+    const proxiedUrl = `${config.proxyUrl}?url=${encodeURIComponent(serviceUrl)}&target=msml`
     
     const url = (!root.demoMode)
       ? proxiedUrl
