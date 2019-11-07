@@ -14,7 +14,6 @@ if (!env.match(/^(production|staging|development)$/)) {
 
 const config = {
   appRootUrl: localStorage.getItem('appRootUrl') || `${window.location.origin}${window.location.pathname}`,
-  mlServiceUrl: localStorage.getItem('mlServiceUrl') || 'https://www.zooniverse.org/api',
   proxyUrl: localStorage.getItem('proxyUrl') || 'http://localhost:3666',
   panoptesAppId: (env === 'production')
     ? ''
