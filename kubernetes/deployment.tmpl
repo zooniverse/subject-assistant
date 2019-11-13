@@ -19,3 +19,19 @@ spec:
           image: zooniverse/zoo-ml-subject-assistant:__IMAGE_TAG__
           ports:
             - containerPort: 80
+          env:
+            - name: ORIGINS
+              valueFrom:
+                secretKeyRef:
+                  name: subject-assistant-proxy-conf
+                  key: ORIGINS
+            - name: TARGETS
+              valueFrom:
+                secretKeyRef:
+                  name: subject-assistant-proxy-conf
+                  key: TARGETS
+            - name: URL_FOR_MSML
+              valueFrom:
+                secretKeyRef:
+                  name: subject-assistant-proxy-conf
+                  key: URL_FOR_MSML
