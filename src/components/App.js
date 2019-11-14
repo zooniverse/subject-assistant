@@ -44,7 +44,7 @@ class App extends React.Component {
                 <Route path="/config" component={ConfigForm} />
               </main>
           }
-          <footer>Footer</footer>
+          <footer>v1.0</footer>
         </>
       </Router>
     )
