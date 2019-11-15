@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
 import { ASYNC_STATES } from '@util'
@@ -39,9 +39,20 @@ class App extends React.Component {
               </main>
             :
               <main>
-                <Route path="/" exact component={Home} />
-                <Route path="/tasks" component={MLTaskManager} />
-                <Route path="/config" component={ConfigForm} />
+                <Switch>
+                  <Route path="/" exact>
+                    <Home />
+                  </Route>
+                  <Route path="/tasks/:task_id">
+                    <MLTaskManager />
+                  </Route>
+                  <Route path="/tasks">
+                    <MLTaskManager />
+                  </Route>
+                  <Route path="/config" exact>
+                    <ConfigForm />
+                  </Route>
+                </Switch>
               </main>
           }
           <footer>v1.0</footer>
