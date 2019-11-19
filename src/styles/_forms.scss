@@ -40,3 +40,8 @@
   background: $danger-colour;
   color: $danger-contrast;
 }
+
+input[readonly] {
+  color: $mid-fore-colour;
+  background: $mid-back-colour;
+}

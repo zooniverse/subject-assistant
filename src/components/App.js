@@ -1,5 +1,5 @@
 import React from 'react'
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router, Switch, Route } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
 import { ASYNC_STATES } from '@util'
@@ -8,6 +8,7 @@ import ConfigForm from './ConfigForm'
 import Home from './Home'
 import Header from './Header'
 import MLTaskManager from './MLTaskManager'
+import Status401 from './Status401'
 
 import demoDataForTask from '@demo-data/task.txt'
 import demoDataForResults from '@demo-data/detections.txt'
@@ -27,6 +28,7 @@ class App extends React.Component {
   
   render () {
     const initialised = this.context.auth.status === ASYNC_STATES.SUCCESS
+    const user = this.context.auth.user
     
     return (
       <Router>
@@ -39,9 +41,26 @@ class App extends React.Component {
               </main>
             :
               <main>
-                <Route path="/" exact component={Home} />
-                <Route path="/tasks" component={MLTaskManager} />
-                <Route path="/config" component={ConfigForm} />
+                <Switch>
+                  <Route path="/" exact>
+                    <Home />
+                  </Route>
+                  <Route path="/tasks/:task_id">
+                    {(user)
+                      ? <MLTaskManager />
+                      : <Status401 />
+                    }
+                  </Route>
+                  <Route path="/tasks">
+                    {(user)
+                      ? <MLTaskManager />
+                      : <Status401 />
+                    }
+                  </Route>
+                  <Route path="/config" exact>
+                    <ConfigForm />
+                  </Route>
+                </Switch>
               </main>
           }
           <footer>v1.0</footer>

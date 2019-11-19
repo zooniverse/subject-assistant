@@ -4,14 +4,13 @@ import config from '@config'
 import superagent from 'superagent'
 
 const TASKS_ENDPOINT = '/task'
-const TASK_ID_STORAGE_KEY = 'mlTaskId'
 const DEMO_URL = `${config.appRootUrl}demo-data/task.txt`
 
 const MLTaskStore = types.model('MLTaskStore', {
   
   status: types.optional(types.string, ASYNC_STATES.IDLE),
   statusMessage: types.maybe(types.string),
-  id: types.optional(types.string, localStorage.getItem(TASK_ID_STORAGE_KEY) || ''),  // ID of the ML Task, specified by the user.
+  id: types.optional(types.string, ''),  // ID of the ML Task, specified by the user.
   data: types.frozen({}),  // Data related to the ML Task itself.
   
   // Data from the results file, which is linked to from the ML Task, is stored in the MLResultsStore.
@@ -28,8 +27,8 @@ const MLTaskStore = types.model('MLTaskStore', {
   },
 
   setId (val) {
+    if (self.id !== val) self.reset()
     self.id = val
-    localStorage.setItem(TASK_ID_STORAGE_KEY, val)
   },
   
   fetch: flow(function * fetch () {
