@@ -8,6 +8,7 @@ import ConfigForm from './ConfigForm'
 import Home from './Home'
 import Header from './Header'
 import MLTaskManager from './MLTaskManager'
+import Status401 from './Status401'
 
 import demoDataForTask from '@demo-data/task.txt'
 import demoDataForResults from '@demo-data/detections.txt'
@@ -27,6 +28,7 @@ class App extends React.Component {
   
   render () {
     const initialised = this.context.auth.status === ASYNC_STATES.SUCCESS
+    const user = this.context.auth.user
     
     return (
       <Router>
@@ -44,10 +46,16 @@ class App extends React.Component {
                     <Home />
                   </Route>
                   <Route path="/tasks/:task_id">
-                    <MLTaskManager />
+                    {(user)
+                      ? <MLTaskManager />
+                      : <Status401 />
+                    }
                   </Route>
                   <Route path="/tasks">
-                    <MLTaskManager />
+                    {(user)
+                      ? <MLTaskManager />
+                      : <Status401 />
+                    }
                   </Route>
                   <Route path="/config" exact>
                     <ConfigForm />
