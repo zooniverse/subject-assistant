@@ -36,6 +36,15 @@ article {
           content: ">";
           margin-right: 1em;
         }
+        
+        &.go-back {
+          background: $sub-action-colour;
+          color: $sub-action-contrast;
+          
+          &:before {
+            content: "<";
+          }
+        }
       }
     }
   }

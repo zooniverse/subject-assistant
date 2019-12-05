@@ -14,7 +14,7 @@ export default function HomePage () {
       </div>
       <ul className="nav-list">
         <li><Link to="/intro">Intro</Link></li>
-        <li><Link to="/hamlet">Step 1: Send Photos to ML Service</Link></li>
+        <li><Link to="/send">Step 1: Send Photos to ML Service</Link></li>
         <li><Link to="/tasks">Step 2: Review Photos from ML Service</Link></li>
         <li><Link to="/config">Advanced: App Config</Link></li>
       </ul>

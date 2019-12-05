@@ -1,6 +1,9 @@
 import React from 'react'
 import { observer } from 'mobx-react'
+import { Link } from 'react-router-dom'
+
 import AppContext from '@store'
+
 import Fetch from './Fetch'
 import DisplayAndSelect from './DisplayAndSelect'
 import ProcessAndOutput from './ProcessAndOutput'
@@ -30,6 +33,10 @@ class MLTaskManager extends React.Component {
         <DisplayAndSelect />
       
         <ProcessAndOutput />
+        
+        <ul className="nav-list">
+          <li><Link className="go-back" to="/">Back</Link></li>
+        </ul>
 
       </article>
     )

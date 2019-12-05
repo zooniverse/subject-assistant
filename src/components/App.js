@@ -7,7 +7,9 @@ import { ASYNC_STATES } from '@util'
 import Header from './Header'
 
 import ConfigForm from './ConfigForm'
+import HamletPage from './HamletPage'
 import HomePage from './HomePage'
+import IntroPage from './IntroPage'
 import MLTaskManager from './MLTaskManager'
 import Status401 from './Status401'
 import Status404 from './Status404'
@@ -46,6 +48,12 @@ class App extends React.Component {
                 <Switch>
                   <Route path="/" exact>
                     <HomePage />
+                  </Route>
+                  <Route path="/intro" exact>
+                    <IntroPage />
+                  </Route>
+                  <Route path="/send" exact>
+                    <HamletPage />
                   </Route>
                   <Route path="/tasks/:task_id" exact>
                     {(user)
