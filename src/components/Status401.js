@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import AppContext from '@store'
 
-function Status401() {
+function Status401 () {
   const store = useContext(AppContext)
   return (
     <article>
