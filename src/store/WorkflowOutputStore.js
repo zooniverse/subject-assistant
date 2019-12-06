@@ -18,6 +18,14 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
     self.operation = ''
     self.status = ASYNC_STATES.IDLE
     self.statusMessage = undefined
+    
+    self.moveTarget = ''
+    self.retireTarget = ''
+  },
+  
+  resetTargets () {
+    self.moveTarget = ''
+    self.retireTarget = ''
   },
   
   setMoveTarget (val) {
