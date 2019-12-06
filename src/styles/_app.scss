@@ -15,7 +15,7 @@ $back-colour: #fff;
 :root {
   background: $back-colour;
   color: $fore-colour;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 16px;
 }
 
@@ -54,7 +54,8 @@ html, body {
     }
     
     nav {
-      flex-basis: 100%;
+      flex: 1 1 100%;
+      flex-wrap: wrap;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -77,8 +78,17 @@ html, body {
         }
       }
       
+      .filler {
+        flex: 1 1 auto;
+      }
+      
       .user {
+        flex: 0 0 auto;
+        padding: 0.5em 1em;
         
+        span {
+          margin-right: 1em;
+        }
       }
     }
   }
@@ -91,6 +101,7 @@ html, body {
   > footer {
     background: $primary-colour;
     color: $back-colour;
+    padding: 0.5em 1em;
     flex: 0 0 auto;
   }
 }
