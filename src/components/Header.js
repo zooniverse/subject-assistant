@@ -8,19 +8,11 @@ function Header() {
   const store = useContext(AppContext)
   return (
     <header>
+      <img class="zooniverse logo" src="/assets/zooniverse-icon-web-white-small.png" alt="Zooniverse logo" />
       <h1>Zoo ML Subject Assistant</h1>
       <nav>
         <Link to="/"><i className="material-icons">home</i></Link>
-        <label
-          className={(store.demoMode) ? 'active' : ''}
-        >
-          <input
-            type="checkbox"
-            checked={store.demoMode}
-            onChange={store.toggleDemoMode}
-          />
-          Demo Mode
-        </label>
+        <span class="filler"></span>
         <div className="user">
           {(store.auth.user)
             ? <span>{store.auth.user.display_name || store.auth.user.login}</span>

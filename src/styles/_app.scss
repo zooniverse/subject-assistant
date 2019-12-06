@@ -2,6 +2,8 @@ $primary-colour: #488;
 $primary-contrast: #eee;
 $action-colour: #48c;
 $action-contrast: #fff;
+$sub-action-colour: #68a;
+$sub-action-contrast: #fff;
 $danger-colour: #c44;
 $danger-contrast: #fff;
 $fore-colour: #444;
@@ -13,7 +15,7 @@ $back-colour: #fff;
 :root {
   background: $back-colour;
   color: $fore-colour;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 16px;
 }
 
@@ -29,16 +31,31 @@ html, body {
   min-height: 100vh;
   
   > header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
     background: $primary-colour;
     color: $back-colour;
     flex: 0 0 auto;
     
+    
+    img.zooniverse.logo {
+      display: inline-block;
+      flex: 0 0 auto;
+      height: 2em;
+      margin: auto 1em;
+    }
+    
     h1 {
+      flex: 1 1 auto;
       padding: 0.5rem 1rem;
       margin: 0;
     }
     
     nav {
+      flex: 1 1 100%;
+      flex-wrap: wrap;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -61,8 +78,17 @@ html, body {
         }
       }
       
+      .filler {
+        flex: 1 1 auto;
+      }
+      
       .user {
+        flex: 0 0 auto;
+        padding: 0.5em 1em;
         
+        span {
+          margin-right: 1em;
+        }
       }
     }
   }
@@ -75,10 +101,15 @@ html, body {
   > footer {
     background: $primary-colour;
     color: $back-colour;
+    padding: 0.5em 1em;
     flex: 0 0 auto;
   }
 }
 
 a {
   color: $action-colour;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
 }

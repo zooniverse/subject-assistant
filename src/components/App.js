@@ -4,11 +4,15 @@ import { observer } from 'mobx-react'
 import AppContext from '@store'
 import { ASYNC_STATES } from '@util'
 
-import ConfigForm from './ConfigForm'
-import Home from './Home'
 import Header from './Header'
+
+import ConfigForm from './ConfigForm'
+import HamletPage from './HamletPage'
+import HomePage from './HomePage'
+import IntroPage from './IntroPage'
 import MLTaskManager from './MLTaskManager'
 import Status401 from './Status401'
+import Status404 from './Status404'
 
 import demoDataForTask from '@demo-data/task.txt'
 import demoDataForResults from '@demo-data/detections.txt'
@@ -43,15 +47,24 @@ class App extends React.Component {
               <main>
                 <Switch>
                   <Route path="/" exact>
-                    <Home />
+                    <HomePage />
                   </Route>
-                  <Route path="/tasks/:task_id">
+                  <Route path="/intro" exact>
+                    <IntroPage />
+                  </Route>
+                  <Route path="/send" exact>
+                    {(user)
+                      ? <HamletPage />
+                      : <Status401 />
+                    }
+                  </Route>
+                  <Route path="/tasks/:task_id" exact>
                     {(user)
                       ? <MLTaskManager />
                       : <Status401 />
                     }
                   </Route>
-                  <Route path="/tasks">
+                  <Route path="/tasks" exact>
                     {(user)
                       ? <MLTaskManager />
                       : <Status401 />
@@ -59,6 +72,9 @@ class App extends React.Component {
                   </Route>
                   <Route path="/config" exact>
                     <ConfigForm />
+                  </Route>
+                  <Route path="*">
+                    <Status404 />
                   </Route>
                 </Switch>
               </main>
