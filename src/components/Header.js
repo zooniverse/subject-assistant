@@ -8,6 +8,7 @@ function Header() {
   const store = useContext(AppContext)
   return (
     <header>
+      <img class="zooniverse logo" src="/assets/zooniverse-icon-web-white-small.png" alt="Zooniverse logo" />
       <h1>Zoo ML Subject Assistant</h1>
       <nav>
         <Link to="/"><i className="material-icons">home</i></Link>

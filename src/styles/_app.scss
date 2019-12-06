@@ -31,16 +31,30 @@ html, body {
   min-height: 100vh;
   
   > header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
     background: $primary-colour;
     color: $back-colour;
     flex: 0 0 auto;
     
+    
+    img.zooniverse.logo {
+      display: inline-block;
+      flex: 0 0 auto;
+      height: 2em;
+      margin: auto 1em;
+    }
+    
     h1 {
+      flex: 1 1 auto;
       padding: 0.5rem 1rem;
       margin: 0;
     }
     
     nav {
+      flex-basis: 100%;
       display: flex;
       flex-direction: row;
       align-items: center;
