@@ -2,7 +2,7 @@
 
 Machine Learning-assisted web app for processing Zooniverse Subjects.
 
-http://subject-assistant.zooniverse.org/app/
+https://subject-assistant.zooniverse.org/
 
 ## Usage
 
@@ -84,3 +84,17 @@ External dependencies:
 - GitHub Pages for hosting Front End app
 - Zooniverse Kubernetes system for hosting Proxy Server
 - Both set up to use `*.zooniverse.org` domain names.
+
+### Special Dev Notes: Deployment Wonkiness
+
+Hi, Shaun here. As of 2019.12.06 there is an issue that I haven't correctly solved: there are TWO `index.html` files, which might result in a messy deployment.
+
+- The first `index.html` created for production environment is created by running `npm run build` and is found in `/app/index.html`.
+- The second `index.html` is found in the root `/` folder, and is the actual `index.html` users see when they go to `https://subject-assistant.zooniverse.org/`
+
+This wonkiness was the result of a change of deployment targets, from serving `/app` on one of our static site buckets to simply serving `/` from github.io via `https://subject-assistant.zooniverse.org/`
+
+For the moment, the manual solution is to:
+- run `npm run build`
+- copy `/app/index.html` to `/index.html`
+- change `<script src="./main.js"></script>` to `<script src="./app/main.js"></script>`
