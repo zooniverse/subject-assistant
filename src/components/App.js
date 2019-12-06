@@ -53,7 +53,10 @@ class App extends React.Component {
                     <IntroPage />
                   </Route>
                   <Route path="/send" exact>
-                    <HamletPage />
+                    {(user)
+                      ? <HamletPage />
+                      : <Status401 />
+                    }
                   </Route>
                   <Route path="/tasks/:task_id" exact>
                     {(user)
