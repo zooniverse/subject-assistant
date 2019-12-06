@@ -16,12 +16,19 @@ class MLTaskManager extends React.Component {
   render () {
     return (
       <article className="mlTaskManager">
-        <h2>ML Task Manager</h2>
+        <h2>Step 2: Review Photos from ML Service</h2>
       
         <div className="info text">
           <p>
-            The Task Manager lets you retrieve the Subject images <em>(from animal camera traps)</em> you submitted to the external ML Service, <em>along with machine-tagged detection data.</em> Using this new machine-tagged data (which indicates the likelihood that your Subject image is <em>empty of animals or otherwise</em>), you can process the Subject images to an output - e.g. moving non-empty Subjects to a new worfklow for volunteers to examine, retiring empty Subjects, or download the list of images (along with their Zooniverse Subject data and the new ML detection data) as a CSV.
+            At this step, you can retrieve the Subject images <em>(from animal camera traps)</em> you submitted to the external ML Service, <em>along with machine-tagged detection data.</em> Using this new machine-tagged data (which indicates the likelihood that your Subject image is <em>empty of animals or otherwise</em>), you can process the Subject images to an output - e.g. moving non-empty Subjects to a new worfklow for volunteers to examine, retiring empty Subjects, or download the list of images (along with their Zooniverse Subject data and the new ML detection data) as a CSV.
           </p>
+          <p>Notes:</p>
+          <ul>
+            <li>The <b>ML Task Request ID</b> is the ID of job that you asked the Machine Learning service to perform on your images. You should have received it when you completed Step 1, usually from a direct URL to this page: e.g. <code>https://subject-assistant.zooniverse.org/#/tasks/1000</code></li>
+            <li>A <b>Subject</b> is a unit of data on the Zooniverse platform. A Subject can have many images, but if you're new to the Zooniverse system, you can assume that one image = one Subject.</li>
+            <li>If you want to <b>retire some Subjects</b>, there needs to be a <b>Workflow</b> to be <i>retired from.</i></li>
+            <li>If you want to <b>move some Subjects</b>, there needs to be a <b>Subject Set</b> to be <i>moved to.</i></li>
+          </ul>
         </div>
         
         <Fetch />

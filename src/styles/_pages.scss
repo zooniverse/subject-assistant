@@ -11,9 +11,14 @@ article {
     margin: 1em 0;
     padding: 0.5em 1em;
     
-    > p, > ol {
+    p, ol, ul {
       font-size: 0.9em;
       line-height: 1.5em;
+    }
+    
+    li {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
     }
   }
   
