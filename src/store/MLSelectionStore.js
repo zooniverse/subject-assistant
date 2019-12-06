@@ -1,5 +1,5 @@
 import { types, getRoot } from 'mobx-state-tree'
-import { SELECTION_OPERATORS, SELECTION_THRESHOLDS } from '@util'
+import { SELECTION_WITH_IMAGES, SELECTION_OPERATORS, SELECTION_THRESHOLDS } from '@util'
 
 const NUM_OF_SAMPLES = 20
 
@@ -8,6 +8,7 @@ const MLSelectionStore = types.model('MLSelectionStore', {
   selection: types.array(types.frozen({})),
   sample: types.array(types.frozen({})),
   
+  withImages: types.optional(types.string, SELECTION_WITH_IMAGES.AT_LEAST_ONE_IMAGE),
   operator: types.optional(types.string, SELECTION_OPERATORS.GREATER_THAN),
   threshold: types.optional(types.integer, SELECTION_THRESHOLDS.DEFAULT),
   
@@ -17,6 +18,10 @@ const MLSelectionStore = types.model('MLSelectionStore', {
     self.selection = []
   },
 
+  setWithImages (val) {
+    self.withImages = val
+  },
+  
   setOperator (val) {
     self.operator = val
   },

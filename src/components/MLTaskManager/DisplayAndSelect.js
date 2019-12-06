@@ -1,7 +1,7 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
-import { ASYNC_STATES, SELECTION_OPERATORS, SELECTION_THRESHOLD, stopEvent } from '@util'
+import { ASYNC_STATES, SELECTION_WITH_IMAGES, SELECTION_OPERATORS, SELECTION_THRESHOLD, stopEvent } from '@util'
 
 class DisplayAndSelect extends React.Component {
   constructor (props) {
@@ -42,7 +42,21 @@ class DisplayAndSelect extends React.Component {
     return (
       <div className="panel">
         <p>
-          <span>You are selecting images that are &nbsp;</span>
+          <span>You are selecting Subjects &nbsp;</span>
+
+          <select
+            onChange={(e) => { mlSelection.setWithImages(e.target.value) }}
+            value={mlSelection.withImages}
+          >
+            {Object.keys(SELECTION_WITH_IMAGES).map(key => (
+              <option
+                key={`selection-withImages-${key}`}
+                val={SELECTION_WITH_IMAGES[key]}
+              >
+                {SELECTION_WITH_IMAGES[key]}
+              </option>
+            ))}
+          </select>
 
           <select
             onChange={(e) => { mlSelection.setOperator(e.target.value) }}

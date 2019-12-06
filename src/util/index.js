@@ -19,6 +19,11 @@ export const API_RESPONSE = {
   },
 }
 
+export const SELECTION_WITH_IMAGES = {
+  AT_LEAST_ONE_IMAGE: 'with at least one image that is',
+  EVERY_IMAGE: 'where every image is',
+}
+
 export const SELECTION_OPERATORS = {
   LESS_THAN: '<=',
   GREATER_THAN: '>=',
