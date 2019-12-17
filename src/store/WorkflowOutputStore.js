@@ -46,7 +46,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
     try {
       const data = yield superagent
         .post(url)
-        .withCredentials()
+        // .withCredentials()  // Do NOT use this after Dec 2019, due to changes with the Panoptes API.
         .set('Accept', 'application/vnd.api+json; version=1')
         .set('Authorization', apiClient.headers.Authorization)
         .set('Content-Type', 'application/json')
@@ -89,7 +89,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
     try {
       yield superagent
         .post(url)
-        .withCredentials()
+        // .withCredentials()  // Do NOT use this after Dec 2019, due to changes with the Panoptes API.
         .set('Accept', 'application/vnd.api+json; version=1')
         .set('Authorization', apiClient.headers.Authorization)
         .set('Content-Type', 'application/json')
