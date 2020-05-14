@@ -79,7 +79,7 @@ class App extends React.Component {
                 </Switch>
               </main>
           }
-          <footer>v1.0</footer>
+          <footer></footer>
         </>
       </Router>
     )

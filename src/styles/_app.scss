@@ -26,6 +26,8 @@ $mid-colour: #ccc;
 $mid-back-colour: #efefef;
 $back-colour: #fff;
 
+$max-readable-width: 50rem;
+
 :root {
   background: $back-colour;
   color: $fore-colour;
@@ -46,14 +48,18 @@ html, body {
   min-height: 100vh;
   
   > header {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
     background: $primary-colour;
     color: $back-colour;
     flex: 0 0 auto;
     
+    > div {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      max-width: $max-readable-width;
+      margin: 0 auto;
+    }
     
     img.zooniverse.logo {
       display: inline-block;
@@ -74,6 +80,8 @@ html, body {
       display: flex;
       flex-direction: row;
       align-items: stretch;
+      max-width: $max-readable-width;
+      margin: 0 auto;
       
       a {
         color: $primary-contrast;
