@@ -1,22 +1,37 @@
-$primary-colour: #488;
-$primary-contrast: #eee;
-$action-colour: #48c;
-$action-contrast: #fff;
-$sub-action-colour: #68a;
-$sub-action-contrast: #fff;
-$danger-colour: #c44;
-$danger-contrast: #fff;
-$fore-colour: #444;
+/* Zooniverse Colours */
+$teal: #00979d;
+$dark-teal: #005d69;
+$light-teal: #addde0;
+$zooniverse-background: #2D2D2D;
+$dark-grey: #5c5c5c;
+$mid-grey: #a6a7a9;
+$light-grey: #eff2f5;
+$gold: #F0B200;
+$tomato: #e45950;
+$green: #078f52;
+$light-gold: #f6d885;
+$blue: #43bbfd;
+
+$primary-colour: $teal;
+$primary-contrast: $light-grey;  
+$action-colour: $blue;
+$action-contrast: $dark-grey;
+$sub-action-colour: $dark-grey;
+$sub-action-contrast: $light-grey;
+$danger-colour: $tomato;
+$danger-contrast: $light-grey;
+$fore-colour: $dark-grey;
 $mid-fore-colour: #888;
 $mid-colour: #ccc;
-$mid-back-colour: #eee;
+$mid-back-colour: #efefef;
 $back-colour: #fff;
 
 :root {
   background: $back-colour;
   color: $fore-colour;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 16px;
+  font-family: 'Karla', sans-serif;
+  font-size: 14px;
+  line-height: 22px;
 }
 
 html, body {
@@ -111,5 +126,7 @@ a {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Karla', sans-serif;
+  font-weight: bold;
+  line-height: normal;
 }
