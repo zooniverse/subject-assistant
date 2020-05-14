@@ -73,11 +73,12 @@ html, body {
       flex-wrap: wrap;
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: stretch;
       
       a {
         color: $primary-contrast;
         padding: 0.5rem 1rem;
+        text-decoration: none;
         
         &:hover, &:focus {
           background: $action-colour;

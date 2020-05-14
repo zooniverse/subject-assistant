@@ -12,6 +12,7 @@ function Header() {
       <h1>Zoo ML Subject Assistant</h1>
       <nav>
         <Link to="/"><i className="material-icons">home</i></Link>
+        <Link to="/intro">Intro</Link>
         <span class="filler"></span>
         <div className="user">
           {(store.auth.user)
