@@ -21,7 +21,8 @@ export default function HamletPage () {
         </ol>
       </div>
       <ul className="nav-list">
-        <li><a href={config.hamletUrl}>Go to Hamlet</a></li>
+        <li><a href={config.hamletUrl} target="_blank">Go to Hamlet</a> (do this first)</li>
+        <li><Link to="/tasks">Go to Step 2</Link> (after you've gone to Hamlet)</li>
         <li><Link className="go-back" to="/">Back</Link></li>
       </ul>
     </article>

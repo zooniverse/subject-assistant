@@ -20,7 +20,7 @@ class MLTaskManager extends React.Component {
       
         <div className="info text">
           <p>
-            At this step, you can retrieve the Subject images <em>(from animal camera traps)</em> you submitted to the external ML Service, <em>along with machine-tagged detection data.</em> Using this new machine-tagged data (which indicates the likelihood that your Subject image is <em>empty of animals or otherwise</em>), you can process the Subject images to an output - e.g. moving non-empty Subjects to a new worfklow for volunteers to examine, retiring empty Subjects, or download the list of images (along with their Zooniverse Subject data and the new ML detection data) as a CSV.
+            At this step, you can retrieve the Subject images <b>(from animal camera traps)</b> you submitted to the external ML Service, <b>along with machine-tagged detection data.</b> Using this new machine-tagged data (which indicates the likelihood that your Subject image is <b>empty of animals or otherwise</b>), you can process the Subject images to an output - e.g. moving non-empty Subjects to a new worfklow for volunteers to examine, retiring empty Subjects, or download the list of images (along with their Zooniverse Subject data and the new ML detection data) as a CSV.
           </p>
           <p>Notes:</p>
           <ul>

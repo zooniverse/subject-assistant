@@ -35,15 +35,15 @@
 }
 
 .button {
-  background: $primary-colour;
-  color: $primary-contrast;
+  background: $action-colour;
+  color: $action-contrast;
   cursor: pointer;
   display: inline-block;
 }
 
 .action.button {
-  background: $action-colour;
-  color: $action-contrast;
+  background: $highlight-colour;
+  color: $highlight-contrast;
 }
 
 .danger.button {

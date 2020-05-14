@@ -12,10 +12,12 @@ $green: #078f52;
 $light-gold: #f6d885;
 $blue: #43bbfd;
 
-$primary-colour: $teal;
-$primary-contrast: $light-grey;  
-$action-colour: $blue;
-$action-contrast: $dark-grey;
+$primary-colour: $dark-teal;
+$primary-contrast: $light-grey;
+$highlight-colour: $teal;
+$highlight-contrast: $light-grey;
+$action-colour: $teal;
+$action-contrast: $light-grey;
 $sub-action-colour: $dark-grey;
 $sub-action-contrast: $light-grey;
 $danger-colour: $tomato;
@@ -26,6 +28,7 @@ $mid-colour: #ccc;
 $mid-back-colour: #efefef;
 $back-colour: #fff;
 
+$max-header-width: 60rem;
 $max-readable-width: 50rem;
 
 :root {
@@ -57,7 +60,7 @@ html, body {
       flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
-      max-width: $max-readable-width;
+      max-width: $max-header-width;
       margin: 0 auto;
     }
     
@@ -80,7 +83,7 @@ html, body {
       display: flex;
       flex-direction: row;
       align-items: stretch;
-      max-width: $max-readable-width;
+      max-width: $max-header-width;
       margin: 0 auto;
       
       a {
