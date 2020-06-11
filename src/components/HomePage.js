@@ -7,7 +7,7 @@ export default function HomePage () {
       <h2>Welcome!</h2>
       <div className="info text">
         <p>
-          This is the Zooniverse Machine Learning Subject Assistant. This app was designed to help <em>Project Owners</em> on the <a href="https://www.zooniverse.org/" target="_blank">Zooniverse platform</a> to pre-select, pre-process, and/or filter out <em>image Subjects (from animal camera traps)</em> before presenting them to <em>Zooniverse volunteers</em> to classify.
+          This is the Zooniverse Machine Learning Subject Assistant. This app was designed to help <b>Project Owners</b> on the <a href="https://www.zooniverse.org/" target="_blank">Zooniverse platform</a> to pre-select, pre-process, and/or filter out <b>image Subjects (from animal camera traps)</b> before presenting them to <b>Zooniverse volunteers</b> to classify.
         </p>
         <p>If you're not sure where to start, try the <Link to="/intro">Intro</Link> page.</p>
         

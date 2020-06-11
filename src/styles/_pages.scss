@@ -1,6 +1,8 @@
 article {
   padding: 0.5rem;
   border: 1px solid $mid-colour;
+  max-width: $max-readable-width;
+  margin: 0 auto;
   
   > h2 {
     color: $primary-colour;
@@ -12,7 +14,6 @@ article {
     padding: 0.5em 1em;
     
     p, ol, ul {
-      font-size: 0.9em;
       line-height: 1.5em;
     }
     

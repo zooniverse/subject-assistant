@@ -32,18 +32,32 @@
     color: $mid-colour;
     background: $mid-back-colour;
   }
+  
+  input, select {
+    border: 1px solid $mid-colour;
+    padding: 1em;
+    margin: 0 1em;
+  }
+  
+  input:first-child, select:first-child {
+    margin-left: 0;
+  }
+  
+  input:last-child, select:last-child {
+    margin-right: 0;
+  }
 }
 
 .button {
-  background: $primary-colour;
-  color: $primary-contrast;
+  background: $action-colour;
+  color: $action-contrast;
   cursor: pointer;
   display: inline-block;
 }
 
 .action.button {
-  background: $action-colour;
-  color: $action-contrast;
+  background: $highlight-colour;
+  color: $highlight-contrast;
 }
 
 .danger.button {
