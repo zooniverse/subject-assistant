@@ -60,8 +60,6 @@ const MLTaskStore = types.model('MLTaskStore', {
       
       if (data.Status && typeof(data.Status) === 'object') {
         
-        console.log('+++ D ', data.Status.request_status)
-
         switch (data.Status.request_status) {
           case API_RESPONSE.REQUEST_STATUS.COMPLETED:
 
