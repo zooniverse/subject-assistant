@@ -10,7 +10,7 @@ export const ASYNC_STATES = {
 
 export const API_RESPONSE = {
   STATUS: {
-    NOT_FOUND: 'n',
+    NOT_FOUND: 'Not found.',
   },
   REQUEST_STATUS: {
     COMPLETED: 'completed',

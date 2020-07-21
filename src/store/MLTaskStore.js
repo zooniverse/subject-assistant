@@ -57,13 +57,15 @@ const MLTaskStore = types.model('MLTaskStore', {
       self.status = ASYNC_STATES.SUCCESS
       self.statusMessage = undefined
       self.data = data
+      
+      if (data.Status && typeof(data.Status) === 'object') {
+        
+        console.log('+++ D ', data.Status.request_status)
 
-      if (data.status && typeof(data.status) === 'object') {
-
-        switch (data.status.request_status) {
+        switch (data.Status.request_status) {
           case API_RESPONSE.REQUEST_STATUS.COMPLETED:
 
-            const url = data.status.message && data.status.message.output_file_urls && data.status.message.output_file_urls.detections
+            const url = data.Status.message && data.Status.message.output_file_urls && data.Status.message.output_file_urls.detections
             if (!url) throw new Error('ML Task did not have any valid results.')
             root.mlResults.fetch(url)
             return
@@ -73,12 +75,12 @@ const MLTaskStore = types.model('MLTaskStore', {
 
           case API_RESPONSE.REQUEST_STATUS.FAILED:
 
-            const message = data.status.message
-            if (data.status.message) throw new Error(`ML Task failed. The ML Service said: ${data.status.message}`)
+            const message = data.Status.message
+            if (data.Status.message) throw new Error(`ML Task failed. The ML Service said: ${data.Status.message}`)
             throw new Error('ML Task failed. No reason was specified.')
 
         }
-      } else if (data.status === API_RESPONSE.STATUS.NOT_FOUND) {
+      } else if (data.Status === API_RESPONSE.STATUS.NOT_FOUND) {
         throw new Error('ML Task could not be found. Please check that the Request ID is correct, and that the ML Task hasn\'t expired/been removed from the ML Service.')
       }
 
