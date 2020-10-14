@@ -42,3 +42,16 @@ spec:
                 secretKeyRef:
                   name: subject-assistant-proxy-conf
                   key: URL_FOR_MSML
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: subject-assistant-proxy
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: subject-assistant-proxy
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
