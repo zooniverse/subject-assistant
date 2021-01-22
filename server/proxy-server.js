@@ -48,7 +48,7 @@ function proxyGet (req, res) {
       // default route
       res.json({
         'revision': config.revision,
-        'usage': 'Please supply a URL via query params, e.g. ?url=$URL'
+        'usage': 'Please supply either a ?url=$URL or ?target=msml query param'
       });
 
     } else if (!urlIsAcceptable) {
