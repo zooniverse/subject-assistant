@@ -9,6 +9,7 @@ const config = {
   targets: process.env.TARGETS || 'http://example.com;https://www.zooniverse.org/',
   url_for_msml: process.env.URL_FOR_MSML || '',  // Microsofot Machine Learning
   port: process.env.PORT || 3666,
+  revision: process.env.REVISION || '',
 }
 
 server.use(function (req, res, next) {
@@ -17,13 +18,13 @@ server.use(function (req, res, next) {
   const originIsAcceptable = acceptableOrigins.find(function (target) {
     return origin.toLowerCase() === target.toLowerCase()
   })
-  
+
   if (originIsAcceptable) {
     res.header('Access-Control-Allow-Origin', origin)
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
     res.header('Access-Control-Allow-Credentials', 'true')
   }
-  
+
   next();
 });
 
@@ -31,44 +32,45 @@ function proxyGet (req, res) {
   try {
     let url = req.query.url || ''
     const predefined_target = req.query.target || ''
-    
+
     switch (predefined_target) {
       case 'msml':
         url = `${config.url_for_msml}${url}`
         break
     }
-    
+
     const acceptableTargets = config.targets.split(';')
     const urlIsAcceptable = acceptableTargets.find(function (target) {
       return url.toLowerCase().startsWith(target.toLowerCase())
     })
 
     if (url.length === 0) {
-
-      res
-        .status(500)
-        .send('No URL specified')
+      // default route
+      res.json({
+        'revision': config.revision,
+        'usage': 'Please supply a URL via query params, e.g. ?url=$URL'
+      });
 
     } else if (!urlIsAcceptable) {
-      
+
       res
-        .status(500)
-        .send('Target URL is not in the whitelist')
-      
+        .status(422)
+        .json({'error': 'Target URL is not in the whitelist'});
+
     } else {
 
       request(url, function (proxyErr, proxyRes) {
         // Note: proxyRes.body is unparsed data.
-        
+
         let status = (proxyRes && proxyRes.statusCode) || 500
         let statusMessage = (proxyRes && proxyRes.statusMessage) || 'No data'
         let data = (proxyRes && proxyRes.body) || `ERROR: ${statusMessage}`
-        
+
         if (proxyErr) {
           status = 500
           data = proxyErr.toString()
         }
-        
+
         res
           .status(status)
           .send(data)
@@ -77,7 +79,7 @@ function proxyGet (req, res) {
     }
   } catch (err) {
     const errMessage = err && err.toString() || '???'
-    
+
     res
       .status(500)
       .send(`ERROR: ${errMessage}`)
