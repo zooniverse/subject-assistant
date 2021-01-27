@@ -27,6 +27,7 @@ services:
     environment:
       - ORIGINS=${ORIGINS}
       - TARGETS=${TARGETS}
+      - REVISION=fakerevision123
     volumes:
       - ./server:/usr/src/server
 
