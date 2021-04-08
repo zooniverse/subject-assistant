@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack serve",
     "clean": "rm -fr ./app",
-    "build": "BABEL_ENV=production NODE_ENV=production npm run clean && webpack -p",
+    "build": "BABEL_ENV=production NODE_ENV=production npm run clean && webpack --mode=production",
     "proxy-server": "node server/proxy-server.js"
   },
   "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
