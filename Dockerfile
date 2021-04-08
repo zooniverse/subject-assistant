@@ -1,4 +1,4 @@
-FROM node:8 as builder
+FROM node:14 as builder
 
 RUN mkdir -p /usr/src
 WORKDIR /usr/src/
