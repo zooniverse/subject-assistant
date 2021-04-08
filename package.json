@@ -4,7 +4,7 @@
   "description": "Machine Learning-assisted web app for processing Zooniverse Subjects.",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
+    "start": "webpack serve",
     "clean": "rm -fr ./app",
     "build": "BABEL_ENV=production NODE_ENV=production npm run clean && webpack -p",
     "proxy-server": "node server/proxy-server.js"

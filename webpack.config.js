@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: [
@@ -18,6 +19,20 @@ module.exports = {
       '@demo-data': path.resolve(__dirname, 'src/demo-data/'),
     },
   },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      DEBUG: false,
+      NODE_ENV: 'development',
+      REACT_APP_ENV: false,
+      PANOPTES_ENV: 'staging',
+      PANOPTES_API_HOST: false,
+      PANOPTES_API_APPLICATION: false,
+      TALK_HOST: false,
+      SUGAR_HOST: false,
+      STAT_HOST: false,
+      OAUTH_HOST: false,
+    })
+  ],
   module: {
     rules: [
       {  // Compile JavaScript files into a single bundle
