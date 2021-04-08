@@ -11,33 +11,36 @@
   },
   "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=14"
+  },
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "json2csv": "^4.5.4",
     "mobx": "^5.15.7",
     "mobx-react": "^6.3.1",
-    "mobx-state-tree": "^3.17.2",
+    "mobx-state-tree": "^3.17.3",
     "panoptes-client": "^3.3.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-router-dom": "^5.2.0",
-    "streamsaver": "^2.0.4",
+    "streamsaver": "^2.0.5",
     "superagent": "^5.3.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.0",
-    "@babel/polyfill": "^7.11.5",
-    "@babel/preset-env": "^7.12.0",
-    "@babel/preset-react": "^7.10.4",
-    "babel-loader": "^8.1.0",
+    "@babel/core": "^7.13.15",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
     "css-loader": "^3.6.0",
     "file-loader": "^4.3.0",
     "node-sass": "^4.14.1",
     "sass-loader": "^7.3.1",
     "style-loader": "^0.23.1",
-    "webpack": "^4.44.2",
+    "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.2"
   }
 }
