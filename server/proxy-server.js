@@ -71,7 +71,7 @@ function proxyGet (req, res) {
     } else {
       superagent.get(url)
       .then(proxyRes => {        
-        let status = (proxyRes && proxyRes.statusCode) || 500
+        let status = (proxyRes.statusCode) || 500
         let data = isAValidObject(proxyRes.body)
         ? proxyRes.body  // Handles JSON responses
         : proxyRes.text || ''  // Handles everything else
