@@ -12,6 +12,17 @@ const config = {
   revision: process.env.REVISION || '',
 }
 
+/*
+Checks to see if the Response.body is a valid JSON object (instead of
+undefined or an empty {} object)
+ */
+function isAValidObject (obj) {
+  return obj && Object.keys(obj).length > 0
+}
+
+/*
+Main server functionality
+ */
 server.use(function (req, res, next) {
   const origin = req.get('origin') || ''
   const acceptableOrigins = config.origins.split(';')
@@ -58,17 +69,8 @@ function proxyGet (req, res) {
         .json({'error': 'Target URL is not in the whitelist'});
 
     } else {
-      
-      // TODO: test error handling
-
       superagent.get(url)
       .then(proxyRes => {        
-        console.log(proxyRes.text)
-        
-        function isAValidObject (obj) {
-          return obj && Object.keys(obj).length > 0
-        }
-        
         let status = (proxyRes && proxyRes.statusCode) || 500
         let data = isAValidObject(proxyRes.body)
         ? proxyRes.body  // Handles JSON responses
