@@ -1,5 +1,5 @@
 const express = require('express')
-const request = require('request')  // Note: superagent doesn't work well in this scenario.
+const superagent = require('superagent')
 require('dotenv').config()
 
 const server = express()
@@ -12,6 +12,17 @@ const config = {
   revision: process.env.REVISION || '',
 }
 
+/*
+Checks to see if the Response.body is a valid JSON object (instead of
+undefined or an empty {} object)
+ */
+function isAValidObject (obj) {
+  return obj && Object.keys(obj).length > 0
+}
+
+/*
+Main server functionality
+ */
 server.use(function (req, res, next) {
   const origin = req.get('origin') || ''
   const acceptableOrigins = config.origins.split(';')
@@ -58,31 +69,27 @@ function proxyGet (req, res) {
         .json({'error': 'Target URL is not in the whitelist'});
 
     } else {
-
-      request(url, function (proxyErr, proxyRes) {
-        // Note: proxyRes.body is unparsed data.
-
-        let status = (proxyRes && proxyRes.statusCode) || 500
-        let statusMessage = (proxyRes && proxyRes.statusMessage) || 'No data'
-        let data = (proxyRes && proxyRes.body) || `ERROR: ${statusMessage}`
-
-        if (proxyErr) {
-          status = 500
-          data = proxyErr.toString()
-        }
+      superagent.get(url)
+      .then(proxyRes => {        
+        let status = (proxyRes.statusCode) || 500
+        let data = isAValidObject(proxyRes.body)
+        ? proxyRes.body  // Handles JSON responses
+        : proxyRes.text || ''  // Handles everything else
 
         res
-          .status(status)
-          .send(data)
-
-      });
+        .status(status)
+        .send(data)
+      })
+      .catch(err => {
+        throw err
+      })
     }
   } catch (err) {
     const errMessage = err && err.toString() || '???'
 
     res
-      .status(500)
-      .send(`ERROR: ${errMessage}`)
+    .status(500)
+    .send(`ERROR: ${errMessage}`)
   }
 }
 
