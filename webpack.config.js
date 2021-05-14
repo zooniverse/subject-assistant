@@ -93,6 +93,7 @@ module.exports = {
     //contentBase: path.join(__dirname, 'app'),  // Previously, 
     contentBase: path.join(__dirname, '/'),  // Serve from the root, so we mimic how content is served from the root at https://subject-assistant.zooniverse.org/
     host: process.env.HOST || 'localhost',
+    https: true,
     watchContentBase: true,
     port: 3000
   },
