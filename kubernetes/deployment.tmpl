@@ -19,7 +19,7 @@ spec:
           resources:
             requests:
               memory: "100Mi"
-              cpu: "250m"
+              cpu: "10m"
             limits:
               memory: "100Mi"
               cpu: "500m"
@@ -41,16 +41,3 @@ spec:
                 secretKeyRef:
                   name: subject-assistant-proxy-conf
                   key: URL_FOR_MSML
----
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: subject-assistant-proxy
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: subject-assistant-proxy
-  minReplicas: 1
-  maxReplicas: 3
-  targetCPUUtilizationPercentage: 80
