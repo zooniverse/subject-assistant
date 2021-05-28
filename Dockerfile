@@ -1,4 +1,4 @@
-FROM node:14 as builder
+FROM node:14-slim as builder
 
 RUN mkdir -p /usr/src
 WORKDIR /usr/src/
