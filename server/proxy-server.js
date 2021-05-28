@@ -1,23 +1,15 @@
 const express = require('express')
-const superagent = require('superagent')
+const fetch = require('node-fetch')
 require('dotenv').config()
 
 const server = express()
 
 const config = {
-  origins: process.env.ORIGINS || 'http://localhost:3000;http://local.zooniverse.org:3000',
+  origins: process.env.ORIGINS || 'https://localhost:3000;https://local.zooniverse.org:3000',
   targets: process.env.TARGETS || 'http://example.com;https://www.zooniverse.org/',
   url_for_msml: process.env.URL_FOR_MSML || '',  // Microsofot Machine Learning
   port: process.env.PORT || 3666,
   revision: process.env.REVISION || '',
-}
-
-/*
-Checks to see if the Response.body is a valid JSON object (instead of
-undefined or an empty {} object)
- */
-function isAValidObject (obj) {
-  return obj && Object.keys(obj).length > 0
 }
 
 /*
@@ -69,15 +61,19 @@ function proxyGet (req, res) {
         .json({'error': 'Target URL is not in the whitelist'});
 
     } else {
-      superagent.get(url)
-      .then(proxyRes => {        
-        let status = (proxyRes.statusCode) || 500
-        let data = isAValidObject(proxyRes.body)
-        ? proxyRes.body  // Handles JSON responses
-        : proxyRes.text || ''  // Handles everything else
-
+      
+      // We need to use fetch instead of superagent because the latter can't
+      // handle streaming data (content-type: application/octent-stream)
+      fetch(url)
+      .then(proxyRes => {
+        // We can return either .json() or .text() here to suit the data we
+        // receive, but since we won't know the data type in advance, .text()
+        // seems more general
+        return proxyRes.text()
+      })
+      .then(data => {
         res
-        .status(status)
+        .status(200)
         .send(data)
       })
       .catch(err => {
