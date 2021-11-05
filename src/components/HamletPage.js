@@ -16,7 +16,7 @@ export default function HamletPage () {
           <li>You should now see a list of <b>Subject Sets</b>. Choose one, then click on the <b>Generate</b> button.</li>
           <li><i>(Clicking that button submits all the photos in that Subject Set to the Machine Learning Service as a "job", and that job is identified by its "ML Task ID".</i></li>
           <li>Wait a minute or so, then <b>refresh the page.</b></li>
-          <li>The page should now that your Subject Set export is "Complete", and you'll see an <b>ML Task ID.</b></li>
+          <li>The page should now show that your Subject Set export is "Complete", and you'll see an <b>ML Task ID.</b></li>
           <li>More importantly, the page will now have a <b>link</b> that says <i>"View the results on the Subject Assistant"</i> - clicking that link will take you directly to <Link to="/tasks">Step 2</Link>, with the ML Task ID pre-filled.</li>
         </ol>
       </div>
