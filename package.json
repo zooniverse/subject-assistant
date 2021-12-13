@@ -4,7 +4,7 @@
   "description": "Machine Learning-assisted web app for processing Zooniverse Subjects.",
   "main": "index.js",
   "scripts": {
-    "start": "export NODE_ENV=production ; webpack serve",
+    "start": "export NODE_ENV=production ; export PROXY_HOST=http://localhost:3666 ; webpack serve",
     "clean": "rm -fr ./app",
     "build": "export BABEL_ENV=production ; export NODE_ENV=production ; npm run clean && webpack --mode=production",
     "proxy-server": "node server/proxy-server.js"

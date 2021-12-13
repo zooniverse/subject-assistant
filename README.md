@@ -126,3 +126,5 @@ Environmental (ENV) Config Values:
   requests to. e.g. `TARGETS=http://example.com/;http://www.example.com/`
 - `URL_FOR_MSML`: URL for the Microsoft Megadetector ML service. Used by the
   Proxy Server.
+- `PROXY_HOST`: URL of the Proxy Server. Used by the Subject Assistant to find
+  the proxy. Can be overwritten via the Subject Assistant's in-app config.

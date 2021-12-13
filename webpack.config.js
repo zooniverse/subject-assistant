@@ -10,9 +10,9 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, 'app'),
   },
-  mode: "development",
+  mode: "none",
   resolve: {
-    alias: {  // Allows absolute paths in import statements, so we can `import Example from '@store/Example'` instead of `import Example from '../../src/store/Example'` 
+    alias: {  // Allows absolute paths in import statements, so we can `import Example from '@store/Example'` instead of `import Example from '../../src/store/Example'`
       '@util': path.resolve(__dirname, 'src/util/'),
       '@store': path.resolve(__dirname, 'src/store/'),
       '@config': path.resolve(__dirname, 'src/config/'),
@@ -27,6 +27,7 @@ module.exports = {
       PANOPTES_ENV: 'staging',
       PANOPTES_API_HOST: false,
       PANOPTES_API_APPLICATION: false,
+      PROXY_HOST: false,
       TALK_HOST: false,
       SUGAR_HOST: false,
       STAT_HOST: false,
@@ -90,7 +91,7 @@ module.exports = {
       'localhost',
       '.zooniverse.org'
     ],
-    //contentBase: path.join(__dirname, 'app'),  // Previously, 
+    //contentBase: path.join(__dirname, 'app'),  // Previously,
     contentBase: path.join(__dirname, '/'),  // Serve from the root, so we mimic how content is served from the root at https://subject-assistant.zooniverse.org/
     host: process.env.HOST || 'localhost',
     https: true,
