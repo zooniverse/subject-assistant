@@ -31,7 +31,7 @@ const MLTaskStore = types.model('MLTaskStore', {
     self.id = val
   },
 
-  fetch: flow(function * fetch () {
+  doFetch: flow(function * doFetch () {
     const root = getRoot(self)
 
     self.reset()
@@ -51,7 +51,7 @@ const MLTaskStore = types.model('MLTaskStore', {
         .withCredentials()
         .then(res => {
           if (res.ok) return res.body || JSON.parse(res.text)  // The latter is for demo-data
-          throw new Error('ML Task Store can\'t fetch() data')
+          throw new Error('ML Task Store can\'t doFetch() data')
         })
 
       self.status = ASYNC_STATES.SUCCESS
@@ -65,7 +65,7 @@ const MLTaskStore = types.model('MLTaskStore', {
 
             const url = data.Status.message && data.Status.message.output_file_urls && data.Status.message.output_file_urls.detections
             if (!url) throw new Error('ML Task did not have any valid results.')
-            root.mlResults.fetch(url)
+            root.mlResults.doFetch(url)
             return
 
           case API_RESPONSE.REQUEST_STATUS.RUNNING:

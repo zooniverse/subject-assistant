@@ -52,7 +52,7 @@ function Fetch (props) {
             className="action button flex-item"
             type="button"
             onClick={(e) => {
-              mlTask.fetch()
+              mlTask.doFetch()
               stopEvent(e)
               history.push(`/tasks/${mlTask.id}`)
             }}

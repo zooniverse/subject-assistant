@@ -19,7 +19,7 @@ const MLResultsStore = types.model('MLResultsStore', {
     self.data = {}
   },
 
-  fetch: flow(function * fetch (url) {
+  doFetch: flow(function * doFetch (url) {
     const root = getRoot(self)
     self.status = ASYNC_STATES.FETCHING
     self.statusMessage = undefined
@@ -36,7 +36,7 @@ const MLResultsStore = types.model('MLResultsStore', {
         .withCredentials()
         .then(res => {        
           if (res.ok) return JSON.parse(res.text)
-          throw new Error('ML Results Store couldn\'t fetch() data')
+          throw new Error('ML Results Store couldn\'t doFetch() data')
         })
 
       self.status = ASYNC_STATES.SUCCESS
