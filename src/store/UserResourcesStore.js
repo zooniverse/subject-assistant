@@ -2,7 +2,6 @@ import { flow, getRoot, types } from 'mobx-state-tree'
 import { ASYNC_STATES } from '@util'
 import config from '@config'
 import apiClient from 'panoptes-client'
-import superagent from 'superagent'
 
 const UserResourcesStore = types.model('UserResourcesStore', {
 
