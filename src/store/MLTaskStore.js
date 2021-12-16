@@ -1,7 +1,6 @@
 import { flow, getRoot, types } from 'mobx-state-tree'
 import { ASYNC_STATES, API_RESPONSE } from '@util'
 import config from '@config'
-import superagent from 'superagent'
 
 const TASKS_ENDPOINT = '/task'
 const DEMO_URL = `${config.appRootUrl}demo-data/task.txt`
@@ -46,13 +45,13 @@ const MLTaskStore = types.model('MLTaskStore', {
       : DEMO_URL
 
     try {
-      const data = yield superagent
-        .get(url)
-        .withCredentials()
-        .then(res => {
-          if (res.ok) return res.body || JSON.parse(res.text)  // The latter is for demo-data
-          throw new Error('ML Task Store can\'t doFetch() data')
-        })
+      const data = yield fetch(url, {
+        method: 'GET',
+        credentials: 'include',
+      }).then(res => {
+        if (res.ok) return res.json() || JSON.parse(res.text)  // The latter is for demo-data
+        throw new Error('ML Task Store can\'t doFetch() data')
+      })
 
       self.status = ASYNC_STATES.SUCCESS
       self.statusMessage = undefined
