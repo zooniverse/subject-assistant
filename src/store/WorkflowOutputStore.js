@@ -124,12 +124,45 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
     }
   }),
 
-  create: flow(function * createAndMoveToSubjectSet (subjectIds, subjectSetName) {
+  create: flow(function * createAndMoveToSubjectSet (subjectIds = [], subjectSetName = '', projectId = '') {
     self.operation = 'create'
     self.status = ASYNC_STATES.SENDING
     self.statusMessage = undefined
 
     console.log('+++ ', subjectSetName)
+
+    const url = `${apiClient.root}/subject_sets`
+
+    try {
+      const data = yield fetch(url, {
+        method: 'POST',
+        // credentials: 'include',  // Do not use, due to CORS issues
+        headers: {
+          'Accept': 'application/vnd.api+json; version=1',
+          'Authorization': apiClient.headers.Authorization,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          subject_sets: {
+            display_name: subjectSetName,
+            links: {
+              project: '16927',  // DEBUG
+            },
+          }
+        }),
+      }).then(res => {
+        if (res.ok) return res.json()
+        throw new Error('ML Results Store couldn\'t create a new Subject Set')
+      })
+
+      console.log('+++ data: ', data)
+
+    } catch (err) {
+      const message = err && err.toString() || undefined
+      self.status = ASYNC_STATES.ERROR
+      self.statusMessage = message
+      console.error('[WorkflowOutputStore] ', err)
+    }
   }),
 
 }))
