@@ -56,6 +56,6 @@ export function statusIcon (status) {
     case ASYNC_STATES.SENDING:
       return <i className="material-icons">sync</i>
   }
-  
+
   return null;
 }

@@ -10,19 +10,19 @@ class ProcessAndOutput extends React.Component {
   constructor (props) {
     super(props)
   }
-  
+
   render () {
     const mlTask = this.context.mlTask
     const mlResults = this.context.mlResults
     const mlSelection = this.context.mlSelection
     const workflowOutput = this.context.workflowOutput
     const userResources = this.context.userResources
-    
+
     // If the results aren't ready, don't render this component.
     if (mlTask.status !== ASYNC_STATES.SUCCESS || mlResults.status !== ASYNC_STATES.SUCCESS) {
       return null
     }
-    
+
     return (
       <form className="form" onSubmit={(e) => { return stopEvent(e) }}>
         <h2>Process Selected Images</h2>
@@ -38,7 +38,7 @@ class ProcessAndOutput extends React.Component {
             Export
           </button>
         </fieldset>
-            
+
         <fieldset>
           <legend>Move Subjects</legend>
           <div>
@@ -66,7 +66,7 @@ class ProcessAndOutput extends React.Component {
               : null
             }
           </div>
-          
+
           <div>
             <button
               className="action button"
@@ -86,9 +86,9 @@ class ProcessAndOutput extends React.Component {
               : null
             }
           </div>
-            
+
         </fieldset>
-            
+
         <fieldset>
           <legend>Retire Subjects</legend>
           <div>
@@ -115,7 +115,7 @@ class ProcessAndOutput extends React.Component {
               : null
             }
           </div>
-          
+
           <div>
             <button
               className="action button"
@@ -135,23 +135,55 @@ class ProcessAndOutput extends React.Component {
               : null
             }
           </div>
-            
+
+        </fieldset>
+
+        <fieldset style={{ visibility: 'hidden' }}>  /*TODO*/
+          <legend>Create &amp; Move to New Subject Set</legend>
+          <div>
+            <span>Choose a name for your new Subject Set: &nbsp;</span>
+            <input
+              value={workflowOutput.createTarget}
+              onChange={(e) => { workflowOutput.setCreateTarget(e.target.value) }}
+            />
+          </div>
+
+          <div>
+            <button
+              className="action button"
+              onClick={this.doCreate.bind(this)}
+            >
+              Create &amp; Move
+            </button>
+
+            {(workflowOutput.operation === 'create')
+              ? <var className="block">
+                  {workflowOutput.status} {statusIcon(workflowOutput.status)}
+                </var>
+              : null
+            }
+            {(workflowOutput.operation === 'create' && workflowOutput.statusMessage && workflowOutput.statusMessage.length > 0)
+              ? <var className="error block">{workflowOutput.statusMessage}</var>
+              : null
+            }
+          </div>
+
         </fieldset>
       </form>
     )
   }
-  
+
   doExport () {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON()
     let csvData = ''
     if (selection.length > 0) csvData = parse(selection, {})
-    
+
     const fileStream = streamSaver.createWriteStream('subject-assistant.csv', {})
-    
+
     const onSuccess = () => { console.log('EXPORT SUCCESS') }
     const onError = () => { console.error('EXPORT ERROR') }
-    
+
     new Response(csvData).body.pipeTo(fileStream).then(onSuccess, onError)
   }
 
@@ -160,15 +192,15 @@ class ProcessAndOutput extends React.Component {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON() || []
     const subjectIds = getUniqueSubjectIds(selection)
-    
+
     const moveTarget = workflowOutput.moveTarget.trim()
-    
+
     if (moveTarget.length === 0) {
       // TODO: better warnings
       alert('Please specify a Subject Set to which these Subjects will be moved')
       return
     }
-    
+
     workflowOutput.move(subjectIds, moveTarget)
   }
 
@@ -177,16 +209,33 @@ class ProcessAndOutput extends React.Component {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON() || []
     const subjectIds = getUniqueSubjectIds(selection)
-    
+
     const retireTarget = workflowOutput.retireTarget.trim()
-    
+
     if (retireTarget.length === 0) {
       // TODO: better warnings
       alert('Please specify a Workflow from which these Subjects will be retired')
       return
     }
-    
+
     workflowOutput.retire(subjectIds, retireTarget)
+  }
+
+  doCreate () {
+    const workflowOutput = this.context.workflowOutput
+    const mlSelection = this.context.mlSelection
+    const selection = mlSelection.selection.toJSON() || []
+    const subjectIds = getUniqueSubjectIds(selection)
+
+    const createTarget = workflowOutput.createTarget.trim()
+
+    if (createTarget.length === 0) {
+      // TODO: better warnings
+      alert('Please specify a name for the new Subject Set')
+      return
+    }
+
+    workflowOutput.create(subjectIds, createTarget)
   }
 }
 

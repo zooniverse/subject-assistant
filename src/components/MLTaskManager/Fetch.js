@@ -1,16 +1,20 @@
 import React, { useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { observer } from 'mobx-react'
 import AppContext from '@store'
 import { ASYNC_STATES, statusIcon, stopEvent } from '@util'
 
 function Fetch (props) {
   const context = useContext(AppContext)
+  const history = useHistory()
   const mlTask = context.mlTask
   const mlResults = context.mlResults
 
   const { task_id } = useParams()
-  if (task_id !== undefined) {
+  const taskIsUndefined = mlTask.id === '' || mlTask.id === undefined
+
+  // Set Task ID, if user directly accessed URL with Task ID
+  if (task_id !== undefined && taskIsUndefined) {
     mlTask.setId(task_id)
   }
 
@@ -41,15 +45,16 @@ function Fetch (props) {
           <input
             className="text input flex-item grow"
             value={mlTask.id}
-            readOnly={task_id !== undefined}
+            readOnly={false}
             onChange={(e) => { mlTask.setId(e.target.value) }}
           />
           <button
             className="action button flex-item"
             type="button"
             onClick={(e) => {
-              mlTask.fetch()
+              mlTask.doFetch()
               stopEvent(e)
+              history.push(`/tasks/${mlTask.id}`)
             }}
           >
             Fetch

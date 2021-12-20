@@ -1,8 +1,42 @@
 # Zooniverse ML Subject Assistant
 
-Machine Learning-assisted web app for processing Zooniverse Subjects.
+In short: Machine Learning-assisted web app for processing Zooniverse Subjects.
+
+In long: the Subject Assistant aims to provide (wildlife camera trap-based)
+project owners an optional Machine Learning-assisted (ML) step in the Subject
+upload pipeline. Powered by external ML services, project owners can, for
+example, identify wildlife in photos before passing the difficult ones to
+volunteers.
 
 https://subject-assistant.zooniverse.org/
+
+- The Subject Assistant is just the front-end that easily allows Zooniverse
+  project owners to submit their Zooniverse Subjects to certain ML services,
+  and pull the results for further processing.
+- The ML services are external to this project.
+- This repo also contains the Proxy Server, which allows the Subject Assistant
+  (on a `*.zooniverse.org` domain) to download data from non-Zooniverse domains
+  (i.e. the external ML services), without running into CORS errors.
+- This repo is closely related to [Hamlet](https://github.com/zooniverse/hamlet),
+  which is what actually uploads Subjects to external ML services. (It's a
+  multi-step process that can probably optimised, but for now it works.)
+
+**2021/22 Local Development Notes**
+
+The current code is optimised for deployment, so some workarounds are required
+to get the Subject Assistant (and the Proxy Server) working on localhost.
+- Since `https://hamlet-staging.zooniverse.org/` points to `production` and
+  doesn't have a `staging` equivalent (despite its name!), local development
+  **also points to production** (!!!)
+- `npm start` now sets ENV=production
+- The Zooniverse oAuth app now allows `localhost` as a return URL. (This should
+  be enabled/disabled as necessary!)
+- On local, the Subject Assistant runs on HTTPS (for auth security) but the
+  Proxy Server runs on HTTP (because there's no easy self-hosted SSL solution
+  for Node.js scripts, AFAIK). To allow mixed-content, the local testing must
+  be done on `localhost:3000` (and `localhost:3666`), not the usual alias of
+  `local.zooniverse:3000`. This is because Chrome & Firefox are much more
+  forgiving of mixed-content on `localhost` than on other domains.
 
 ## Usage
 
@@ -30,7 +64,7 @@ Requires:
   featuring images of animal from camera traps.
 
 How to Use:
-- **TODO**
+- Instructions are on the web app.
 
 ## Dev Notes
 
@@ -42,7 +76,7 @@ Intended Developers:
 - Web developers (HTML/JS) who are sorta familiar with the [Zooniverse](https://github.com/zooniverse/)
   dev environment.
 
-Requires: 
+Requires:
 - `npm` - the Node Package Manager, usually installed together with [Node](https://nodejs.org/)
 
 Project Overview:
@@ -55,7 +89,7 @@ Project Overview:
   - can be run locally by running `npm run start`
   - is built by running `npm run build` and auto-deployed on GitHub Pages as soon as changes are merged to `master`.
 - The Proxy Server...
-  - exists to pass information between the front end and the ML servers, to bypass the CORS security issues that prevents data fetches between different domains. 
+  - exists to pass information between the front end and the ML servers, to bypass the CORS security issues that prevents data fetches between different domains.
   - is purely server-side, and is used to hide secrets from the user-facing front end.
   - has its code stored in `/server`
   - is auto-deployed to our Kubernetes systems (via Jenkins, presumably) as soon as changes are merged to `master`
@@ -85,16 +119,12 @@ External dependencies:
 - Zooniverse Kubernetes system for hosting Proxy Server
 - Both set up to use `*.zooniverse.org` domain names.
 
-### Special Dev Notes: Deployment Wonkiness
-
-Hi, Shaun here. As of 2019.12.06 there is an issue that I haven't correctly solved: there are TWO `index.html` files, which might result in a messy deployment.
-
-- The first `index.html` created for production environment is created by running `npm run build` and is found in `/app/index.html`.
-- The second `index.html` is found in the root `/` folder, and is the actual `index.html` users see when they go to `https://subject-assistant.zooniverse.org/`
-
-This wonkiness was the result of a change of deployment targets, from serving `/app` on one of our static site buckets to simply serving `/` from github.io via `https://subject-assistant.zooniverse.org/`
-
-For the moment, the manual solution is to:
-- run `npm run build`
-- copy `/app/index.html` to `/index.html`
-- change `<script src="./main.js"></script>` to `<script src="./app/main.js"></script>`
+Environmental (ENV) Config Values:
+- `ORIGINS`: acceptable Zooniverse domains, which the Proxy Server accepts
+  requests from. e.g. `ORIGINS=https://subject-assistant.zooniverse.org/`
+- `TARGETS`: acceptable external domains/URLs, which the Proxy Server will send
+  requests to. e.g. `TARGETS=http://example.com/;http://www.example.com/`
+- `URL_FOR_MSML`: URL for the Microsoft Megadetector ML service. Used by the
+  Proxy Server.
+- `PROXY_HOST`: URL of the Proxy Server. Used by the Subject Assistant to find
+  the proxy. Can be overwritten via the Subject Assistant's in-app config.

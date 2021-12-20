@@ -24,7 +24,7 @@ const AuthStore = types.model('AuthStore', {
       self.user = user
       
       root.userResources.reset()
-      if (user) root.userResources.fetch()
+      if (user) root.userResources.doFetch()
     } catch (err) {
       self.status = ASYNC_STATES.ERROR
     }

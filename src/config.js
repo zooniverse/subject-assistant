@@ -14,7 +14,7 @@ if (!env.match(/^(production|staging|development)$/)) {
 
 const config = {
   appRootUrl: localStorage.getItem('appRootUrl') || `${window.location.origin}${window.location.pathname}`,
-  proxyUrl: localStorage.getItem('proxyUrl') || 'https://subject-assistant-proxy.zooniverse.org',
+  proxyUrl: localStorage.getItem('proxyUrl') || process.env.PROXY_HOST || 'https://subject-assistant-proxy.zooniverse.org',
   hamletUrl: (env === 'production')
     ? 'https://hamlet-staging.zooniverse.org/'
     : 'https://hamlet-staging.zooniverse.org/',
