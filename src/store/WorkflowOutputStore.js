@@ -129,8 +129,6 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
     self.status = ASYNC_STATES.SENDING
     self.statusMessage = undefined
 
-    console.log('+++ ', subjectSetName)
-
     const url = `${apiClient.root}/subject_sets`
 
     try {
@@ -155,6 +153,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
         throw new Error('ML Results Store couldn\'t create a new Subject Set')
       })
 
+      alert('DEBUG: a new Subject Set was created on Project 16927. This is a work in progress.')
       console.log('+++ data: ', data)
 
     } catch (err) {

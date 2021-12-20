@@ -138,7 +138,7 @@ class ProcessAndOutput extends React.Component {
 
         </fieldset>
 
-        <fieldset>
+        <fieldset style={{ visibility: 'hidden' }}>  /*TODO*/
           <legend>Create &amp; Move to New Subject Set</legend>
           <div>
             <span>Choose a name for your new Subject Set: &nbsp;</span>
