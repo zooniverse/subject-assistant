@@ -43,25 +43,29 @@ class ProcessAndOutput extends React.Component {
         </fieldset>
 
         <div className="info panel">
-          <select
-            value={userResources.selectedProject}
-            onChange={(e) => { userResources.selectProject(e.target.value) }}
-          >
-            <option key={`select-project-____`} value={''}>
-              &laquo; To access the options below, first select a Project &raquo;
-            </option>
-            {userResources.ownedProjects.map(item => (
-              <option key={`select-project-${item.id}`} value={item.id}>
-                {item.id} - {item.display_name}
+          {(userResources.projectsStatus === ASYNC_STATES.SUCCESS) ?
+            <select
+              value={userResources.selectedProject}
+              onChange={(e) => { userResources.selectProject(e.target.value) }}
+            >
+              <option key={`select-project-____`} value={''}>
+                &laquo; To access the options below, first select a Project &raquo;
               </option>
-            ))}
-          </select>
+              {userResources.ownedProjects.map(item => (
+                <option key={`select-project-${item.id}`} value={item.id}>
+                  {item.id} - {item.display_name}
+                </option>
+              ))}
+            </select>
+            : statusIcon(userResources.projectsStatus)
+          }
         </div>
 
         <fieldset>
           <legend>B. Move Subjects</legend>
           <div>
             <span>Specify which subject set to move to: &nbsp;</span>
+            {userResources.subjectSetsStatus !== ASYNC_STATES.SUCCESS && statusIcon(userResources.subjectSetsStatus)}
             {(userResources.subjectSetsStatus === ASYNC_STATES.SUCCESS && userResources.ownedSubjectSets.length > 0)
               ? <select
                   value={workflowOutput.moveTarget}
@@ -71,7 +75,7 @@ class ProcessAndOutput extends React.Component {
                   {userResources.ownedSubjectSets.map(item => (
                     <option key={`move-to-subjectset-${item.id}`} value={item.id}>
                       {item.id} - {item.display_name}
-                  </option>
+                    </option>
                   ))}
                 </select>
               : null
@@ -107,6 +111,7 @@ class ProcessAndOutput extends React.Component {
           <legend>C. Retire Subjects</legend>
           <div>
             <span>Specify which workflow to retire from: &nbsp;</span>
+            {userResources.workflowsStatus !== ASYNC_STATES.SUCCESS && statusIcon(userResources.workflowsStatus)}
             {(userResources.workflowsStatus === ASYNC_STATES.SUCCESS && userResources.ownedWorkflows.length > 0)
               ? <div>
                   <span>or, choose from: &nbsp;</span>
@@ -118,7 +123,7 @@ class ProcessAndOutput extends React.Component {
                     {userResources.ownedWorkflows.map(item => (
                       <option key={`retire-from-workflow-${item.id}`} value={item.id}>
                         {item.id} - {item.display_name}
-                    </option>
+                      </option>
                     ))}
                   </select>
                 </div>
