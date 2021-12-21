@@ -49,10 +49,13 @@ class ProcessAndOutput extends React.Component {
             value={userResources.selectedProject}
             onChange={(e) => { userResources.selectProject(e.target.value) }}
           >
+            <option key={`select-project-____`} value={''}>
+              &laquo; Select a project &raquo;
+            </option>
             {userResources.ownedProjects.map(item => (
               <option key={`select-project-${item.id}`} value={item.id}>
                 {item.id} - {item.display_name}
-            </option>
+              </option>
             ))}
           </select>
         </div>
