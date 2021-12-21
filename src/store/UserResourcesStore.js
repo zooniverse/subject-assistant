@@ -46,6 +46,7 @@ const UserResourcesStore = types.model('UserResourcesStore', {
       let subjectSets = []
 
       self.projectStatus = ASYNC_STATES.FETCHING
+      self.ownedProjects = []
 
       // Fetch all projects this user is an owner of.
       data = yield apiClient.type('projects')
@@ -105,11 +106,52 @@ const UserResourcesStore = types.model('UserResourcesStore', {
       self.projectStatusMessage = message
       console.error('[UserResourcesStore] ', err)
     }
+  }),
 
+  fetchWorkflows: flow(function * fetchWorkflows () {
+    const root = getRoot(self)
+    if (self.selectedProject === '') return
+    
+    try {
+      let data = []
+      let workflows = []
+
+      self.workflowStatus = ASYNC_STATES.FETCHING
+      self.ownedWorkflows = []
+      root.workflowOutput.setRetireTarget('')
+
+      data = yield apiClient.type('workflows')
+        .get({
+          project_id: self.selectedProject,
+        })
+        .then(res => res)
+        .catch(err => { throw err })
+      workflows.push(...data)
+
+      self.ownedWorkflows = workflows
+
+      if (workflows.length > 0) root.workflowOutput.setRetireTarget(workflows[0].id)
+
+      self.workflowStatus = ASYNC_STATES.SUCCESS
+
+    } catch (err) {
+      const message = err && err.toString() || undefined
+      self.workflowStatus = ASYNC_STATES.ERROR
+      self.workflowStatusMessage = message
+      console.error('[UserResourcesStore] ', err)
+    }
   }),
 
   selectProject (projectId = '') {
+    if (self.projectStatus === ASYNC_STATES.FETCHING
+        || self.workflowStatus === ASYNC_STATES.FETCHING
+        || self.subjectSetStatus === ASYNC_STATES.FETCHING) {
+      console.log('[UserResourcesStore] Please wait, current fetching user resources.')
+      return
+    }
+
     self.selectedProject = projectId
+    self.fetchWorkflows()
   },
 }))
 
