@@ -18,10 +18,14 @@ class ProcessAndOutput extends React.Component {
     const workflowOutput = this.context.workflowOutput
     const userResources = this.context.userResources
 
+    /* DEBUG / WORK IN PROGRESS
+    // Temporarily remove this clause, so Process and Output ALWAYS shows
+
     // If the results aren't ready, don't render this component.
     if (mlTask.status !== ASYNC_STATES.SUCCESS || mlResults.status !== ASYNC_STATES.SUCCESS) {
       return null
     }
+    */
 
     return (
       <form className="form" onSubmit={(e) => { return stopEvent(e) }}>
@@ -38,6 +42,20 @@ class ProcessAndOutput extends React.Component {
             Export
           </button>
         </fieldset>
+
+        <div className="info panel">
+          ...or, if you select a project:
+          <select
+            value={userResources.selectedProject}
+            onChange={(e) => { userResources.selectProject(e.target.value) }}
+          >
+            {userResources.ownedProjects.map(item => (
+              <option key={`select-project-${item.id}`} value={item.id}>
+                {item.id} - {item.display_name}
+            </option>
+            ))}
+          </select>
+        </div>
 
         <fieldset>
           <legend>Move Subjects</legend>

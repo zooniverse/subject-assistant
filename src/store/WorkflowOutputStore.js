@@ -9,9 +9,9 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
   status: types.optional(types.string, ASYNC_STATES.IDLE),
   statusMessage: types.maybe(types.string),
 
-  moveTarget: types.optional(types.string, ''),
-  retireTarget: types.optional(types.string, ''),
-  createTarget: types.optional(types.string, ''),
+  moveTarget: types.optional(types.string, ''),  // Target Subject Set ID
+  retireTarget: types.optional(types.string, ''),  // Target Workflow ID
+  createTarget: types.optional(types.string, ''),  // Target Subject Set Name
 
 }).actions(self => ({
 
