@@ -18,19 +18,22 @@ class ProcessAndOutput extends React.Component {
     const workflowOutput = this.context.workflowOutput
     const userResources = this.context.userResources
 
-    // If the results aren't ready, don't render this component.
     if (mlTask.status !== ASYNC_STATES.SUCCESS || mlResults.status !== ASYNC_STATES.SUCCESS) {
       return null
     }
+
+    const moveTarget = workflowOutput.moveTarget.trim()
+    const retireTarget = workflowOutput.retireTarget.trim()
+    const createTarget = workflowOutput.createTarget.trim()
 
     return (
       <form className="form" onSubmit={(e) => { return stopEvent(e) }}>
         <h2>Process Selected Images</h2>
         <div className="info panel">
-          You have selected {mlSelection.selection.length} images to process. You have a choice to...
+          You have selected {mlSelection.selection.length} images to process. You have the following options:
         </div>
         <fieldset>
-          <legend>Export to CSV</legend>
+          <legend>A. Export to CSV</legend>
           <button
             className="action button"
             onClick={this.doExport.bind(this)}
@@ -39,41 +42,57 @@ class ProcessAndOutput extends React.Component {
           </button>
         </fieldset>
 
+        <div className="info panel">
+          {(userResources.projectsStatus === ASYNC_STATES.SUCCESS) ?
+            <select
+              value={userResources.selectedProject}
+              onChange={(e) => { userResources.selectProject(e.target.value) }}
+            >
+              <option key={`select-project-____`} value={''}>
+                &laquo; To access the options below, first select a Project &raquo;
+              </option>
+              {userResources.ownedProjects.map(item => (
+                <option key={`select-project-${item.id}`} value={item.id}>
+                  {item.id} - {item.display_name}
+                </option>
+              ))}
+            </select>
+            : statusIcon(userResources.projectsStatus)
+          }
+        </div>
+
         <fieldset>
-          <legend>Move Subjects</legend>
+          <legend>B. Move Subjects</legend>
           <div>
             <span>Specify which subject set to move to: &nbsp;</span>
-            <input
-              value={workflowOutput.moveTarget}
-              onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
-            />
-            {(userResources.status === ASYNC_STATES.SUCCESS && userResources.ownedSubjectSets && userResources.ownedSubjectSets.length > 0)  // If we know which resources the user has, we can show a <select> option. Otherwise, enable manual input.
-              ? <div>
-                  <span>or, choose from: &nbsp;</span>
-                  <select
-                    value={workflowOutput.moveTarget}
-                    onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
-                    class={!(userResources.ownedSubjectSets.map(i=>i.id).includes(workflowOutput.moveTarget)) ? 'greyed-out' : ''}
-                  >
-                    {userResources.ownedSubjectSets.map(item => (
-                      <option key={`move-to-subjectset-${item.id}`} value={item.id}>
-                        {item.id} - {item.display_name}
+            {userResources.subjectSetsStatus !== ASYNC_STATES.SUCCESS && statusIcon(userResources.subjectSetsStatus)}
+            {(userResources.subjectSetsStatus === ASYNC_STATES.SUCCESS && userResources.ownedSubjectSets.length > 0)
+              ? <select
+                  value={workflowOutput.moveTarget}
+                  onChange={(e) => { workflowOutput.setMoveTarget(e.target.value) }}
+                  class={!(userResources.ownedSubjectSets.map(i=>i.id).includes(workflowOutput.moveTarget)) ? 'greyed-out' : ''}
+                >
+                  {userResources.ownedSubjectSets.map(item => (
+                    <option key={`move-to-subjectset-${item.id}`} value={item.id}>
+                      {item.id} - {item.display_name}
                     </option>
-                    ))}
-                  </select>
-                </div>
-
+                  ))}
+                </select>
               : null
             }
           </div>
 
           <div>
-            <button
-              className="action button"
-              onClick={this.doMove.bind(this)}
-            >
-              Move
-            </button>
+            {(moveTarget) ?
+              <button
+                className="action button"
+                onClick={this.doMove.bind(this)}
+              >
+                Move
+              </button>
+              :
+              <span>(Please choose a Project and a Subject Set)</span>
+            }
 
             {(workflowOutput.operation === 'move')
               ? <var className="block">
@@ -86,18 +105,14 @@ class ProcessAndOutput extends React.Component {
               : null
             }
           </div>
-
         </fieldset>
 
         <fieldset>
-          <legend>Retire Subjects</legend>
+          <legend>C. Retire Subjects</legend>
           <div>
             <span>Specify which workflow to retire from: &nbsp;</span>
-            <input
-              value={workflowOutput.retireTarget}
-              onChange={(e) => { workflowOutput.setRetireTarget(e.target.value) }}
-            />
-            {(userResources.status === ASYNC_STATES.SUCCESS && userResources.ownedWorkflows && userResources.ownedWorkflows.length > 0)  // If we know which resources the user has, we can show a <select> option.
+            {userResources.workflowsStatus !== ASYNC_STATES.SUCCESS && statusIcon(userResources.workflowsStatus)}
+            {(userResources.workflowsStatus === ASYNC_STATES.SUCCESS && userResources.ownedWorkflows.length > 0)
               ? <div>
                   <span>or, choose from: &nbsp;</span>
                   <select
@@ -108,7 +123,7 @@ class ProcessAndOutput extends React.Component {
                     {userResources.ownedWorkflows.map(item => (
                       <option key={`retire-from-workflow-${item.id}`} value={item.id}>
                         {item.id} - {item.display_name}
-                    </option>
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -117,12 +132,16 @@ class ProcessAndOutput extends React.Component {
           </div>
 
           <div>
-            <button
-              className="action button"
-              onClick={this.doRetire.bind(this)}
-            >
-              Retire
-            </button>
+            {(retireTarget) ?
+              <button
+                className="action button"
+                onClick={this.doRetire.bind(this)}
+              >
+                Retire
+              </button>
+              :
+              <span>(Please choose a Project and a Workflow)</span>
+            }
 
             {(workflowOutput.operation === 'retire')
               ? <var className="block">
@@ -135,11 +154,10 @@ class ProcessAndOutput extends React.Component {
               : null
             }
           </div>
-
         </fieldset>
 
         <fieldset style={{ display: 'none' }}>  /*TODO*/
-          <legend>Create &amp; Move to New Subject Set</legend>
+          <legend>D. Create &amp; Move to New Subject Set</legend>
           <div>
             <span>Choose a name for your new Subject Set: &nbsp;</span>
             <input
@@ -167,7 +185,6 @@ class ProcessAndOutput extends React.Component {
               : null
             }
           </div>
-
         </fieldset>
       </form>
     )

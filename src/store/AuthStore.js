@@ -4,12 +4,12 @@ import oauth from 'panoptes-client/lib/oauth'
 import { ASYNC_STATES } from '@util'
 
 const AuthStore = types.model('AuthStore', {
-  
+
   status: types.optional(types.string, ASYNC_STATES.IDLE),
   user: types.optional(types.frozen({}), null),  // When uninitialised, user should be null instead of {}
-  
+
 }).actions(self => ({
-  
+
   initialise () {
     self.checkUser()
   },
@@ -17,14 +17,14 @@ const AuthStore = types.model('AuthStore', {
   checkUser: flow(function * checkUser () {
     const root = getRoot(self)
     self.status = ASYNC_STATES.FETCHING
-    
+
     try {
       const user = yield oauth.checkCurrent()
       self.status = ASYNC_STATES.SUCCESS
       self.user = user
-      
+
       root.userResources.reset()
-      if (user) root.userResources.doFetch()
+      if (user) root.userResources.fetchProjects()
     } catch (err) {
       self.status = ASYNC_STATES.ERROR
     }
