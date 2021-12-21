@@ -5,12 +5,12 @@ import apiClient from 'panoptes-client'
 
 const UserResourcesStore = types.model('UserResourcesStore', {
 
-  projectStatus: types.optional(types.string, ASYNC_STATES.IDLE),
-  projectStatusMessage: types.maybe(types.string),
-  workflowStatus: types.optional(types.string, ASYNC_STATES.IDLE),
-  workflowStatusMessage: types.maybe(types.string),
-  subjectSetStatus: types.optional(types.string, ASYNC_STATES.IDLE),
-  subjectSetStatusMessage: types.maybe(types.string),
+  projectsStatus: types.optional(types.string, ASYNC_STATES.IDLE),
+  projectsStatusMessage: types.maybe(types.string),
+  workflowsStatus: types.optional(types.string, ASYNC_STATES.IDLE),
+  workflowsStatusMessage: types.maybe(types.string),
+  subjectSetsStatus: types.optional(types.string, ASYNC_STATES.IDLE),
+  subjectSetsStatusMessage: types.maybe(types.string),
 
   ownedProjects: types.array(types.frozen({})),
   ownedSubjectSets: types.array(types.frozen({})),
@@ -21,12 +21,12 @@ const UserResourcesStore = types.model('UserResourcesStore', {
 }).actions(self => ({
 
   reset () {
-    self.projectStatus = ASYNC_STATES.IDLE
-    self.projectStatusMessage = undefined
-    self.workflowStatus = ASYNC_STATES.IDLE
-    self.workflowStatusMessage = undefined
-    self.subjectSetStatus = ASYNC_STATES.IDLE
-    self.subjectSetStatusMessage = undefined
+    self.projectsStatus = ASYNC_STATES.IDLE
+    self.projectsStatusMessage = undefined
+    self.workflowsStatus = ASYNC_STATES.IDLE
+    self.workflowsStatusMessage = undefined
+    self.subjectSetsStatus = ASYNC_STATES.IDLE
+    self.subjectSetsStatusMessage = undefined
 
     self.ownedProjects = []
     self.ownedSubjectSets = []
@@ -37,10 +37,10 @@ const UserResourcesStore = types.model('UserResourcesStore', {
   },
 
   resetDependents () {
-    self.workflowStatus = ASYNC_STATES.IDLE
-    self.workflowStatusMessage = undefined
-    self.subjectSetStatus = ASYNC_STATES.IDLE
-    self.subjectSetStatusMessage = undefined
+    self.workflowsStatus = ASYNC_STATES.IDLE
+    self.workflowsStatusMessage = undefined
+    self.subjectSetsStatus = ASYNC_STATES.IDLE
+    self.subjectSetsStatusMessage = undefined
 
     self.ownedSubjectSets = []
     self.ownedWorkflows = []
@@ -58,7 +58,7 @@ const UserResourcesStore = types.model('UserResourcesStore', {
       let workflows = []
       let subjectSets = []
 
-      self.projectStatus = ASYNC_STATES.FETCHING
+      self.projectsStatus = ASYNC_STATES.FETCHING
       self.ownedProjects = []
 
       // Fetch all projects this user is an owner of.
@@ -83,12 +83,12 @@ const UserResourcesStore = types.model('UserResourcesStore', {
 
       if (projects.length > 0) self.selectProject(projects[0].id)
 
-      self.projectStatus = ASYNC_STATES.SUCCESS
+      self.projectsStatus = ASYNC_STATES.SUCCESS
 
     } catch (err) {
       const message = err && err.toString() || undefined
-      self.projectStatus = ASYNC_STATES.ERROR
-      self.projectStatusMessage = message
+      self.projectsStatus = ASYNC_STATES.ERROR
+      self.projectsStatusMessage = message
       console.error('[UserResourcesStore] ', err)
     }
   }),
@@ -101,7 +101,7 @@ const UserResourcesStore = types.model('UserResourcesStore', {
       let data = []
       let workflows = []
 
-      self.workflowStatus = ASYNC_STATES.FETCHING
+      self.workflowsStatus = ASYNC_STATES.FETCHING
       self.ownedWorkflows = []
 
       data = yield apiClient.type('workflows')
@@ -116,12 +116,12 @@ const UserResourcesStore = types.model('UserResourcesStore', {
 
       if (workflows.length > 0) root.workflowOutput.setRetireTarget(workflows[0].id)
 
-      self.workflowStatus = ASYNC_STATES.SUCCESS
+      self.workflowsStatus = ASYNC_STATES.SUCCESS
 
     } catch (err) {
       const message = err && err.toString() || undefined
-      self.workflowStatus = ASYNC_STATES.ERROR
-      self.workflowStatusMessage = message
+      self.workflowsStatus = ASYNC_STATES.ERROR
+      self.workflowsStatusMessage = message
       console.error('[UserResourcesStore] ', err)
     }
   }),
@@ -134,7 +134,7 @@ const UserResourcesStore = types.model('UserResourcesStore', {
       let data = []
       let subjectSets = []
 
-      self.subjectSetStatus = ASYNC_STATES.FETCHING
+      self.subjectSetsStatus = ASYNC_STATES.FETCHING
       self.ownedSubjectSets = []
 
       data = yield apiClient.type('subject_sets')
@@ -149,20 +149,20 @@ const UserResourcesStore = types.model('UserResourcesStore', {
 
       if (subjectSets.length > 0) root.workflowOutput.setMoveTarget(subjectSets[0].id)
 
-      self.subjectSetStatus = ASYNC_STATES.SUCCESS
+      self.subjectSetsStatus = ASYNC_STATES.SUCCESS
 
     } catch (err) {
       const message = err && err.toString() || undefined
-      self.subjectSetStatus = ASYNC_STATES.ERROR
-      self.subjectSetStatusMessage = message
+      self.subjectSetsStatus = ASYNC_STATES.ERROR
+      self.subjectSetsStatusMessage = message
       console.error('[UserResourcesStore] ', err)
     }
   }),
 
   selectProject (projectId = '') {
-    if (self.projectStatus === ASYNC_STATES.FETCHING
-        || self.workflowStatus === ASYNC_STATES.FETCHING
-        || self.subjectSetStatus === ASYNC_STATES.FETCHING) {
+    if (self.projectsStatus === ASYNC_STATES.FETCHING
+        || self.workflowsStatus === ASYNC_STATES.FETCHING
+        || self.subjectSetsStatus === ASYNC_STATES.FETCHING) {
       console.log('[UserResourcesStore] Please wait, current fetching user resources.')
       return
     }
