@@ -26,6 +26,8 @@ spec:
           ports:
             - containerPort: 80
           env:
+            - name: CAMERA_TRAPS_API_SERVICE_PATH
+              value: /v4/camera-trap/detection-batch
             - name: ORIGINS
               valueFrom:
                 secretKeyRef:
