@@ -25,6 +25,9 @@ services:
     ports:
       - "3666:3666"
     environment:
+      - URL_FOR_MSML=http://otter.southcentralus.cloudapp.azure.com:6001/v4/camera-trap/detection-batch
+      - CAMERA_TRAPS_API_SERVICE_HOST=10.0.244.99
+      - CAMERA_TRAPS_API_SERVICE_PATH=/v4/camera-trap/detection-batch
       - ORIGINS=${ORIGINS}
       - TARGETS=${TARGETS}
       - REVISION=fakerevision123

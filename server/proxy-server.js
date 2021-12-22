@@ -4,10 +4,29 @@ require('dotenv').config()
 
 const server = express()
 
+function targetsConfig() {
+  let targets = process.env.TARGETS || 'http://example.com;https://www.zooniverse.org/'
+  // append the Zooniverse hosted service HOST if the env var is set, else use the defaults above
+  if (process.env.CAMERA_TRAPS_API_SERVICE_HOST) {
+    targets = `http://${process.env.CAMERA_TRAPS_API_SERVICE_HOST};${targets}`
+  }
+  return targets
+}
+
+function urlForMsml() {
+  // Microsofot Machine Learning Camera Traps URL
+  let url = process.env.URL_FOR_MSML
+  // use Zooniverse hosted service URL if the env var is set, else use the default above
+  if (process.env.CAMERA_TRAPS_API_SERVICE_HOST) {
+    url = `http://${process.env.CAMERA_TRAPS_API_SERVICE_HOST}${process.env.CAMERA_TRAPS_API_SERVICE_PATH}`
+  }
+  return url
+}
+
 const config = {
   origins: process.env.ORIGINS || 'https://localhost:3000;https://local.zooniverse.org:3000',
-  targets: process.env.TARGETS || 'http://example.com;https://www.zooniverse.org/',
-  url_for_msml: process.env.URL_FOR_MSML || '',  // Microsofot Machine Learning
+  targets: targetsConfig(),
+  url_for_msml: urlForMsml(),
   port: process.env.PORT || 3666,
   revision: process.env.REVISION || '',
 }
@@ -61,7 +80,7 @@ function proxyGet (req, res) {
         .json({'error': 'Target URL is not in the whitelist'});
 
     } else {
-      
+
       // We need to use fetch instead of superagent because the latter can't
       // handle streaming data (content-type: application/octent-stream)
       fetch(url)
@@ -96,4 +115,5 @@ server.listen(config.port, (err) => {
   console.log(`Proxy Server running at port ${config.port}`)
   console.log(`Acceptable origins: ${config.origins.split(';')}`)
   console.log(`Acceptable targets: ${config.targets.split(';')}`)
+  console.log(`MS ML URL: ${config.url_for_msml}`)
 })
