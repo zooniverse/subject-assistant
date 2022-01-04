@@ -26,6 +26,7 @@ class ProcessAndOutput extends React.Component {
     const moveTarget = workflowOutput.moveTarget.trim()
     const retireTarget = workflowOutput.retireTarget.trim()
     const createTarget = workflowOutput.createTarget.trim()
+    const selectedProject = userResources.selectedProject
 
     return (
       <form className="form" onSubmit={(e) => { return stopEvent(e) }}>
@@ -157,14 +158,17 @@ class ProcessAndOutput extends React.Component {
           </div>
         </fieldset>
 
-        <fieldset style={{ display: 'none' }}>  /*TODO*/
+        <fieldset>
           <legend>D. Create &amp; Move to New Subject Set</legend>
           <div>
             <span>Choose a name for your new Subject Set: &nbsp;</span>
-            <input
-              value={workflowOutput.createTarget}
-              onChange={(e) => { workflowOutput.setCreateTarget(e.target.value) }}
-            />
+            {(selectedProject)
+              ? <input
+                  value={workflowOutput.createTarget}
+                  onChange={(e) => { workflowOutput.setCreateTarget(e.target.value) }}
+                />
+              : statusIcon(ASYNC_STATES.IDLE)
+            }
           </div>
 
           <div>
