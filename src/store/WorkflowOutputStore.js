@@ -144,7 +144,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
           subject_sets: {
             display_name: subjectSetName,
             links: {
-              project: '16927',  // DEBUG
+              project: projectId,
             },
           }
         }),
@@ -153,7 +153,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
         throw new Error('ML Results Store couldn\'t create a new Subject Set')
       })
 
-      alert('DEBUG: a new Subject Set was created on Project 16927. This is a work in progress.')
+      alert(`DEBUG: a new Subject Set was created on Project ${projectId}. This is a work in progress.`)
       console.log('+++ data: ', data)
 
     } catch (err) {

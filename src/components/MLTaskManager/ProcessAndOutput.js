@@ -26,7 +26,6 @@ class ProcessAndOutput extends React.Component {
     const moveTarget = workflowOutput.moveTarget.trim()
     const retireTarget = workflowOutput.retireTarget.trim()
     const createTarget = workflowOutput.createTarget.trim()
-    const selectedProject = userResources.selectedProject
 
     return (
       <form className="form" onSubmit={(e) => { return stopEvent(e) }}>
@@ -162,7 +161,7 @@ class ProcessAndOutput extends React.Component {
           <legend>D. Create &amp; Move to New Subject Set</legend>
           <div>
             <span>Choose a name for your new Subject Set: &nbsp;</span>
-            {(selectedProject)
+            {(userResources.selectedProject)
               ? <input
                   value={workflowOutput.createTarget}
                   onChange={(e) => { workflowOutput.setCreateTarget(e.target.value) }}
@@ -248,6 +247,7 @@ class ProcessAndOutput extends React.Component {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON() || []
     const subjectIds = getUniqueSubjectIds(selection)
+    const { selectedProject } = this.context.userResources
 
     const createTarget = workflowOutput.createTarget.trim()
 
@@ -257,7 +257,7 @@ class ProcessAndOutput extends React.Component {
       return
     }
 
-    workflowOutput.create(subjectIds, createTarget)
+    workflowOutput.create(subjectIds, createTarget, selectedProject)
   }
 }
 
