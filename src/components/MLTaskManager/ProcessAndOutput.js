@@ -19,8 +19,7 @@ class ProcessAndOutput extends React.Component {
     const userResources = this.context.userResources
 
     if (mlTask.status !== ASYNC_STATES.SUCCESS || mlResults.status !== ASYNC_STATES.SUCCESS) {
-      // TEMP
-      // return null
+      return null
     }
 
     const moveTarget = workflowOutput.moveTarget.trim()
