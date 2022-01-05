@@ -156,14 +156,17 @@ class ProcessAndOutput extends React.Component {
           </div>
         </fieldset>
 
-        <fieldset style={{ display: 'none' }}>  /*TODO*/
+        <fieldset>
           <legend>D. Create &amp; Move to New Subject Set</legend>
           <div>
             <span>Choose a name for your new Subject Set: &nbsp;</span>
-            <input
-              value={workflowOutput.createTarget}
-              onChange={(e) => { workflowOutput.setCreateTarget(e.target.value) }}
-            />
+            {(userResources.selectedProject)
+              ? <input
+                  value={workflowOutput.createTarget}
+                  onChange={(e) => { workflowOutput.setCreateTarget(e.target.value) }}
+                />
+              : statusIcon(ASYNC_STATES.IDLE)
+            }
           </div>
 
           <div>
@@ -243,6 +246,7 @@ class ProcessAndOutput extends React.Component {
     const mlSelection = this.context.mlSelection
     const selection = mlSelection.selection.toJSON() || []
     const subjectIds = getUniqueSubjectIds(selection)
+    const { selectedProject } = this.context.userResources
 
     const createTarget = workflowOutput.createTarget.trim()
 
@@ -252,7 +256,7 @@ class ProcessAndOutput extends React.Component {
       return
     }
 
-    workflowOutput.create(subjectIds, createTarget)
+    workflowOutput.create(subjectIds, createTarget, selectedProject)
   }
 }
 
