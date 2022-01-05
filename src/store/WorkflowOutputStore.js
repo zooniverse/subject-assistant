@@ -42,15 +42,15 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
     self.createTarget = val
   },
 
-  move: flow(function * moveToSubjectSet (subjectIds, subjectSetId) {
-    self.operation = 'move'
+  move: flow(function * moveToSubjectSet (subjectIds, subjectSetId, continueFromCreate = false) {
+    if (!continueFromCreate) { self.operation = 'move' }
     self.status = ASYNC_STATES.SENDING
     self.statusMessage = undefined
 
     const url = `${apiClient.root}/subject_sets/${subjectSetId}/links/subjects`
 
     try {
-      const data = yield fetch(url, {
+      yield fetch(url, {
         method: 'POST',
         // credentials: 'include',  // Do not use, due to CORS issues
         headers: {
@@ -62,7 +62,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
           subjects: subjectIds,
         }),
       }).then(res => {
-        if (res.ok) return res.json()
+        if (res.ok) return
         throw new Error()
       }).catch(err => {
         const res = (err && err.response) || {}
@@ -107,7 +107,7 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
           retirement_reason: 'other',
         }),
       }).then(res => {
-        if (res.ok) return res.json()
+        if (res.ok) return
         throw new Error('Workflow Output Store couldn\'t retire() data')
       })
 
@@ -151,8 +151,9 @@ const WorkflowOutputStore = types.model('WorkflowOutputStore', {
         throw new Error('ML Results Store couldn\'t create a new Subject Set')
       })
 
-      alert(`DEBUG: a new Subject Set was created on Project ${projectId}. This is a work in progress.`)
-      console.log('+++ data: ', data)
+      // Move to the created Subject Set
+      const subjectSetId = data.subject_sets[0].id
+      self.move(subjectIds, subjectSetId, true)
 
     } catch (err) {
       const message = err && err.toString() || undefined
