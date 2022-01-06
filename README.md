@@ -124,7 +124,9 @@ Environmental (ENV) Config Values:
   requests from. e.g. `ORIGINS=https://subject-assistant.zooniverse.org/`
 - `TARGETS`: acceptable external domains/URLs, which the Proxy Server will send
   requests to. e.g. `TARGETS=http://example.com/;http://www.example.com/`
-- `URL_FOR_MSML`: URL for the Microsoft Megadetector ML service. Used by the
-  Proxy Server.
+- `URL_FOR_MSML`: URL for the Microsoft Megadetector ML service. Used by the Proxy Server.
+  - Note: as of 2022, the Megedetector ML service is now being hosted on the Zooniverse. The following vars supersede URL_FOR_MSML:
+    - `CAMERA_TRAPS_API_SERVICE_HOST`: hostname for the Zooniverse-hosted Megadetector ML service.
+    - `CAMERA_TRAPS_API_SERVICE_PATH`: path of the Zooniverse-hosted Megadetector ML service. 
 - `PROXY_HOST`: URL of the Proxy Server. Used by the Subject Assistant to find
   the proxy. Can be overwritten via the Subject Assistant's in-app config.
