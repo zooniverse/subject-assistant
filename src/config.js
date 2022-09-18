@@ -16,7 +16,7 @@ const config = {
   appRootUrl: localStorage.getItem('appRootUrl') || `${window.location.origin}${window.location.pathname}`,
   proxyUrl: localStorage.getItem('proxyUrl') || process.env.PROXY_HOST || 'https://subject-assistant-proxy.zooniverse.org',
   hamletUrl: (env === 'production')
-    ? 'https://hamlet-staging.zooniverse.org/'
+    ? 'https://hamlet.zooniverse.org/'
     : 'https://hamlet-staging.zooniverse.org/',
   panoptesAppId: (env === 'production')
     ? '9177dbfa64561b23b3089efedd75b0a52b8aa5a5c9de18cf966670cd3b0f4449'
