@@ -25,9 +25,11 @@ https://subject-assistant.zooniverse.org/
 
 The current code is optimised for deployment, so some workarounds are required
 to get the Subject Assistant (and the Proxy Server) working on localhost.
-- Since `https://hamlet-staging.zooniverse.org/` points to `production` and
+- ~~Since `https://hamlet-staging.zooniverse.org/` points to `production` and
   doesn't have a `staging` equivalent (despite its name!), local development
-  **also points to production** (!!!)
+  **also points to production** (!!!)~~
+  - Update: since late 2022, we now have `https://hamlet.zooniverse.org` which
+    points to production. `hamlet-staging` now points to staging.
 - `npm start` now sets ENV=production
 - The Zooniverse oAuth app now allows `localhost` as a return URL. (This should
   be enabled/disabled as necessary!)
@@ -37,6 +39,15 @@ to get the Subject Assistant (and the Proxy Server) working on localhost.
   be done on `localhost:3000` (and `localhost:3666`), not the usual alias of
   `local.zooniverse:3000`. This is because Chrome & Firefox are much more
   forgiving of mixed-content on `localhost` than on other domains.
+
+**2023 Deployment Notes**
+
+- ❗ Reminder: devs need to **manually run** `npm run build` to update the
+  `/app` directory, which then gets published on GitHub pages. (See Dev Notes,
+  How To Deploy.)
+- As the Zooniverse team has gotten used to automated deployment for (almost)
+  all of its front end repos, Subject Assistant might not behave as expected due
+  to its manual deployment process. There's room for improvement here.
 
 ## Usage
 
