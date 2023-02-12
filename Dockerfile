@@ -1,4 +1,7 @@
-FROM node:14-slim as builder
+FROM node:18-slim as builder
+
+ARG NODE_ENV=production
+ENV NODE_ENV=$NODE_ENV
 
 RUN mkdir -p /usr/src
 WORKDIR /usr/src/
@@ -10,7 +13,7 @@ RUN chown -R node:node .
 
 USER node
 
-RUN npm install
+RUN npm ci
 
 COPY ./ .
 
