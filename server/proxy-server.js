@@ -110,10 +110,26 @@ function proxyGet (req, res) {
 
 server.get('*', proxyGet)
 
-server.listen(config.port, (err) => {
-  if (err) throw err
-  console.log(`Proxy Server running at port ${config.port}`)
-  console.log(`Acceptable origins: ${config.origins.split(';')}`)
-  console.log(`Acceptable targets: ${config.targets.split(';')}`)
-  console.log(`MS ML URL: ${config.url_for_msml}`)
-})
+if (NODE_ENV === 'production') {
+  server.listen(config.port, (err) => {
+    if (err) throw err
+    console.log(`Proxy Server running at port ${config.port}`)
+    console.log(`Acceptable origins: ${config.origins.split(';')}`)
+    console.log(`Acceptable targets: ${config.targets.split(';')}`)
+    console.log(`MS ML URL: ${config.url_for_msml}`)
+  })
+} else {
+  const https = require('https');
+  const selfsigned = require('selfsigned');
+  const attrs = [{ name: 'commonName', value: 'local.zooniverse.org' }];
+  const { cert, private: key } = selfsigned.generate(attrs, { days: 365 });
+  https.createServer({ cert, key }, server)
+    .listen(config.port, (err) => {
+      if (err) throw err;
+      console.log(`Proxy Server running at port ${config.port}`);
+      console.log(`Acceptable origins: ${config.origins.split(';')}`);
+      console.log(`Acceptable targets: ${config.targets.split(';')}`);
+      console.log(`MS ML URL: ${config.url_for_msml}`);
+    })
+}
+
