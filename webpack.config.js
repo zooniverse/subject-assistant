@@ -56,38 +56,24 @@ module.exports = {
       },
       {  // Copy HTML file
         test: /\.html$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-            }
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: '[name][ext]'
+        }
       },
       {  // Copy media assets
         test: /\.(png|jpe?g|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'assets',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/[name][ext]'
+        }
       },
       {  // Copy demo data
         test: /demo-data\/.+\.txt/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'demo-data',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'demo-data/[name][ext]'
+        }
       },
     ],
   },
