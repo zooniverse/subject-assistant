@@ -110,7 +110,7 @@ function proxyGet (req, res) {
 
 server.get('*', proxyGet)
 
-if (NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   server.listen(config.port, (err) => {
     if (err) throw err
     console.log(`Proxy Server running at port ${config.port}`)
