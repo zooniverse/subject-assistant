@@ -18,6 +18,11 @@ module.exports = {
       '@config': path.resolve(__dirname, 'src/config/'),
       '@demo-data': path.resolve(__dirname, 'src/demo-data/'),
     },
+    fallback: {
+      fs: false,
+      url: require.resolve("url"),
+      process: false,
+    }
   },
   plugins: [
     new webpack.EnvironmentPlugin({
@@ -91,11 +96,8 @@ module.exports = {
       'localhost',
       '.zooniverse.org'
     ],
-    //contentBase: path.join(__dirname, 'app'),  // Previously,
-    contentBase: path.join(__dirname, '/'),  // Serve from the root, so we mimic how content is served from the root at https://subject-assistant.zooniverse.org/
     host: process.env.HOST || 'localhost',
-    https: true,
-    watchContentBase: true,
-    port: 3000
+    port: 3000,
+    server: 'https'
   },
 }
