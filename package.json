@@ -12,7 +12,7 @@
   "author": "Zooniverse <contact@zooniverse.org> (https://www.zooniverse.org/)",
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
@@ -21,7 +21,6 @@
     "mobx": "^5.15.7",
     "mobx-react": "^6.3.1",
     "mobx-state-tree": "^3.17.3",
-    "node-fetch": "^2.6.7",
     "panoptes-client": "^4.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
