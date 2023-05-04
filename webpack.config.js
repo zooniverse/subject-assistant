@@ -82,8 +82,8 @@ module.exports = {
       'localhost',
       '.zooniverse.org'
     ],
-    host: process.env.HOST || 'localhost',
+    historyApiFallback: true,
     port: 3000,
-    server: 'https'
+    server: 'https',
   },
 }
