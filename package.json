@@ -34,7 +34,7 @@
     "@babel/preset-react": "^7.22.3",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.8.1",
-    "sass": "^1.62.1",
+    "sass": "^1.63.3",
     "sass-loader": "^13.3.2",
     "selfsigned": "^2.1.1",
     "style-loader": "^3.3.3",
