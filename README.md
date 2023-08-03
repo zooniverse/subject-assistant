@@ -2,7 +2,7 @@
 
 In short: Machine Learning-assisted web app for processing Zooniverse Subjects.
 
-In long: the Subject Assistant aims to provide (wildlife camera trap-based) project owners an optional Machine Learning-assisted (ML) step in the Subject upload pipeline. Powered by external ML services, project owners can, for example, identify wildlife in photos before passing the difficult ones to volunteers.
+In long: the Subject Assistant aims to provide **(wildlife camera trap-based)** project owners an optional Machine Learning-assisted (ML) step in the Subject upload pipeline. Powered by **external ML services,** project owners can, for example, identify wildlife in photos before passing the difficult ones to volunteers. This repo also contains code for the **proxy server.**
 
 https://subject-assistant.zooniverse.org/
 
