@@ -3,13 +3,14 @@ import { observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
 import AppContext from '@store'
+import zooniverseLogo from '../../assets/zooniverse-icon-web-white-small.png'
 
 function Header() {
   const store = useContext(AppContext)
   return (
     <header>
       <div>
-        <img class="zooniverse logo" src="/assets/zooniverse-icon-web-white-small.png" alt="Zooniverse logo" />
+        <img class="zooniverse logo" src={zooniverseLogo} alt="Zooniverse logo" />
         <h1>Zooniverse ML Subject Assistant</h1>
       </div>
       <nav>
