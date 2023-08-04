@@ -17,6 +17,7 @@ module.exports = {
       '@store': path.resolve(__dirname, 'src/store/'),
       '@config': path.resolve(__dirname, 'src/config/'),
       '@demo-data': path.resolve(__dirname, 'src/demo-data/'),
+      '@assets': path.resolve(__dirname, 'assets/'),
     },
     fallback: {
       fs: false,

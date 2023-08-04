@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
 import AppContext from '@store'
-import zooniverseLogo from '../../assets/zooniverse-icon-web-white-small.png'
+import zooniverseLogo from '@assets/zooniverse-icon-web-white-small.png'
 
 function Header() {
   const store = useContext(AppContext)
