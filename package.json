@@ -18,7 +18,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.19.2",
     "json2csv": "^5.0.6",
-    "mobx": "^5.15.7",
+    "mobx": "^6.12.5",
     "mobx-react": "^6.3.1",
     "mobx-state-tree": "^3.17.3",
     "panoptes-client": "^5.5.8",
